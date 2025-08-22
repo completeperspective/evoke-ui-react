@@ -203,19 +203,16 @@ The AI coding assistant will:
 The command follows this process:
 
 1. **Research Phase**
-
    - Analyzes your codebase for patterns
    - Searches for similar implementations
    - Identifies conventions to follow
 
 2. **Documentation Gathering**
-
    - Fetches relevant API docs
    - Includes library documentation
    - Adds gotchas and quirks
 
 3. **Blueprint Creation**
-
    - Creates step-by-step implementation plan
    - Includes validation gates
    - Adds test requirements
@@ -242,19 +239,16 @@ The `examples/` folder is **critical** for success. AI coding assistants perform
 ### What to Include in Examples
 
 1. **Code Structure Patterns**
-
    - How you organize modules
    - Import conventions
    - Class/function patterns
 
 2. **Testing Patterns**
-
    - Test file structure
    - Mocking approaches
    - Assertion styles
 
 3. **Integration Patterns**
-
    - API client implementations
    - Database connections
    - Authentication flows

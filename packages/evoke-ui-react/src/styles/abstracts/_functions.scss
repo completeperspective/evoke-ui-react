@@ -1,0 +1,379 @@
+/**
+ * Design System Functions
+ * Utility functions for design token calculations and color manipulation
+ */
+
+@use 'sass:math';
+@use 'sass:string';
+@use 'sass:list';
+@use 'sass:meta';
+
+/**
+ * String Replace
+ * Replace substring in a string (Sass utility) - Non-recursive version
+ */
+@function str-replace($string, $search, $replace: '') {
+  $result: $string;
+  $index: string.index($result, $search);
+
+  @while $index {
+    $before: string.slice($result, 1, $index - 1);
+    $after: string.slice($result, $index + string.length($search));
+    $result: $before + $replace + $after;
+    $index: string.index($result, $search);
+  }
+
+  @return $result;
+}
+
+/**
+ * Strip Unit
+ * Remove unit from a number
+ */
+@function strip-unit($number) {
+  @if meta.type-of($number) == 'number' and not math.is-unitless($number) {
+    @return math.div($number, $number * 0 + 1);
+  }
+
+  @return $number;
+}
+
+/**
+ * OKLCH Color
+ * Convert OKLCH values to CSS oklch() function
+ */
+@function oklch-color($lightness, $chroma: null, $hue: null) {
+  // If only one parameter, assume it's a CSS custom property
+  @if $chroma == null and $hue == null {
+    @return oklch(#{$lightness});
+  }
+
+  // If three parameters, construct full OKLCH value
+  @if $chroma != null and $hue != null {
+    @return oklch(#{$lightness} #{$chroma} #{$hue});
+  }
+
+  @error "oklch-color() requires either 1 parameter (CSS variable) or 3 parameters (lightness, chroma, hue)";
+}
+
+/**
+ * Lighten OKLCH
+ * Increase lightness of an OKLCH color
+ */
+@function lighten-oklch($color, $amount) {
+  // This is a simplified version - in real implementation,
+  // you'd parse the OKLCH values and manipulate them
+  // For now, return the color with a CSS calc() adjustment
+  @return oklch(calc(#{$color} + #{$amount}));
+}
+
+/**
+ * Darken OKLCH
+ * Decrease lightness of an OKLCH color
+ */
+@function darken-oklch($color, $amount) {
+  @return oklch(calc(#{$color} - #{$amount}));
+}
+
+/**
+ * Spacing Scale
+ * Get spacing value from scale
+ */
+@function space($key) {
+  $spacing-map: (
+    0: 0,
+    px: 0.0625rem,
+    0.5: 0.125rem,
+    1: 0.25rem,
+    1.5: 0.375rem,
+    2: 0.5rem,
+    2.5: 0.625rem,
+    3: 0.75rem,
+    3.5: 0.875rem,
+    4: 1rem,
+    5: 1.25rem,
+    6: 1.5rem,
+    7: 1.75rem,
+    8: 2rem,
+    9: 2.25rem,
+    10: 2.5rem,
+    11: 2.75rem,
+    12: 3rem,
+    14: 3.5rem,
+    16: 4rem,
+    18: 4.5rem,
+    20: 5rem,
+    24: 6rem,
+    28: 7rem,
+    32: 8rem,
+    36: 9rem,
+    40: 10rem,
+    44: 11rem,
+    48: 12rem,
+    56: 14rem,
+    64: 16rem,
+    80: 20rem,
+    96: 24rem,
+  );
+
+  @if map-has-key($spacing-map, $key) {
+    @return map-get($spacing-map, $key);
+  }
+
+  @warn "Unknown spacing key `#{$key}`.";
+  @return null;
+}
+
+/**
+ * Font Size Scale
+ * Get font size from scale
+ */
+@function font-size($key) {
+  $font-size-map: (
+    xs: 0.75rem,
+    sm: 0.875rem,
+    base: 1rem,
+    lg: 1.125rem,
+    xl: 1.25rem,
+    2xl: 1.5rem,
+    3xl: 1.875rem,
+    4xl: 2.25rem,
+    5xl: 3rem,
+    6xl: 3.75rem,
+    7xl: 4.5rem,
+    8xl: 6rem,
+    9xl: 8rem,
+  );
+
+  @if map-has-key($font-size-map, $key) {
+    @return map-get($font-size-map, $key);
+  }
+
+  @warn "Unknown font-size key `#{$key}`.";
+  @return null;
+}
+
+/**
+ * Line Height Scale
+ * Get line height from scale
+ */
+@function line-height($key) {
+  $line-height-map: (
+    xs: 1.33,
+    sm: 1.43,
+    base: 1.5,
+    lg: 1.56,
+    xl: 1.6,
+    2xl: 1.33,
+    3xl: 1.27,
+    4xl: 1.22,
+    5xl: 1.17,
+    6xl: 1.13,
+    7xl: 1.11,
+    8xl: 1.08,
+    9xl: 1.06,
+  );
+
+  @if map-has-key($line-height-map, $key) {
+    @return map-get($line-height-map, $key);
+  }
+
+  @warn "Unknown line-height key `#{$key}`.";
+  @return null;
+}
+
+/**
+ * Shadow Scale  
+ * Get shadow from elevation scale
+ */
+@function shadow($key) {
+  $shadow-map: (
+    none: none,
+    xs: (
+      0 1px 2px 0 rgb(0 0 0 / 0.05),
+    ),
+    sm: (
+      0 1px 3px 0 rgb(0 0 0 / 0.1),
+      0 1px 2px -1px rgb(0 0 0 / 0.1),
+    ),
+    md: (
+      0 4px 6px -1px rgb(0 0 0 / 0.1),
+      0 2px 4px -2px rgb(0 0 0 / 0.1),
+    ),
+    lg: (
+      0 10px 15px -3px rgb(0 0 0 / 0.1),
+      0 4px 6px -4px rgb(0 0 0 / 0.1),
+    ),
+    xl: (
+      0 20px 25px -5px rgb(0 0 0 / 0.1),
+      0 8px 10px -6px rgb(0 0 0 / 0.1),
+    ),
+    2xl: (
+      0 25px 50px -12px rgb(0 0 0 / 0.25),
+    ),
+    inner: (
+      inset 0 2px 4px 0 rgb(0 0 0 / 0.05),
+    ),
+  );
+
+  @if map-has-key($shadow-map, $key) {
+    @return map-get($shadow-map, $key);
+  }
+
+  @warn "Unknown shadow key `#{$key}`.";
+  @return null;
+}
+
+/**
+ * Z-Index Scale
+ * Get z-index from layering scale
+ */
+@function z-index($key) {
+  $z-index-map: (
+    behind: -1,
+    base: 0,
+    docked: 10,
+    dropdown: 1000,
+    sticky: 1100,
+    floating: 1200,
+    fixed: 1300,
+    overlay: 1400,
+    modal: 1500,
+    notification: 1600,
+    tooltip: 1700,
+    maximum: 9999,
+  );
+
+  @if map-has-key($z-index-map, $key) {
+    @return map-get($z-index-map, $key);
+  }
+
+  @warn "Unknown z-index key `#{$key}`.";
+  @return null;
+}
+
+/**
+ * Border Radius Scale
+ * Get border radius from scale
+ */
+@function radius($key) {
+  $radius-map: (
+    none: 0,
+    sm: 0.125rem,
+    md: 0.375rem,
+    lg: 0.5rem,
+    xl: 0.75rem,
+    2xl: 1rem,
+    full: 9999px,
+  );
+
+  @if map-has-key($radius-map, $key) {
+    @return map-get($radius-map, $key);
+  }
+
+  @warn "Unknown radius key `#{$key}`.";
+  @return null;
+}
+
+/**
+ * Duration Scale
+ * Get animation duration from scale
+ */
+@function duration($key) {
+  $duration-map: (
+    instant: 75ms,
+    fast: 150ms,
+    normal: 250ms,
+    moderate: 350ms,
+    slow: 500ms,
+    slower: 750ms,
+    slowest: 1000ms,
+  );
+
+  @if map-has-key($duration-map, $key) {
+    @return map-get($duration-map, $key);
+  }
+
+  @warn "Unknown duration key `#{$key}`.";
+  @return null;
+}
+
+/**
+ * Easing Function
+ * Get easing curve from scale
+ */
+@function easing($key) {
+  $easing-map: (
+    linear: linear,
+    default: cubic-bezier(0.4, 0, 0.2, 1),
+    in: cubic-bezier(0.4, 0, 1, 1),
+    out: cubic-bezier(0, 0, 0.2, 1),
+    in-out: cubic-bezier(0.4, 0, 0.2, 1),
+    bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55),
+    sharp: cubic-bezier(0.4, 0, 0.6, 1),
+    smooth: cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    elastic: cubic-bezier(0.175, 0.885, 0.32, 1.275),
+  );
+
+  @if map-has-key($easing-map, $key) {
+    @return map-get($easing-map, $key);
+  }
+
+  @warn "Unknown easing key `#{$key}`.";
+  @return null;
+}
+
+/**
+ * Fluid Typography
+ * Create fluid typography that scales between viewports
+ */
+@function fluid-size($min-size, $max-size, $min-viewport: 320px, $max-viewport: 1200px) {
+  $min-size-unitless: strip-unit($min-size);
+  $max-size-unitless: strip-unit($max-size);
+  $min-viewport-unitless: strip-unit($min-viewport);
+  $max-viewport-unitless: strip-unit($max-viewport);
+
+  $slope: math.div(
+    $max-size-unitless - $min-size-unitless,
+    $max-viewport-unitless - $min-viewport-unitless
+  );
+  $y-axis-intersection: -$min-viewport-unitless * $slope + $min-size-unitless;
+
+  @return clamp(#{$min-size}, #{$y-axis-intersection}rem + #{$slope * 100}vw, #{$max-size});
+}
+
+/**
+ * Color Contrast
+ * Calculate color contrast ratio (simplified)
+ * Note: This is a basic implementation for educational purposes
+ */
+@function color-contrast($color1, $color2) {
+  // This would need a full OKLCH color parsing implementation
+  // For now, return a placeholder
+  @return 4.5; // Assuming WCAG AA compliance
+}
+
+/**
+ * Component Size Scale
+ * Standard component sizing scale
+ */
+@function component-size($key) {
+  $size-map: (
+    xs: var(--ui-space-6),
+    // 24px
+    sm: var(--ui-space-8),
+    // 32px
+    md: var(--ui-space-10),
+    // 40px
+    lg: var(--ui-space-12),
+    // 48px
+    xl: var(--ui-space-14), // 56px
+  );
+
+  @if map-has-key($size-map, $key) {
+    @return map-get($size-map, $key);
+  }
+
+  @warn "Unknown component size key `#{$key}`.";
+  @return null;
+}

@@ -1,0 +1,279 @@
+/**
+ * Design Token Variables - CSS Custom Properties
+ * All design tokens as CSS variables for runtime theming
+ * OKLCH color space for better color manipulation and accessibility
+ */
+
+:root {
+  /* ================================
+   * COLOR PALETTE - OKLCH FORMAT
+   * ================================ */
+
+  /* Gray Scale - Neutral colors with slight blue undertone */
+  --ui-color-gray-50: 0.98 0.005 247.86;
+  --ui-color-gray-100: 0.96 0.006 247.86;
+  --ui-color-gray-200: 0.92 0.013 247.86;
+  --ui-color-gray-300: 0.87 0.015 247.86;
+  --ui-color-gray-400: 0.7 0.015 247.86;
+  --ui-color-gray-500: 0.55 0.016 247.86;
+  --ui-color-gray-600: 0.44 0.017 247.86;
+  --ui-color-gray-700: 0.36 0.013 247.86;
+  --ui-color-gray-800: 0.27 0.015 247.86;
+  --ui-color-gray-900: 0.19 0.015 247.86;
+  --ui-color-gray-950: 0.13 0.013 247.86;
+
+  /* Brand Colors - Primary brand palette */
+  --ui-color-brand-primary: 0.65 0.19 255.5;
+  --ui-color-brand-secondary: 0.7 0.16 310.1;
+  --ui-color-brand-accent: 0.7 0.17 200.1;
+
+  /* Status Colors - Semantic UI states */
+  --ui-color-status-success: 0.68 0.17 142.5;
+  --ui-color-status-warning: 0.8 0.15 85.9;
+  --ui-color-status-error: 0.63 0.2 25.3;
+  --ui-color-status-info: 0.7 0.15 220.4;
+
+  /* Semantic Color Mappings - Light Theme */
+  --ui-color-background: 1 0 0;
+  --ui-color-foreground: 0.19 0.015 247.86;
+
+  --ui-color-primary: 0.65 0.19 255.5;
+  --ui-color-primary-foreground: 0.98 0.005 247.86;
+
+  --ui-color-secondary: 0.96 0.006 247.86;
+  --ui-color-secondary-foreground: 0.19 0.015 247.86;
+
+  --ui-color-muted: 0.96 0.006 247.86;
+  --ui-color-muted-foreground: 0.55 0.016 247.86;
+
+  --ui-color-accent: 0.96 0.006 247.86;
+  --ui-color-accent-foreground: 0.19 0.015 247.86;
+
+  --ui-color-destructive: 0.63 0.2 25.3;
+  --ui-color-destructive-foreground: 0.98 0.005 247.86;
+
+  --ui-color-border: 0.92 0.013 247.86;
+  --ui-color-input: 0.92 0.013 247.86;
+  --ui-color-ring: 0.65 0.19 255.5;
+
+  --ui-color-card: 1 0 0;
+  --ui-color-card-foreground: 0.19 0.015 247.86;
+
+  --ui-color-popover: 1 0 0;
+  --ui-color-popover-foreground: 0.19 0.015 247.86;
+
+  /* ================================
+   * TYPOGRAPHY SCALE
+   * ================================ */
+
+  /* Font Families */
+  --ui-font-family-sans:
+    system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+    'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
+    'Noto Color Emoji';
+  --ui-font-family-mono:
+    'SF Mono', Monaco, Inconsolata, 'Liberation Mono', 'Fira Code', 'Fira Mono', 'DejaVu Sans Mono',
+    'Courier New', monospace;
+  --ui-font-family-serif: 'New York', Georgia, 'Times New Roman', Times, serif;
+
+  /* Font Weights */
+  --ui-font-weight-thin: 100;
+  --ui-font-weight-extralight: 200;
+  --ui-font-weight-light: 300;
+  --ui-font-weight-normal: 400;
+  --ui-font-weight-medium: 500;
+  --ui-font-weight-semibold: 600;
+  --ui-font-weight-bold: 700;
+  --ui-font-weight-extrabold: 800;
+  --ui-font-weight-black: 900;
+
+  /* Font Sizes & Line Heights */
+  --ui-font-size-xs: 0.75rem;
+  --ui-line-height-xs: 1.33;
+  --ui-letter-spacing-xs: 0.05em;
+
+  --ui-font-size-sm: 0.875rem;
+  --ui-line-height-sm: 1.43;
+  --ui-letter-spacing-sm: 0.025em;
+
+  --ui-font-size-base: 1rem;
+  --ui-line-height-base: 1.5;
+  --ui-letter-spacing-base: 0em;
+
+  --ui-font-size-lg: 1.125rem;
+  --ui-line-height-lg: 1.56;
+  --ui-letter-spacing-lg: -0.025em;
+
+  --ui-font-size-xl: 1.25rem;
+  --ui-line-height-xl: 1.6;
+  --ui-letter-spacing-xl: -0.025em;
+
+  --ui-font-size-2xl: 1.5rem;
+  --ui-line-height-2xl: 1.33;
+  --ui-letter-spacing-2xl: -0.05em;
+
+  --ui-font-size-3xl: 1.875rem;
+  --ui-line-height-3xl: 1.27;
+  --ui-letter-spacing-3xl: -0.05em;
+
+  --ui-font-size-4xl: 2.25rem;
+  --ui-line-height-4xl: 1.22;
+  --ui-letter-spacing-4xl: -0.05em;
+
+  --ui-font-size-5xl: 3rem;
+  --ui-line-height-5xl: 1.17;
+  --ui-letter-spacing-5xl: -0.075em;
+
+  --ui-font-size-6xl: 3.75rem;
+  --ui-line-height-6xl: 1.13;
+  --ui-letter-spacing-6xl: -0.075em;
+
+  --ui-font-size-7xl: 4.5rem;
+  --ui-line-height-7xl: 1.11;
+  --ui-letter-spacing-7xl: -0.1em;
+
+  --ui-font-size-8xl: 6rem;
+  --ui-line-height-8xl: 1.08;
+  --ui-letter-spacing-8xl: -0.1em;
+
+  --ui-font-size-9xl: 8rem;
+  --ui-line-height-9xl: 1.06;
+  --ui-letter-spacing-9xl: -0.1em;
+
+  /* ================================
+   * SPACING SCALE - 4PX GRID
+   * ================================ */
+
+  --ui-space-0: 0rem;
+  --ui-space-px: 0.0625rem;
+  --ui-space-0_5: 0.125rem;
+  --ui-space-1: 0.25rem;
+  --ui-space-1_5: 0.375rem;
+  --ui-space-2: 0.5rem;
+  --ui-space-2_5: 0.625rem;
+  --ui-space-3: 0.75rem;
+  --ui-space-3_5: 0.875rem;
+  --ui-space-4: 1rem;
+  --ui-space-5: 1.25rem;
+  --ui-space-6: 1.5rem;
+  --ui-space-7: 1.75rem;
+  --ui-space-8: 2rem;
+  --ui-space-9: 2.25rem;
+  --ui-space-10: 2.5rem;
+  --ui-space-11: 2.75rem;
+  --ui-space-12: 3rem;
+  --ui-space-14: 3.5rem;
+  --ui-space-16: 4rem;
+  --ui-space-18: 4.5rem;
+  --ui-space-20: 5rem;
+  --ui-space-24: 6rem;
+  --ui-space-28: 7rem;
+  --ui-space-32: 8rem;
+  --ui-space-36: 9rem;
+  --ui-space-40: 10rem;
+  --ui-space-44: 11rem;
+  --ui-space-48: 12rem;
+  --ui-space-56: 14rem;
+  --ui-space-64: 16rem;
+  --ui-space-80: 20rem;
+  --ui-space-96: 24rem;
+
+  /* ================================
+   * BORDER RADIUS
+   * ================================ */
+
+  --ui-radius-none: 0;
+  --ui-radius-sm: 0.125rem;
+  --ui-radius-md: 0.375rem;
+  --ui-radius-lg: 0.5rem;
+  --ui-radius-xl: 0.75rem;
+  --ui-radius-2xl: 1rem;
+  --ui-radius-full: 9999px;
+
+  /* ================================
+   * MOTION & ANIMATION
+   * ================================ */
+
+  /* Duration */
+  --ui-duration-instant: 75ms;
+  --ui-duration-fast: 150ms;
+  --ui-duration-normal: 250ms;
+  --ui-duration-moderate: 350ms;
+  --ui-duration-slow: 500ms;
+  --ui-duration-slower: 750ms;
+  --ui-duration-slowest: 1000ms;
+
+  /* Easing */
+  --ui-easing-linear: linear;
+  --ui-easing-default: cubic-bezier(0.4, 0, 0.2, 1);
+  --ui-easing-in: cubic-bezier(0.4, 0, 1, 1);
+  --ui-easing-out: cubic-bezier(0, 0, 0.2, 1);
+  --ui-easing-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --ui-easing-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  --ui-easing-sharp: cubic-bezier(0.4, 0, 0.6, 1);
+  --ui-easing-smooth: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --ui-easing-elastic: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+  /* ================================
+   * ELEVATION & SHADOWS
+   * ================================ */
+
+  --ui-shadow-none: none;
+  --ui-shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --ui-shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --ui-shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --ui-shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --ui-shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  --ui-shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+  --ui-shadow-inner: inset 0 2px 4px 0 rgb(0 0 0 / 0.05);
+
+  /* Z-Index Scale */
+  --ui-z-index-behind: -1;
+  --ui-z-index-base: 0;
+  --ui-z-index-docked: 10;
+  --ui-z-index-dropdown: 1000;
+  --ui-z-index-sticky: 1100;
+  --ui-z-index-floating: 1200;
+  --ui-z-index-fixed: 1300;
+  --ui-z-index-overlay: 1400;
+  --ui-z-index-modal: 1500;
+  --ui-z-index-notification: 1600;
+  --ui-z-index-tooltip: 1700;
+  --ui-z-index-maximum: 9999;
+}
+
+/* ================================
+ * DARK THEME OVERRIDES
+ * ================================ */
+
+.dark {
+  /* Semantic Color Mappings - Dark Theme */
+  --ui-color-background: 0.13 0.013 247.86;
+  --ui-color-foreground: 0.98 0.005 247.86;
+
+  --ui-color-secondary: 0.27 0.015 247.86;
+  --ui-color-secondary-foreground: 0.98 0.005 247.86;
+
+  --ui-color-muted: 0.27 0.015 247.86;
+  --ui-color-muted-foreground: 0.7 0.015 247.86;
+
+  --ui-color-accent: 0.27 0.015 247.86;
+  --ui-color-accent-foreground: 0.98 0.005 247.86;
+
+  --ui-color-border: 0.27 0.015 247.86;
+  --ui-color-input: 0.27 0.015 247.86;
+
+  --ui-color-card: 0.13 0.013 247.86;
+  --ui-color-card-foreground: 0.98 0.005 247.86;
+
+  --ui-color-popover: 0.13 0.013 247.86;
+  --ui-color-popover-foreground: 0.98 0.005 247.86;
+
+  /* Enhanced shadows for dark theme */
+  --ui-shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.3);
+  --ui-shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.4), 0 1px 2px -1px rgb(0 0 0 / 0.4);
+  --ui-shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.4);
+  --ui-shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.4), 0 4px 6px -4px rgb(0 0 0 / 0.4);
+  --ui-shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.4), 0 8px 10px -6px rgb(0 0 0 / 0.4);
+  --ui-shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.8);
+}

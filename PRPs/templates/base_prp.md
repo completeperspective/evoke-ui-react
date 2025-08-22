@@ -132,7 +132,7 @@ async function newFeature(param: string): Promise<Result> {
         await rateLimiter.acquire();
         return await externalApi.call(validated);
       },
-      { attempts: 3, backoff: "exponential" }
+      { attempts: 3, backoff: 'exponential' },
     );
 
     // PATTERN: Standardized response format
@@ -147,19 +147,19 @@ async function newFeature(param: string): Promise<Result> {
 
 ```yaml
 DATABASE:
-  - migration: "npm run migration:create add-feature-column"
-  - schema: "Update prisma/schema.prisma with new model"
-  - generate: "npx prisma generate after schema changes"
+  - migration: 'npm run migration:create add-feature-column'
+  - schema: 'Update prisma/schema.prisma with new model'
+  - generate: 'npx prisma generate after schema changes'
 
 CONFIG:
   - add to: src/config/index.ts
   - pattern: "FEATURE_TIMEOUT: process.env.FEATURE_TIMEOUT || '30'"
-  - env file: ".env.example needs FEATURE_TIMEOUT=30"
+  - env file: '.env.example needs FEATURE_TIMEOUT=30'
 
 ROUTES:
   - add to: src/routes/index.ts
   - pattern: "router.use('/feature', featureRouter)"
-  - middleware: "Apply auth middleware if needed"
+  - middleware: 'Apply auth middleware if needed'
 ```
 
 ## Validation Loop
@@ -183,27 +183,27 @@ npx tsc --noEmit                         # Type checking only
 
 ```typescript
 // CREATE new-feature.test.ts with these test cases:
-import { describe, it, expect, vi } from "vitest";
+import { describe, it, expect, vi } from 'vitest';
 // OR: import { jest } from '@jest/globals'; for Jest
 
-describe("newFeature", () => {
-  it("should handle happy path", async () => {
+describe('newFeature', () => {
+  it('should handle happy path', async () => {
     // Basic functionality works
-    const result = await newFeature("valid_input");
-    expect(result.status).toBe("success");
+    const result = await newFeature('valid_input');
+    expect(result.status).toBe('success');
   });
 
-  it("should throw ValidationError for invalid input", async () => {
+  it('should throw ValidationError for invalid input', async () => {
     // Invalid input raises ValidationError
-    await expect(newFeature("")).rejects.toThrow(ValidationError);
+    await expect(newFeature('')).rejects.toThrow(ValidationError);
   });
 
-  it("should handle external API timeout gracefully", async () => {
+  it('should handle external API timeout gracefully', async () => {
     // Handles timeouts gracefully
-    vi.spyOn(externalApi, "call").mockRejectedValue(new Error("Timeout"));
-    const result = await newFeature("valid");
-    expect(result.status).toBe("error");
-    expect(result.message).toContain("timeout");
+    vi.spyOn(externalApi, 'call').mockRejectedValue(new Error('Timeout'));
+    const result = await newFeature('valid');
+    expect(result.status).toBe('error');
+    expect(result.message).toContain('timeout');
   });
 });
 ```

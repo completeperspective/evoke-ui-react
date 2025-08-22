@@ -1,0 +1,155 @@
+/**
+ * Utilities Index
+ * Custom utility classes that complement Tailwind CSS
+ */
+
+@use '../abstracts' as *;
+
+/**
+ * Screen Reader Only Utility
+ * Hide content visually but keep accessible to screen readers
+ */
+.sr-only {
+  @include sr-only;
+}
+
+/**
+ * Focus Visible Utility
+ * Show content only when focused (for skip links, etc.)
+ */
+.focus-visible-only {
+  @include sr-only;
+
+  &:focus {
+    position: static;
+    width: auto;
+    height: auto;
+    padding: var(--ui-space-2) var(--ui-space-3);
+    margin: var(--ui-space-1);
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+    background: oklch(var(--ui-color-background));
+    color: oklch(var(--ui-color-foreground));
+    border: 1px solid oklch(var(--ui-color-border));
+    border-radius: var(--ui-radius-md);
+  }
+}
+
+/**
+ * Text Utilities
+ * Extend Tailwind's text utilities
+ */
+.text-balance {
+  text-wrap: balance;
+}
+
+.text-pretty {
+  text-wrap: pretty;
+}
+
+/**
+ * Glass Effect Utility
+ * Modern glassmorphism styling
+ */
+.glass {
+  @include glass();
+}
+
+.glass-strong {
+  @include glass(0.2, 20px);
+}
+
+/**
+ * Fluid Typography Utilities
+ * Responsive typography that scales with viewport
+ */
+.text-fluid-sm {
+  font-size: fluid-size(0.875rem, 1rem);
+}
+
+.text-fluid-base {
+  font-size: fluid-size(1rem, 1.125rem);
+}
+
+.text-fluid-lg {
+  font-size: fluid-size(1.125rem, 1.25rem);
+}
+
+.text-fluid-xl {
+  font-size: fluid-size(1.25rem, 1.5rem);
+}
+
+.text-fluid-2xl {
+  font-size: fluid-size(1.5rem, 2rem);
+}
+
+.text-fluid-3xl {
+  font-size: fluid-size(1.875rem, 2.5rem);
+}
+
+/**
+ * Animation Utilities
+ * Custom animations not covered by Tailwind
+ */
+.animate-fade-in {
+  animation: fade-in var(--ui-duration-normal) var(--ui-easing-out);
+}
+
+.animate-slide-up {
+  animation: slide-up var(--ui-duration-normal) var(--ui-easing-out);
+}
+
+.animate-scale-in {
+  animation: scale-in var(--ui-duration-fast) var(--ui-easing-bounce);
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(1rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/**
+ * Reduced Motion Utilities
+ * Respect user motion preferences
+ */
+@include reduced-motion {
+  .animate-fade-in,
+  .animate-slide-up,
+  .animate-scale-in {
+    animation: none;
+  }
+
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

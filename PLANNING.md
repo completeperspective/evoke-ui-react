@@ -139,7 +139,7 @@ Building a production-ready, themable React component library on top of shadcn/u
 ### Tailwind v4 CSS-First Configuration
 
 ```scss
-@import "tailwindcss";
+@import 'tailwindcss';
 
 @theme {
   --color-primary: oklch(var(--ui-color-primary));
@@ -326,13 +326,11 @@ import customTheme from "./theme.config";
 ## Success Metrics
 
 1. **Developer Experience**
-
    - TypeScript coverage: 100%
    - Storybook stories: 100% component coverage
    - Documentation completeness
 
 2. **Performance**
-
    - Lighthouse score > 95
    - Bundle size under targets
    - Zero runtime errors

@@ -1,8 +1,8 @@
 # Prime Context for Claude Code
 
-If the project has not been onboarded with serena, please run the serena onboarding command.
-
 Use the 'tree' to get an understanding of the project structure.
+
+If applicable, and the project has not been onboarded with serena, please run the serena onboarding command.
 
 Start with reading the CLAUDE.md file if it exists to get an understanding of the project.
 

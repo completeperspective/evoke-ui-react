@@ -1,0 +1,119 @@
+/**
+ * Main style entry point for @evoke-ui/react
+ * Imports and organizes all style modules following 7-1 architecture
+ */
+
+/* ================================
+ * DESIGN TOKENS & ABSTRACTS
+ * ================================ */
+
+// Import design tokens as CSS variables
+@use 'tokens';
+
+// Note: Tailwind CSS is processed by Vite plugin, not imported here
+
+/* ================================
+ * LAYER IMPORTS
+ * ================================ */
+
+// Component-specific styles (will be populated as components are added)
+@use 'components';
+
+// Custom utility classes
+@use 'utilities';
+
+/* ================================
+ * BASE STYLES
+ * ================================ */
+
+:root {
+  /* Optimize font rendering */
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+
+  /* Color scheme support for system themes */
+  color-scheme: light dark;
+}
+
+/* Universal reset with modern CSS */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Base typography and color */
+html {
+  /* Use rem for scalable typography */
+  font-size: 100%; /* 16px base */
+  /* Improve text rendering on high-DPI displays */
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--ui-font-family-sans);
+  font-size: var(--ui-font-size-base);
+  line-height: var(--ui-line-height-base);
+  color: oklch(var(--ui-color-foreground));
+  background-color: oklch(var(--ui-color-background));
+
+  /* Improve text rendering */
+  font-feature-settings:
+    'kern' 1,
+    'liga' 1,
+    'calt' 1;
+  text-rendering: optimizeLegibility;
+
+  /* Smooth scrolling */
+  scroll-behavior: smooth;
+
+  /* Prevent horizontal scroll */
+  overflow-x: hidden;
+}
+
+/* Respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  :root {
+    /* Increase contrast for better accessibility */
+    --ui-color-border: 0 0 0; /* Pure black borders */
+  }
+}
+
+/* Focus management for keyboard navigation */
+:focus-visible {
+  outline: 2px solid oklch(var(--ui-color-ring));
+  outline-offset: 2px;
+}
+
+/* Hide focus outline for mouse users */
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Better default focus styles for interactive elements */
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+a:focus-visible {
+  outline: 2px solid oklch(var(--ui-color-ring));
+  outline-offset: 2px;
+}

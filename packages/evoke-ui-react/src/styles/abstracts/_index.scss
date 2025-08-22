@@ -1,0 +1,16 @@
+/**
+ * Abstracts Index
+ * Forward all abstract modules for clean imports
+ * 
+ * Usage in components:
+ * @use '../styles/abstracts' as *;
+ */
+
+// Forward variables (CSS custom properties)
+@forward 'variables';
+
+// Forward mixins (reusable style patterns)
+@forward 'mixins';
+
+// Forward functions (utility functions and calculations)
+@forward 'functions';

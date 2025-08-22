@@ -33,7 +33,7 @@ If you notice this pattern in the prompt, please use these flags to only define 
 
 ### ✅ Task Completion
 
-- **Mark completed tasks in `TASK.md`** immediately after finishing them.
+- **ALWAYS Mark completed tasks in `TASK.md`** immediately after finishing them.
 - Add new sub-tasks or TODOs discovered during development to `TASK.md` under a “Discovered During Work” section.
 
 ### 📎 Style & Conventions

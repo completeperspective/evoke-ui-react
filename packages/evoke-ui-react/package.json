@@ -1,0 +1,92 @@
+{
+  "name": "@evoke-ui/react",
+  "version": "0.1.0",
+  "description": "A themable React component library built on shadcn/ui with OKLCH color space and runtime theming",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./styles": {
+      "sass": "./src/styles/index.scss",
+      "css": "./dist/styles.css"
+    },
+    "./styles.css": "./dist/styles.css",
+    "./tailwind-v3": "./dist/tailwind-preset-v3.js"
+  },
+  "files": [
+    "dist",
+    "src/styles"
+  ],
+  "sideEffects": [
+    "*.css",
+    "*.scss"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "npm run build:lib && npm run build:styles",
+    "build:lib": "tsup",
+    "build:styles": "npm run build:sass && npm run build:tailwind && npm run combine:styles",
+    "build:sass": "sass src/styles/index.scss dist/styles-sass.css --style compressed",
+    "build:tailwind": "echo '/* Tailwind CSS output handled by Vite plugin in production */' > dist/styles-tailwind.css",
+    "combine:styles": "cat dist/styles-sass.css dist/styles-tailwind.css > dist/styles.css && rm dist/styles-sass.css dist/styles-tailwind.css",
+    "build:watch": "concurrently \"npm run build:lib -- --watch\" \"npm run build:sass -- --watch\"",
+    "type-check": "tsc --noEmit",
+    "clean": "rm -rf dist",
+    "preview": "vite preview",
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "test:coverage": "vitest --coverage"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
+  },
+  "dependencies": {
+    "@radix-ui/colors": "^3.0.0",
+    "@radix-ui/themes": "^2.0.3",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.1.0",
+    "tailwind-merge": "^2.2.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.0.0-alpha.14",
+    "@testing-library/jest-dom": "^6.2.0",
+    "@testing-library/react": "^14.1.2",
+    "@types/node": "^24.3.0",
+    "@types/react": "^18.2.48",
+    "@types/react-dom": "^18.2.18",
+    "@vitejs/plugin-react": "^4.2.1",
+    "@vitest/ui": "^1.2.2",
+    "concurrently": "^8.2.2",
+    "jsdom": "^26.1.0",
+    "sass": "^1.70.0",
+    "tailwindcss": "^4.0.0-alpha.14",
+    "tsup": "^8.0.1",
+    "vite": "^5.0.12",
+    "vitest": "^1.2.2"
+  },
+  "keywords": [
+    "react",
+    "component-library",
+    "ui-components",
+    "design-system",
+    "tailwindcss",
+    "shadcn",
+    "oklch",
+    "theming"
+  ],
+  "author": "",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/evoke-ui.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/evoke-ui/issues"
+  },
+  "homepage": "https://github.com/yourusername/evoke-ui#readme"
+}
