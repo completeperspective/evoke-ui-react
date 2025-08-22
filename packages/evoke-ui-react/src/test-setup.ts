@@ -13,21 +13,24 @@ afterEach(() => {
 });
 
 // Mock window.matchMedia
+const mockMatchMedia = vi.fn().mockImplementation((query) => {
+  const mql = {
+    matches: query === '(prefers-color-scheme: dark)' ? false : false,
+    media: query,
+    onchange: null,
+    addListener: vi.fn(), // deprecated
+    removeListener: vi.fn(), // deprecated
+    addEventListener: vi.fn(),
+    removeEventListener: vi.fn(),
+    dispatchEvent: vi.fn(),
+  };
+  
+  return mql;
+});
+
 Object.defineProperty(window, 'matchMedia', {
   writable: true,
-  value: vi.fn().mockImplementation((query) => {
-    const mql = {
-      matches: query === '(prefers-color-scheme: dark)' ? false : false,
-      media: query,
-      onchange: null,
-      addListener: vi.fn(), // deprecated
-      removeListener: vi.fn(), // deprecated
-      addEventListener: vi.fn(),
-      removeEventListener: vi.fn(),
-      dispatchEvent: vi.fn(),
-    };
-    return mql;
-  }),
+  value: mockMatchMedia,
 });
 
 // Mock localStorage
@@ -62,4 +65,5 @@ Object.defineProperty(window, 'CSS', {
 beforeEach(() => {
   vi.clearAllMocks();
   localStorageMock.clear();
+  mockMatchMedia.mockClear();
 });

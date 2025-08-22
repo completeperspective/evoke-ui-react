@@ -1,0 +1,112 @@
+/**
+ * Label Component Styles
+ * Form labels with indicators and states
+ */
+@use '../../styles/abstracts' as *;
+
+.label {
+  @include component-base;
+  
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  user-select: none;
+  
+  // Better text rendering
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  
+  // Smooth transitions
+  transition: color var(--ui-duration-fast) var(--ui-easing-out);
+  
+  // Hover state
+  &:hover {
+    color: oklch(var(--ui-color-primary));
+  }
+  
+  // Content wrapper
+  .content {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.25rem;
+  }
+  
+  // Required/Optional indicators
+  .indicator {
+    font-size: inherit;
+    font-weight: inherit;
+    
+    &.required {
+      color: oklch(var(--ui-color-destructive));
+      margin-left: 0.125rem;
+    }
+    
+    &.optional {
+      color: oklch(var(--ui-color-muted-foreground));
+      font-size: 0.875em;
+      font-weight: var(--ui-font-weight-normal);
+      margin-left: 0.25rem;
+    }
+  }
+  
+  // Suffix content
+  .suffix {
+    margin-left: 0.5rem;
+    display: inline-flex;
+    align-items: center;
+  }
+  
+  // Disabled state styling when associated with disabled inputs
+  &:has(+ input:disabled),
+  &:has(+ textarea:disabled),
+  &:has(+ select:disabled) {
+    opacity: 0.7;
+    cursor: not-allowed;
+    
+    &:hover {
+      color: inherit;
+    }
+  }
+}
+
+// Dark theme adjustments
+@include dark {
+  .label {
+    .indicator.optional {
+      color: oklch(var(--ui-color-muted-foreground));
+    }
+  }
+}
+
+// High contrast mode support
+@include high-contrast {
+  .label {
+    .indicator.required {
+      font-weight: var(--ui-font-weight-bold);
+    }
+  }
+}
+
+// Reduced motion preferences
+@include reduced-motion {
+  .label {
+    transition: none;
+  }
+}
+
+// Print styles
+@media print {
+  .label {
+    color: black;
+    
+    .indicator.required {
+      color: black;
+    }
+    
+    .indicator.optional {
+      color: #666;
+    }
+  }
+}

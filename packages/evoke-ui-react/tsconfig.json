@@ -9,6 +9,16 @@
     "baseUrl": ".",
     "paths": {}
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx"],
-  "exclude": ["node_modules", "dist", "**/*.test.ts", "**/*.test.tsx", "**/*.stories.tsx"]
+  "include": [
+    "src/**/*.ts", 
+    "src/**/*.tsx"
+  ],
+  "exclude": [
+    "node_modules", 
+    "dist", 
+    "**/*.test.ts", 
+    "**/*.test.tsx", 
+    "**/*.stories.tsx", 
+    "src/**/__tests__/**/*"
+  ]
 }

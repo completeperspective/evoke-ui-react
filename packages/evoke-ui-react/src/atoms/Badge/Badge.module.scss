@@ -1,0 +1,275 @@
+/**
+ * Badge Component Styles
+ * Small status indicators and tags
+ */
+@use '../../styles/abstracts' as *;
+
+.badge {
+  @include component-base;
+  
+  // Ensure consistent alignment
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  
+  // Better text rendering
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  
+  // Prevent text selection
+  user-select: none;
+  -webkit-user-select: none;
+  
+  // Improved spacing and typography
+  gap: 0.25rem;
+  white-space: nowrap;
+  
+  // Better transitions
+  transition: all var(--ui-duration-fast) var(--ui-easing-out);
+  
+  // Interactive states
+  &.interactive {
+    cursor: pointer;
+    
+    &:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 2px 4px oklch(var(--ui-color-foreground) / 0.1);
+      
+      @include reduced-motion {
+        transform: none;
+        box-shadow: none;
+      }
+    }
+    
+    &:active {
+      transform: translateY(0);
+      box-shadow: 0 1px 2px oklch(var(--ui-color-foreground) / 0.1);
+      
+      @include reduced-motion {
+        transform: none;
+        box-shadow: none;
+      }
+    }
+    
+    // Focus styles for interactive badges
+    &:focus {
+      outline: 2px solid oklch(var(--ui-color-ring));
+      outline-offset: 2px;
+    }
+  }
+  
+  // Icon spacing and sizing
+  .icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    
+    &.startIcon {
+      margin-right: 0.125rem;
+    }
+    
+    &.endIcon {
+      margin-left: 0.125rem;
+    }
+    
+    // Ensure icons are properly sized
+    svg {
+      width: 0.75rem;
+      height: 0.75rem;
+    }
+  }
+  
+  // Remove button for removable badges
+  .removeButton {
+    @include button-reset;
+    
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 0.25rem;
+    padding: 0.125rem;
+    border-radius: 50%;
+    color: inherit;
+    opacity: 0.7;
+    transition: all var(--ui-duration-fast) var(--ui-easing-out);
+    
+    &:hover {
+      opacity: 1;
+      background-color: oklch(var(--ui-color-foreground) / 0.1);
+    }
+    
+    &:focus {
+      outline: 1px solid oklch(var(--ui-color-ring));
+      outline-offset: 1px;
+      opacity: 1;
+    }
+    
+    // Icon styling
+    svg {
+      width: 0.75rem;
+      height: 0.75rem;
+      stroke-width: 2;
+    }
+  }
+}
+
+// Size-specific adjustments
+.badge {
+  // Small size adjustments
+  &:has(.icon) {
+    &[class*="px-1.5"] { // sm size
+      .icon svg {
+        width: 0.625rem;
+        height: 0.625rem;
+      }
+      
+      .removeButton svg {
+        width: 0.625rem;
+        height: 0.625rem;
+      }
+    }
+    
+    &[class*="px-3"] { // lg size
+      .icon svg {
+        width: 0.875rem;
+        height: 0.875rem;
+      }
+      
+      .removeButton svg {
+        width: 0.875rem;
+        height: 0.875rem;
+      }
+    }
+  }
+}
+
+// Dark theme adjustments
+@include dark {
+  .badge {
+    &.interactive:hover {
+      box-shadow: 0 2px 4px oklch(var(--ui-color-background) / 0.3);
+    }
+    
+    &.interactive:active {
+      box-shadow: 0 1px 2px oklch(var(--ui-color-background) / 0.3);
+    }
+    
+    .removeButton:hover {
+      background-color: oklch(var(--ui-color-background) / 0.1);
+    }
+  }
+}
+
+// High contrast mode support
+@include high-contrast {
+  .badge {
+    border: 2px solid currentColor;
+    
+    &.interactive:focus {
+      outline: 3px solid;
+      outline-offset: 3px;
+    }
+    
+    .removeButton {
+      border: 1px solid currentColor;
+      
+      &:focus {
+        outline: 2px solid;
+        outline-offset: 2px;
+      }
+    }
+  }
+}
+
+// Reduced motion preferences
+@include reduced-motion {
+  .badge {
+    transition: none;
+    
+    .removeButton {
+      transition: none;
+    }
+  }
+}
+
+// Print styles
+@media print {
+  .badge {
+    background: transparent !important;
+    color: black !important;
+    border: 1px solid black !important;
+    box-shadow: none !important;
+    
+    .removeButton {
+      display: none;
+    }
+  }
+}
+
+// Better text contrast for certain variants
+.badge {
+  // Ensure text is readable on colored backgrounds
+  &[class*="bg-yellow-"] {
+    color: oklch(var(--ui-color-foreground));
+  }
+  
+  // Status-specific styling enhancements
+  &[class*="bg-destructive"] {
+    .removeButton:hover {
+      background-color: oklch(var(--ui-color-destructive-foreground) / 0.1);
+    }
+  }
+  
+  &[class*="bg-green-"] {
+    .removeButton:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+  }
+  
+  &[class*="bg-blue-"] {
+    .removeButton:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+  }
+  
+  &[class*="bg-yellow-"] {
+    .removeButton:hover {
+      background-color: rgba(0, 0, 0, 0.1);
+    }
+  }
+}
+
+// Animation for badge entrance (if needed for dynamic badges)
+@keyframes badgeEntrance {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+// Animation for badge removal
+@keyframes badgeExit {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+}
+
+// Optional entrance animation class
+.badge.animate-entrance {
+  animation: badgeEntrance var(--ui-duration-fast) var(--ui-easing-out);
+  
+  @include reduced-motion {
+    animation: none;
+  }
+}

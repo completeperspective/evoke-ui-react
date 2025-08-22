@@ -57,8 +57,8 @@ export * from './providers';
 export * from './hooks';
 export * from './types';
 
-// Future component exports will be added here:
-// export * from './atoms';
+// Component exports - Atomic Design Architecture
+export * from './atoms';
 // export * from './molecules';
 // export * from './organisms';
 // export * from './templates';

@@ -1,0 +1,234 @@
+/**
+ * Heading Component Styles
+ * Responsive heading styles with enhanced typography
+ */
+@use '../../styles/abstracts' as *;
+
+.heading {
+  @include component-base;
+  
+  // Better text rendering for headings
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  
+  // Prevent layout shift from font loading
+  font-display: swap;
+  
+  // Better line height for headings
+  line-height: 1.2;
+  
+  // Improved letter spacing for larger text
+  letter-spacing: -0.025em;
+  
+  // Better word breaking for long headings
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  
+  // Remove default margins that can cause layout issues
+  margin: 0;
+  
+  // Enhanced selection styling
+  &::selection {
+    background-color: oklch(var(--ui-color-primary) / 0.2);
+    color: oklch(var(--ui-color-primary-foreground));
+  }
+  
+  &::-moz-selection {
+    background-color: oklch(var(--ui-color-primary) / 0.2);
+    color: oklch(var(--ui-color-primary-foreground));
+  }
+  
+  // Focus styles for focusable headings
+  &.focusable {
+    @include focus-ring;
+    border-radius: var(--ui-radius-sm);
+    
+    &:focus {
+      outline: 2px solid oklch(var(--ui-color-ring));
+      outline-offset: 2px;
+    }
+  }
+  
+  // Link styling within headings
+  a {
+    color: inherit;
+    text-decoration: none;
+    transition: all var(--ui-duration-fast) var(--ui-easing-out);
+    
+    &:hover {
+      color: oklch(var(--ui-color-primary));
+      text-decoration: underline;
+      text-decoration-color: oklch(var(--ui-color-primary) / 0.5);
+      text-underline-offset: 0.125em;
+    }
+    
+    &:focus {
+      outline: 2px solid oklch(var(--ui-color-ring));
+      outline-offset: 2px;
+      border-radius: var(--ui-radius-sm);
+    }
+  }
+  
+  // Balanced text wrapping for better typography
+  text-wrap: balance;
+  
+  // Prevent orphans and widows in headings
+  orphans: 2;
+  widows: 2;
+}
+
+// Responsive font size adjustments
+@include sm {
+  .heading {
+    // Slightly tighter letter spacing on larger screens
+    letter-spacing: -0.03em;
+  }
+}
+
+@include md {
+  .heading {
+    // Even tighter letter spacing for better readability
+    letter-spacing: -0.035em;
+  }
+}
+
+@include lg {
+  .heading {
+    // Optimal letter spacing for desktop
+    letter-spacing: -0.04em;
+    
+    // Better line height for larger screens
+    line-height: 1.1;
+  }
+}
+
+// Level-specific enhancements
+.heading {
+  // H1 specific styles
+  &:is(h1) {
+    font-weight: 800;
+    letter-spacing: -0.05em;
+    
+    @include lg {
+      line-height: 1.05;
+    }
+  }
+  
+  // H2 specific styles  
+  &:is(h2) {
+    border-bottom: 1px solid oklch(var(--ui-color-border));
+    padding-bottom: 0.5rem;
+    
+    &:not(:first-child) {
+      margin-top: 2rem;
+    }
+  }
+  
+  // H3-H6 progressive spacing
+  &:is(h3) {
+    &:not(:first-child) {
+      margin-top: 1.5rem;
+    }
+  }
+  
+  &:is(h4) {
+    &:not(:first-child) {
+      margin-top: 1.25rem;
+    }
+  }
+  
+  &:is(h5, h6) {
+    &:not(:first-child) {
+      margin-top: 1rem;
+    }
+  }
+}
+
+// Dark theme adjustments
+@include dark {
+  .heading {
+    // Better contrast in dark mode
+    text-shadow: 0 0 1px oklch(var(--ui-color-background));
+    
+    &:is(h2) {
+      border-color: oklch(var(--ui-color-border));
+    }
+  }
+}
+
+// High contrast mode support
+@include high-contrast {
+  .heading {
+    &:is(h2) {
+      border-bottom: 2px solid currentColor;
+    }
+    
+    a {
+      text-decoration: underline;
+      text-decoration-thickness: 2px;
+    }
+    
+    &.focusable:focus {
+      outline: 3px solid;
+      outline-offset: 3px;
+    }
+  }
+}
+
+// Print styles
+@media print {
+  .heading {
+    color: black;
+    text-shadow: none;
+    page-break-after: avoid;
+    
+    &:is(h1, h2, h3) {
+      page-break-inside: avoid;
+    }
+    
+    &:is(h2) {
+      border-color: #ccc;
+    }
+    
+    a {
+      color: black;
+      text-decoration: underline;
+    }
+  }
+}
+
+// Reduced motion preferences
+@include reduced-motion {
+  .heading {
+    a {
+      transition: none;
+    }
+  }
+}
+
+// Safari-specific font rendering improvements
+@supports (-webkit-appearance: none) {
+  .heading {
+    // Better font rendering on Safari
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+// Container query support for fluid typography
+@container (min-width: 768px) {
+  .heading {
+    &:is(h1) {
+      font-size: clamp(2.25rem, 4vw, 3rem);
+    }
+    
+    &:is(h2) {
+      font-size: clamp(1.875rem, 3vw, 2.25rem);
+    }
+    
+    &:is(h3) {
+      font-size: clamp(1.5rem, 2.5vw, 1.875rem);
+    }
+  }
+}

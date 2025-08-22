@@ -3,6 +3,9 @@
  * Centralized export of all type definitions
  */
 
+// Global type definitions (CSS modules, etc.)
+import './global.d';
+
 // Theme-related types
 export type {
   OklchColor,

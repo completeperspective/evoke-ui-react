@@ -1,0 +1,219 @@
+/**
+ * Input Component Styles
+ * Custom styles for input field with icon support
+ */
+@use '../../styles/abstracts' as *;
+
+.container {
+  @include component-base;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.inputWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.input {
+  @include input-field;
+  
+  // Enhanced focus styles
+  &:focus {
+    border-color: oklch(var(--ui-color-ring));
+    box-shadow: 0 0 0 1px oklch(var(--ui-color-ring));
+  }
+
+  // State-specific styles
+  &[aria-invalid='true'] {
+    border-color: oklch(var(--ui-color-destructive));
+    
+    &:focus {
+      border-color: oklch(var(--ui-color-destructive));
+      box-shadow: 0 0 0 1px oklch(var(--ui-color-destructive));
+    }
+  }
+
+  // Icon padding adjustments
+  &.withStartIcon {
+    padding-left: 2.5rem;
+  }
+
+  &.withEndIcon {
+    padding-right: 2.5rem;
+  }
+
+  // File input specific styles
+  &[type='file'] {
+    padding: 0;
+    
+    &::file-selector-button {
+      margin-right: var(--ui-space-3);
+      padding: var(--ui-space-2) var(--ui-space-3);
+      background-color: oklch(var(--ui-color-muted));
+      border: none;
+      border-radius: var(--ui-radius-sm);
+      color: oklch(var(--ui-color-muted-foreground));
+      cursor: pointer;
+      font-size: var(--ui-font-size-sm);
+      transition: background-color var(--ui-duration-fast) var(--ui-easing-out);
+      
+      &:hover {
+        background-color: oklch(var(--ui-color-accent));
+      }
+    }
+  }
+
+  // Search input specific styles
+  &[type='search'] {
+    &::-webkit-search-cancel-button {
+      appearance: none;
+    }
+  }
+
+  // Number input specific styles
+  &[type='number'] {
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      appearance: none;
+      margin: 0;
+    }
+
+    // Firefox
+    -moz-appearance: textfield;
+  }
+
+  // Placeholder styling
+  &::placeholder {
+    color: oklch(var(--ui-color-muted-foreground));
+    opacity: 1;
+  }
+
+  // Disabled state
+  &:disabled {
+    background-color: oklch(var(--ui-color-muted));
+    color: oklch(var(--ui-color-muted-foreground));
+    cursor: not-allowed;
+    opacity: 0.6;
+
+    &::placeholder {
+      color: oklch(var(--ui-color-muted-foreground));
+      opacity: 0.5;
+    }
+  }
+
+  // High contrast mode support
+  @include high-contrast {
+    border: 2px solid currentColor;
+    
+    &:focus {
+      outline: 3px solid;
+      outline-offset: 2px;
+    }
+  }
+
+  // Dark theme adjustments
+  @include dark {
+    &[type='file']::file-selector-button {
+      background-color: oklch(var(--ui-color-muted));
+      color: oklch(var(--ui-color-muted-foreground));
+    }
+  }
+}
+
+.icon {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1rem;
+  height: 1rem;
+  color: oklch(var(--ui-color-muted-foreground));
+  z-index: 1;
+  pointer-events: none;
+  
+  &.startIcon {
+    left: var(--ui-space-3);
+  }
+  
+  &.endIcon {
+    right: var(--ui-space-3);
+  }
+
+  // Adjust icon color based on input state
+  .input[aria-invalid='true'] + & {
+    color: oklch(var(--ui-color-destructive));
+  }
+
+  .input:disabled + & {
+    opacity: 0.5;
+  }
+}
+
+.feedback {
+  margin-top: var(--ui-space-1);
+}
+
+.feedbackText {
+  display: block;
+  font-size: var(--ui-font-size-xs);
+  line-height: var(--ui-line-height-xs);
+  
+  &.error {
+    color: oklch(var(--ui-color-destructive));
+    font-weight: var(--ui-font-weight-medium);
+  }
+  
+  &.helper {
+    color: oklch(var(--ui-color-muted-foreground));
+  }
+}
+
+// Responsive adjustments
+@include sm {
+  .input {
+    &.withStartIcon {
+      padding-left: 2.75rem;
+    }
+
+    &.withEndIcon {
+      padding-right: 2.75rem;
+    }
+  }
+
+  .icon {
+    width: 1.125rem;
+    height: 1.125rem;
+    
+    &.startIcon {
+      left: var(--ui-space-4);
+    }
+    
+    &.endIcon {
+      right: var(--ui-space-4);
+    }
+  }
+}
+
+// Animation for feedback text
+.feedbackText {
+  animation: fadeIn var(--ui-duration-fast) var(--ui-easing-out);
+  
+  @include reduced-motion {
+    animation: none;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-0.25rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
