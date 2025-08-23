@@ -113,12 +113,74 @@ const ColorTokensTemplate = () => {
   };
 
   const colorGroups = {
-    'Gray Scale': Object.entries(colors.gray).map(([shade, color]) => ({
-      name: `Gray ${shade}`,
-      description: `Gray scale ${shade} - for backgrounds, text, and neutral elements`,
-      cssVar: `--ui-color-gray-${shade}`,
-      tailwindClass: `bg-gray-${shade}`,
-    })),
+    'Gray Scale': [
+      {
+        name: `Gray 50`,
+        description: `Gray scale 50 - for backgrounds, text, and neutral elements`,
+        cssVar: `--ui-color-gray-50`,
+        tailwindClass: `bg-gray-50`,
+      },
+      {
+        name: `Gray 100`,
+        description: `Gray scale 100 - for backgrounds, text, and neutral elements`,
+        cssVar: `--ui-color-gray-100`,
+        tailwindClass: `bg-gray-100`,
+      },
+      {
+        name: `Gray 200`,
+        description: `Gray scale 200 - for backgrounds, text, and neutral elements`,
+        cssVar: `--ui-color-gray-200`,
+        tailwindClass: `bg-gray-200`,
+      },
+      {
+        name: `Gray 300`,
+        description: `Gray scale 300 - for backgrounds, text, and neutral elements`,
+        cssVar: `--ui-color-gray-300`,
+        tailwindClass: `bg-gray-300`,
+      },
+      {
+        name: `Gray 400`,
+        description: `Gray scale 400 - for backgrounds, text, and neutral elements`,
+        cssVar: `--ui-color-gray-400`,
+        tailwindClass: `bg-gray-400`,
+      },
+      {
+        name: `Gray 500`,
+        description: `Gray scale 500 - for backgrounds, text, and neutral elements`,
+        cssVar: `--ui-color-gray-500`,
+        tailwindClass: `bg-gray-500`,
+      },
+      {
+        name: `Gray 600`,
+        description: `Gray scale 600 - for backgrounds, text, and neutral elements`,
+        cssVar: `--ui-color-gray-600`,
+        tailwindClass: `bg-gray-600`,
+      },
+      {
+        name: `Gray 700`,
+        description: `Gray scale 700 - for backgrounds, text, and neutral elements`,
+        cssVar: `--ui-color-gray-700`,
+        tailwindClass: `bg-gray-700`,
+      },
+      {
+        name: `Gray 800`,
+        description: `Gray scale 800 - for backgrounds, text, and neutral elements`,
+        cssVar: `--ui-color-gray-800`,
+        tailwindClass: `bg-gray-800`,
+      },
+      {
+        name: `Gray 900`,
+        description: `Gray scale 900 - for backgrounds, text, and neutral elements`,
+        cssVar: `--ui-color-gray-900`,
+        tailwindClass: `bg-gray-900`,
+      },
+      {
+        name: `Gray 950`,
+        description: `Gray scale 950 - for backgrounds, text, and neutral elements`,
+        cssVar: `--ui-color-gray-950`,
+        tailwindClass: `bg-gray-950`,
+      },
+    ],
     'Brand Colors': [
       {
         name: 'Primary',
