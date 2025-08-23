@@ -1,5 +1,9 @@
 @import 'tailwindcss';
 
+:root {
+  --ui-color-primary: 0.7 0.17 200.1;
+}
+
 /**
  * Tailwind CSS v4 Configuration with OKLCH Design Tokens
  * Using CSS-first configuration with @theme directive
@@ -195,36 +199,4 @@
   --shadow-xl: var(--ui-shadow-xl);
   --shadow-2xl: var(--ui-shadow-2xl);
   --shadow-inner: var(--ui-shadow-inner);
-}
-
-.dark {
-  /* Semantic Color Mappings - Dark Theme */
-  --ui-color-background: 0.13 0.013 247.86;
-  --ui-color-foreground: 0.98 0.005 247.86;
-
-  --ui-color-secondary: 0.27 0.015 247.86;
-  --ui-color-secondary-foreground: 0.98 0.005 247.86;
-
-  --ui-color-muted: 0.27 0.015 247.86;
-  --ui-color-muted-foreground: 0.7 0.015 247.86;
-
-  --ui-color-accent: 0.27 0.015 247.86;
-  --ui-color-accent-foreground: 0.98 0.005 247.86;
-
-  --ui-color-border: 0.27 0.015 247.86;
-  --ui-color-input: 0.27 0.015 247.86;
-
-  --ui-color-card: 0.13 0.013 247.86;
-  --ui-color-card-foreground: 0.98 0.005 247.86;
-
-  --ui-color-popover: 0.13 0.013 247.86;
-  --ui-color-popover-foreground: 0.98 0.005 247.86;
-
-  /* Enhanced shadows for dark theme */
-  --ui-shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.3);
-  --ui-shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.4), 0 1px 2px -1px rgb(0 0 0 / 0.4);
-  --ui-shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.4);
-  --ui-shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.4), 0 4px 6px -4px rgb(0 0 0 / 0.4);
-  --ui-shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.4), 0 8px 10px -6px rgb(0 0 0 / 0.4);
-  --ui-shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.8);
 }

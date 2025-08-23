@@ -48,13 +48,11 @@ const ColorTokensTemplate = () => {
     description,
     cssVar,
     tailwindClass,
-    colorValue,
   }: {
     name: string;
     description: string;
     cssVar: string;
     tailwindClass: string;
-    colorValue?: string;
   }) => {
     const swatchKey = `${name}-${cssVar}`;
     const isCopied = copiedItem === swatchKey;
@@ -64,12 +62,10 @@ const ColorTokensTemplate = () => {
         <div className="flex items-center space-x-3 mb-3">
           <div className="relative">
             <div
-              className={`w-16 h-16 rounded-xl border-2 border-border/50 flex-shrink-0 shadow-sm transition-transform group-hover:scale-105 cursor-pointer relative overflow-hidden ${tailwindClass}`}
-              onClick={() => copyToClipboard(colorValue || cssVar, swatchKey)}
-              title={`Click to copy color value: ${colorValue || cssVar}`}
+              className={`w-16 h-16 rounded-xl border-2 border-border/50 flex-shrink-0 shadow-sm transition-transform group-hover:scale-105 cursor-pointer ${tailwindClass}`}
+              onClick={() => copyToClipboard(tailwindClass, swatchKey)}
+              title={`Click to copy Tailwind class: ${tailwindClass}`}
             >
-              {/* Visual feedback for click */}
-              <div className="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity" />
             </div>
             {isCopied && (
               <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 px-2 py-1 bg-foreground text-background text-xs rounded whitespace-nowrap animate-pulse z-50">
@@ -109,19 +105,6 @@ const ColorTokensTemplate = () => {
                   {tailwindClass}
                 </Text>
               </button>
-              {colorValue && (
-                <button
-                  onClick={() => copyToClipboard(colorValue, `${swatchKey}-value`)}
-                  className="text-left w-full"
-                >
-                  <Text
-                    variant="code"
-                    className="text-xs text-muted-foreground hover:text-foreground transition-colors truncate block"
-                  >
-                    {colorValue}
-                  </Text>
-                </button>
-              )}
             </div>
           </div>
         </div>
@@ -138,7 +121,6 @@ const ColorTokensTemplate = () => {
       description: `Gray scale ${shade} - for backgrounds, text, and neutral elements`,
       cssVar: `--ui-color-gray-${shade}`,
       tailwindClass: `bg-gray-${shade}`,
-      colorValue: color.oklch || color.value,
     })),
     'Brand Colors': [
       {
@@ -146,21 +128,18 @@ const ColorTokensTemplate = () => {
         description: 'Primary brand color for main actions and emphasis',
         cssVar: '--ui-color-primary',
         tailwindClass: 'bg-primary',
-        colorValue: colors.brand.primary.oklch || colors.brand.primary.value,
       },
       {
         name: 'Secondary',
         description: 'Secondary brand color for supporting elements',
         cssVar: '--ui-color-secondary',
         tailwindClass: 'bg-secondary',
-        colorValue: colors.brand.secondary.oklch || colors.brand.secondary.value,
       },
       {
         name: 'Accent',
         description: 'Accent color for highlights and special emphasis',
         cssVar: '--ui-color-accent',
         tailwindClass: 'bg-accent',
-        colorValue: colors.brand.accent.oklch || colors.brand.accent.value,
       },
     ],
     'Status Colors': [
@@ -169,28 +148,24 @@ const ColorTokensTemplate = () => {
         description: 'Success state - confirmations and positive feedback',
         cssVar: '--ui-color-success',
         tailwindClass: 'bg-success',
-        colorValue: colors.status.success.oklch || colors.status.success.value,
       },
       {
         name: 'Warning',
         description: 'Warning state - cautions and important notices',
         cssVar: '--ui-color-warning',
         tailwindClass: 'bg-warning',
-        colorValue: colors.status.warning.oklch || colors.status.warning.value,
       },
       {
         name: 'Error',
         description: 'Error state - failures and destructive actions',
         cssVar: '--ui-color-error',
         tailwindClass: 'bg-error',
-        colorValue: colors.status.error.oklch || colors.status.error.value,
       },
       {
         name: 'Info',
         description: 'Information state - helpful tips and neutral notices',
         cssVar: '--ui-color-info',
         tailwindClass: 'bg-info',
-        colorValue: colors.status.info.oklch || colors.status.info.value,
       },
     ],
     'Semantic Colors (Current Theme)': [
@@ -199,54 +174,36 @@ const ColorTokensTemplate = () => {
         description: 'Main background color',
         cssVar: '--ui-color-background',
         tailwindClass: 'bg-background',
-        colorValue:
-          colors.semantic[isDark ? 'dark' : 'light'].background.oklch ||
-          colors.semantic[isDark ? 'dark' : 'light'].background.value,
       },
       {
         name: 'Foreground',
         description: 'Primary text color',
         cssVar: '--ui-color-foreground',
         tailwindClass: 'bg-foreground',
-        colorValue:
-          colors.semantic[isDark ? 'dark' : 'light'].foreground.oklch ||
-          colors.semantic[isDark ? 'dark' : 'light'].foreground.value,
       },
       {
         name: 'Muted',
         description: 'Subtle background color',
         cssVar: '--ui-color-muted',
         tailwindClass: 'bg-muted',
-        colorValue:
-          colors.semantic[isDark ? 'dark' : 'light'].muted.oklch ||
-          colors.semantic[isDark ? 'dark' : 'light'].muted.value,
       },
       {
         name: 'Border',
         description: 'Default border color',
         cssVar: '--ui-color-border',
         tailwindClass: 'bg-border',
-        colorValue:
-          colors.semantic[isDark ? 'dark' : 'light'].border.oklch ||
-          colors.semantic[isDark ? 'dark' : 'light'].border.value,
       },
       {
         name: 'Card',
         description: 'Card background color',
         cssVar: '--ui-color-card',
         tailwindClass: 'bg-card',
-        colorValue:
-          colors.semantic[isDark ? 'dark' : 'light'].card.oklch ||
-          colors.semantic[isDark ? 'dark' : 'light'].card.value,
       },
       {
         name: 'Ring',
         description: 'Focus ring color',
         cssVar: '--ui-color-ring',
         tailwindClass: 'bg-ring',
-        colorValue:
-          colors.semantic[isDark ? 'dark' : 'light'].ring.oklch ||
-          colors.semantic[isDark ? 'dark' : 'light'].ring.value,
       },
     ],
   };
@@ -296,14 +253,13 @@ const ColorTokensTemplate = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-            {groupColors.map(({ name, description, cssVar, tailwindClass, colorValue }) => (
+            {groupColors.map(({ name, description, cssVar, tailwindClass }) => (
               <ColorSwatch
                 key={`${groupName}-${name}`}
                 name={name}
                 description={description}
                 cssVar={cssVar}
                 tailwindClass={tailwindClass}
-                colorValue={colorValue}
               />
             ))}
           </div>
@@ -982,7 +938,7 @@ const SpacingTokensTemplate = () => {
                 className="w-20 h-20 bg-gradient-to-br from-primary/20 to-secondary/20 border-2 border-primary/50 mx-auto mb-3 transition-transform hover:scale-105"
                 style={{ borderRadius: value }}
               />
-              <Text variant="xs" className="text-muted-foreground leading-tight">
+              <Text variant="small" className="text-muted-foreground leading-tight">
                 {description}
               </Text>
             </div>
@@ -1213,11 +1169,6 @@ const ShadowTokensTemplate = () => {
     zIndex: getZIndexForShadow(name),
   }));
 
-  const darkShadowData = Object.entries(elevation.darkShadow).map(([name, value]) => ({
-    name,
-    value: value as string,
-    description: getShadowDescription(name),
-  }));
 
   const zIndexData = Object.entries(elevation.zIndex).map(([name, value]) => ({
     name,
@@ -1304,7 +1255,7 @@ const ShadowTokensTemplate = () => {
             <strong>Tip:</strong> Click on shadow values to copy them. Shadows automatically adapt
             for dark mode.
           </Text>
-          <Text variant="xs" className="text-muted-foreground">
+          <Text variant="small" className="text-muted-foreground">
             🌑 Dark mode uses enhanced shadows with higher opacity for better visibility.
           </Text>
         </div>
@@ -1372,7 +1323,7 @@ const ShadowTokensTemplate = () => {
                       shadow-{name}
                     </Text>
                   </CopyButton>
-                  <Text variant="xs" className="text-muted-foreground">
+                  <Text variant="small" className="text-muted-foreground">
                     {description}
                   </Text>
                   {zIndex > 0 && (
@@ -1500,7 +1451,7 @@ const ShadowTokensTemplate = () => {
                           className="h-8 bg-muted/50 rounded border flex items-center justify-center"
                           style={{ boxShadow: value.shadow }}
                         >
-                          <Text variant="xs" className="text-muted-foreground">
+                          <Text variant="small" className="text-muted-foreground">
                             {state}
                           </Text>
                         </div>
@@ -1523,7 +1474,7 @@ const ShadowTokensTemplate = () => {
                           className="h-8 bg-muted/50 rounded border flex items-center justify-center"
                           style={{ boxShadow: value as string }}
                         >
-                          <Text variant="xs" className="text-muted-foreground">
+                          <Text variant="small" className="text-muted-foreground">
                             {state}
                           </Text>
                         </div>
@@ -1565,7 +1516,7 @@ const ShadowTokensTemplate = () => {
                     >
                       <CopyButton text={shadow} itemKey={`colored-${color}-${size}`}>
                         <Text
-                          variant="xs"
+                          variant="small"
                           className="text-muted-foreground hover:text-foreground transition-colors"
                         >
                           Click to copy
@@ -2039,7 +1990,7 @@ const MotionTokensTemplate = () => {
         </div>
       </div>
 
-      <style jsx>{`
+      <style>{`
         @keyframes fadeIn {
           0% {
             opacity: 0;
