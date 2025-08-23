@@ -2,7 +2,6 @@ import type { Meta, StoryObj } from '@storybook/react';
 import React, { useState } from 'react';
 import { Heading } from './atoms/Heading/Heading';
 import { Text } from './atoms/Text/Text';
-import { Separator } from './atoms/Separator/Separator';
 import { Badge } from './atoms/Badge/Badge';
 import { Button } from './atoms/Button/Button';
 import { useTheme } from './hooks/useTheme';
@@ -18,7 +17,8 @@ const meta = {
     layout: 'padded',
     docs: {
       description: {
-        component: 'Design tokens are the foundation of the Evoke UI design system, providing consistent values for colors, typography, spacing, and more.',
+        component:
+          'Design tokens are the foundation of the Evoke UI design system, providing consistent values for colors, typography, spacing, and more.',
       },
     },
   },
@@ -32,35 +32,6 @@ type Story = StoryObj<typeof meta>;
 const ColorTokensTemplate = () => {
   const { isDark, toggleTheme } = useTheme();
   const [copiedItem, setCopiedItem] = useState<string | null>(null);
-  
-  // Inject color tokens as CSS variables for the stories
-  React.useEffect(() => {
-    const root = document.documentElement;
-    
-    // Inject gray colors
-    Object.entries(colors.gray).forEach(([shade, color]) => {
-      root.style.setProperty(`--ui-color-gray-${shade}`, color.oklch);
-    });
-    
-    // Inject brand colors
-    root.style.setProperty('--ui-color-primary', colors.brand.primary.oklch);
-    root.style.setProperty('--ui-color-secondary', colors.brand.secondary.oklch);
-    root.style.setProperty('--ui-color-accent', colors.brand.accent.oklch);
-    
-    // Inject status colors
-    root.style.setProperty('--ui-color-success', colors.status.success.oklch);
-    root.style.setProperty('--ui-color-warning', colors.status.warning.oklch);
-    root.style.setProperty('--ui-color-error', colors.status.error.oklch);
-    root.style.setProperty('--ui-color-info', colors.status.info.oklch);
-    
-    // Inject semantic colors based on theme
-    const semanticColors = colors.semantic[isDark ? 'dark' : 'light'];
-    Object.entries(semanticColors).forEach(([key, color]) => {
-      const kebabKey = key.replace(/([A-Z])/g, '-$1').toLowerCase();
-      root.style.setProperty(`--ui-color-${kebabKey}`, color.oklch);
-    });
-    
-  }, [isDark]);
 
   const copyToClipboard = async (text: string, key: string) => {
     try {
@@ -72,66 +43,30 @@ const ColorTokensTemplate = () => {
     }
   };
 
-  const ColorSwatch = ({ 
-    color, 
-    name, 
-    description, 
-    cssVar 
-  }: { 
-    color: any; 
-    name: string; 
-    description: string; 
-    cssVar: string; 
+  const ColorSwatch = ({
+    name,
+    description,
+    cssVar,
+    tailwindClass,
+    colorValue,
+  }: {
+    name: string;
+    description: string;
+    cssVar: string;
+    tailwindClass: string;
+    colorValue?: string;
   }) => {
     const swatchKey = `${name}-${cssVar}`;
     const isCopied = copiedItem === swatchKey;
-    
-    // Use actual color values from tokens with proper fallbacks
-    const getColorValue = () => {
-      try {
-        // First, try to use the color.oklch value if it's a valid CSS function
-        if (color.oklch && color.oklch.startsWith('oklch(')) {
-          return color.oklch;
-        }
-        
-        // Second, try to construct OKLCH from the value
-        if (color.value) {
-          return `oklch(${color.value})`;
-        }
-        
-        // Third, try RGB fallback
-        if (color.rgb) {
-          return color.rgb;
-        }
-        
-        // Fourth, try CSS variable (if available in DOM)
-        if (typeof window !== 'undefined') {
-          const computedValue = getComputedStyle(document.documentElement).getPropertyValue(cssVar);
-          if (computedValue.trim() && computedValue !== 'initial' && computedValue !== 'inherit') {
-            return computedValue.trim();
-          }
-        }
-      } catch (error) {
-        console.warn('Error getting color value:', error);
-      }
-      
-      // Final fallback to a visible color
-      return '#cccccc';
-    };
-    
+
     return (
       <div className="group border border-border rounded-lg p-4 hover:shadow-md transition-all duration-200 bg-card">
         <div className="flex items-center space-x-3 mb-3">
           <div className="relative">
-            <div 
-              className="w-16 h-16 rounded-xl border-2 border-border/50 flex-shrink-0 shadow-sm transition-transform group-hover:scale-105 cursor-pointer relative overflow-hidden"
-              style={{ 
-                backgroundColor: getColorValue(),
-                // Ensure contrast for very light colors
-                boxShadow: getColorValue() === '#ffffff' || getColorValue().includes('1 0') ? 'inset 0 0 0 1px rgba(0,0,0,0.1)' : undefined
-              }}
-              onClick={() => copyToClipboard(color.oklch || color.value || color.rgb || '#cccccc', swatchKey)}
-              title={`Click to copy OKLCH value: ${getColorValue()}`}
+            <div
+              className={`w-16 h-16 rounded-xl border-2 border-border/50 flex-shrink-0 shadow-sm transition-transform group-hover:scale-105 cursor-pointer relative overflow-hidden ${tailwindClass}`}
+              onClick={() => copyToClipboard(colorValue || cssVar, swatchKey)}
+              title={`Click to copy color value: ${colorValue || cssVar}`}
             >
               {/* Visual feedback for click */}
               <div className="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -144,33 +79,46 @@ const ColorTokensTemplate = () => {
           </div>
           <div className="min-w-0 flex-1">
             <div className="flex items-center justify-between mb-1">
-              <Text weight="semibold" className="truncate">{name}</Text>
-              <Badge variant="secondary" size="sm">OKLCH</Badge>
+              <Text weight="semibold" className="truncate">
+                {name}
+              </Text>
+              <Badge variant="secondary" size="sm">
+                Tailwind
+              </Badge>
             </div>
             <div className="space-y-1">
-              <button 
+              <button
                 onClick={() => copyToClipboard(cssVar, `${swatchKey}-css`)}
                 className="text-left w-full"
               >
-                <Text variant="code" className="text-xs text-muted-foreground hover:text-foreground transition-colors truncate block">
+                <Text
+                  variant="code"
+                  className="text-xs text-muted-foreground hover:text-foreground transition-colors truncate block"
+                >
                   {cssVar}
                 </Text>
               </button>
-              <button 
-                onClick={() => copyToClipboard(color.value || color.oklch || '#cccccc', `${swatchKey}-oklch`)}
+              <button
+                onClick={() => copyToClipboard(tailwindClass, `${swatchKey}-tailwind`)}
                 className="text-left w-full"
               >
-                <Text variant="code" className="text-xs text-muted-foreground hover:text-foreground transition-colors truncate block">
-                  {color.value || 'No value'}
+                <Text
+                  variant="code"
+                  className="text-xs text-muted-foreground hover:text-foreground transition-colors truncate block"
+                >
+                  {tailwindClass}
                 </Text>
               </button>
-              {color.rgb && (
-                <button 
-                  onClick={() => copyToClipboard(color.rgb, `${swatchKey}-rgb`)}
+              {colorValue && (
+                <button
+                  onClick={() => copyToClipboard(colorValue, `${swatchKey}-value`)}
                   className="text-left w-full"
                 >
-                  <Text variant="code" className="text-xs text-muted-foreground hover:text-foreground transition-colors truncate block">
-                    {color.rgb}
+                  <Text
+                    variant="code"
+                    className="text-xs text-muted-foreground hover:text-foreground transition-colors truncate block"
+                  >
+                    {colorValue}
                   </Text>
                 </button>
               )}
@@ -187,28 +135,119 @@ const ColorTokensTemplate = () => {
   const colorGroups = {
     'Gray Scale': Object.entries(colors.gray).map(([shade, color]) => ({
       name: `Gray ${shade}`,
-      color,
       description: `Gray scale ${shade} - for backgrounds, text, and neutral elements`,
       cssVar: `--ui-color-gray-${shade}`,
+      tailwindClass: `bg-gray-${shade}`,
+      colorValue: color.oklch || color.value,
     })),
     'Brand Colors': [
-      { name: 'Primary', color: colors.brand.primary, description: 'Primary brand color for main actions and emphasis', cssVar: '--ui-color-primary' },
-      { name: 'Secondary', color: colors.brand.secondary, description: 'Secondary brand color for supporting elements', cssVar: '--ui-color-secondary' },
-      { name: 'Accent', color: colors.brand.accent, description: 'Accent color for highlights and special emphasis', cssVar: '--ui-color-accent' },
+      {
+        name: 'Primary',
+        description: 'Primary brand color for main actions and emphasis',
+        cssVar: '--ui-color-primary',
+        tailwindClass: 'bg-primary',
+        colorValue: colors.brand.primary.oklch || colors.brand.primary.value,
+      },
+      {
+        name: 'Secondary',
+        description: 'Secondary brand color for supporting elements',
+        cssVar: '--ui-color-secondary',
+        tailwindClass: 'bg-secondary',
+        colorValue: colors.brand.secondary.oklch || colors.brand.secondary.value,
+      },
+      {
+        name: 'Accent',
+        description: 'Accent color for highlights and special emphasis',
+        cssVar: '--ui-color-accent',
+        tailwindClass: 'bg-accent',
+        colorValue: colors.brand.accent.oklch || colors.brand.accent.value,
+      },
     ],
     'Status Colors': [
-      { name: 'Success', color: colors.status.success, description: 'Success state - confirmations and positive feedback', cssVar: '--ui-color-success' },
-      { name: 'Warning', color: colors.status.warning, description: 'Warning state - cautions and important notices', cssVar: '--ui-color-warning' },
-      { name: 'Error', color: colors.status.error, description: 'Error state - failures and destructive actions', cssVar: '--ui-color-error' },
-      { name: 'Info', color: colors.status.info, description: 'Information state - helpful tips and neutral notices', cssVar: '--ui-color-info' },
+      {
+        name: 'Success',
+        description: 'Success state - confirmations and positive feedback',
+        cssVar: '--ui-color-success',
+        tailwindClass: 'bg-success',
+        colorValue: colors.status.success.oklch || colors.status.success.value,
+      },
+      {
+        name: 'Warning',
+        description: 'Warning state - cautions and important notices',
+        cssVar: '--ui-color-warning',
+        tailwindClass: 'bg-warning',
+        colorValue: colors.status.warning.oklch || colors.status.warning.value,
+      },
+      {
+        name: 'Error',
+        description: 'Error state - failures and destructive actions',
+        cssVar: '--ui-color-error',
+        tailwindClass: 'bg-error',
+        colorValue: colors.status.error.oklch || colors.status.error.value,
+      },
+      {
+        name: 'Info',
+        description: 'Information state - helpful tips and neutral notices',
+        cssVar: '--ui-color-info',
+        tailwindClass: 'bg-info',
+        colorValue: colors.status.info.oklch || colors.status.info.value,
+      },
     ],
     'Semantic Colors (Current Theme)': [
-      { name: 'Background', color: colors.semantic[isDark ? 'dark' : 'light'].background, description: 'Main background color', cssVar: '--ui-color-background' },
-      { name: 'Foreground', color: colors.semantic[isDark ? 'dark' : 'light'].foreground, description: 'Primary text color', cssVar: '--ui-color-foreground' },
-      { name: 'Muted', color: colors.semantic[isDark ? 'dark' : 'light'].muted, description: 'Subtle background color', cssVar: '--ui-color-muted' },
-      { name: 'Border', color: colors.semantic[isDark ? 'dark' : 'light'].border, description: 'Default border color', cssVar: '--ui-color-border' },
-      { name: 'Card', color: colors.semantic[isDark ? 'dark' : 'light'].card, description: 'Card background color', cssVar: '--ui-color-card' },
-      { name: 'Ring', color: colors.semantic[isDark ? 'dark' : 'light'].ring, description: 'Focus ring color', cssVar: '--ui-color-ring' },
+      {
+        name: 'Background',
+        description: 'Main background color',
+        cssVar: '--ui-color-background',
+        tailwindClass: 'bg-background',
+        colorValue:
+          colors.semantic[isDark ? 'dark' : 'light'].background.oklch ||
+          colors.semantic[isDark ? 'dark' : 'light'].background.value,
+      },
+      {
+        name: 'Foreground',
+        description: 'Primary text color',
+        cssVar: '--ui-color-foreground',
+        tailwindClass: 'bg-foreground',
+        colorValue:
+          colors.semantic[isDark ? 'dark' : 'light'].foreground.oklch ||
+          colors.semantic[isDark ? 'dark' : 'light'].foreground.value,
+      },
+      {
+        name: 'Muted',
+        description: 'Subtle background color',
+        cssVar: '--ui-color-muted',
+        tailwindClass: 'bg-muted',
+        colorValue:
+          colors.semantic[isDark ? 'dark' : 'light'].muted.oklch ||
+          colors.semantic[isDark ? 'dark' : 'light'].muted.value,
+      },
+      {
+        name: 'Border',
+        description: 'Default border color',
+        cssVar: '--ui-color-border',
+        tailwindClass: 'bg-border',
+        colorValue:
+          colors.semantic[isDark ? 'dark' : 'light'].border.oklch ||
+          colors.semantic[isDark ? 'dark' : 'light'].border.value,
+      },
+      {
+        name: 'Card',
+        description: 'Card background color',
+        cssVar: '--ui-color-card',
+        tailwindClass: 'bg-card',
+        colorValue:
+          colors.semantic[isDark ? 'dark' : 'light'].card.oklch ||
+          colors.semantic[isDark ? 'dark' : 'light'].card.value,
+      },
+      {
+        name: 'Ring',
+        description: 'Focus ring color',
+        cssVar: '--ui-color-ring',
+        tailwindClass: 'bg-ring',
+        colorValue:
+          colors.semantic[isDark ? 'dark' : 'light'].ring.oklch ||
+          colors.semantic[isDark ? 'dark' : 'light'].ring.value,
+      },
     ],
   };
 
@@ -217,33 +256,30 @@ const ColorTokensTemplate = () => {
       <div className="space-y-6">
         <div className="flex items-center justify-between">
           <div className="space-y-2">
-            <Heading level="h1">
-              Color Tokens
-            </Heading>
+            <Heading level="h1">Color Tokens</Heading>
             <Text variant="lead">
-              Our color system uses OKLCH color space for perceptually uniform color manipulation and better accessibility.
+              Our color system uses OKLCH color space for perceptually uniform color manipulation
+              and better accessibility.
             </Text>
           </div>
           <div className="flex items-center space-x-3">
             <Badge variant={isDark ? 'default' : 'secondary'} size="lg">
               {isDark ? 'Dark' : 'Light'} Theme
             </Badge>
-            <Button 
-              variant="outline" 
-              size="sm" 
-              onClick={toggleTheme}
-            >
+            <Button variant="outline" size="sm" onClick={toggleTheme}>
               Switch to {isDark ? 'Light' : 'Dark'}
             </Button>
           </div>
         </div>
-        
+
         <div className="bg-muted/30 border border-border/50 rounded-xl p-4 space-y-2">
           <Text variant="small" className="text-muted-foreground">
-            <strong>Tip:</strong> Click on color swatches or values to copy them to your clipboard. Toggle between light and dark themes to see how colors adapt.
+            <strong>Tip:</strong> Click on color swatches or values to copy them to your clipboard.
+            Toggle between light and dark themes to see how colors adapt.
           </Text>
-          <Text variant="xs" className="text-muted-foreground">
-            🎨 Color swatches display actual OKLCH colors. Click swatches or values to copy them.
+          <Text variant="small" className="text-muted-foreground">
+            🎨 Color swatches use Tailwind classes that automatically use CSS variables. Click
+            swatches or values to copy them.
           </Text>
         </div>
       </div>
@@ -258,15 +294,16 @@ const ColorTokensTemplate = () => {
               {groupColors.length} colors
             </Badge>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-            {groupColors.map(({ name, color, description, cssVar }) => (
+            {groupColors.map(({ name, description, cssVar, tailwindClass, colorValue }) => (
               <ColorSwatch
                 key={`${groupName}-${name}`}
-                color={color}
                 name={name}
                 description={description}
                 cssVar={cssVar}
+                tailwindClass={tailwindClass}
+                colorValue={colorValue}
               />
             ))}
           </div>
@@ -284,7 +321,8 @@ const ColorTokensTemplate = () => {
             </div>
             <Text weight="semibold">Perceptual Uniformity</Text>
             <Text variant="small" className="text-muted-foreground leading-relaxed">
-              Lightness adjustments appear consistent to human perception, making color manipulation predictable.
+              Lightness adjustments appear consistent to human perception, making color manipulation
+              predictable.
             </Text>
           </div>
           <div className="space-y-3">
@@ -293,7 +331,8 @@ const ColorTokensTemplate = () => {
             </div>
             <Text weight="semibold">Better Accessibility</Text>
             <Text variant="small" className="text-muted-foreground leading-relaxed">
-              More accurate contrast ratio calculations ensure WCAG compliance and better readability.
+              More accurate contrast ratio calculations ensure WCAG compliance and better
+              readability.
             </Text>
           </div>
           <div className="space-y-3">
@@ -302,7 +341,8 @@ const ColorTokensTemplate = () => {
             </div>
             <Text weight="semibold">Wide Gamut Support</Text>
             <Text variant="small" className="text-muted-foreground leading-relaxed">
-              Full P3 display support for vibrant colors on modern devices and high-quality monitors.
+              Full P3 display support for vibrant colors on modern devices and high-quality
+              monitors.
             </Text>
           </div>
           <div className="space-y-3">
@@ -315,15 +355,14 @@ const ColorTokensTemplate = () => {
             </Text>
           </div>
         </div>
-        
+
         <div className="bg-background/50 rounded-lg p-4 mt-6">
           <Text variant="code" className="text-sm text-foreground block mb-2">
             OKLCH Format: oklch(lightness chroma hue)
           </Text>
           <Text variant="small" className="text-muted-foreground">
-            • Lightness: 0-1 (0 = black, 1 = white)
-            • Chroma: 0-0.37+ (0 = gray, higher = more saturated)
-            • Hue: 0-360° (color wheel position)
+            • Lightness: 0-1 (0 = black, 1 = white) • Chroma: 0-0.37+ (0 = gray, higher = more
+            saturated) • Hue: 0-360° (color wheel position)
           </Text>
         </div>
       </div>
@@ -356,7 +395,15 @@ const TypographyTokensTemplate = () => {
     }
   };
 
-  const CopyButton = ({ text, itemKey, children }: { text: string; itemKey: string; children: React.ReactNode }) => {
+  const CopyButton = ({
+    text,
+    itemKey,
+    children,
+  }: {
+    text: string;
+    itemKey: string;
+    children: React.ReactNode;
+  }) => {
     const isCopied = copiedItem === itemKey;
     return (
       <button
@@ -403,11 +450,10 @@ const TypographyTokensTemplate = () => {
   return (
     <div className="space-y-12 max-w-7xl">
       <div className="space-y-4">
-        <Heading level="h1">
-          Typography Tokens
-        </Heading>
+        <Heading level="h1">Typography Tokens</Heading>
         <Text variant="lead">
-          Consistent typography scale for readable and harmonious text hierarchy using modular scale ratios.
+          Consistent typography scale for readable and harmonious text hierarchy using modular scale
+          ratios.
         </Text>
         <div className="bg-muted/30 border border-border/50 rounded-xl p-4">
           <Text variant="small" className="text-muted-foreground">
@@ -434,23 +480,29 @@ const TypographyTokensTemplate = () => {
                   <Badge variant="secondary">{tag.toUpperCase()}</Badge>
                   <div className="flex items-center space-x-3 text-sm text-muted-foreground">
                     <CopyButton text={fontSize} itemKey={`${tag}-size`}>
-                      <Text variant="code" className="text-xs">{fontSize} ({pixels})</Text>
+                      <Text variant="code" className="text-xs">
+                        {fontSize} ({pixels})
+                      </Text>
                     </CopyButton>
                     <CopyButton text={fontWeight.toString()} itemKey={`${tag}-weight`}>
-                      <Text variant="code" className="text-xs">Weight: {fontWeight}</Text>
+                      <Text variant="code" className="text-xs">
+                        Weight: {fontWeight}
+                      </Text>
                     </CopyButton>
                     <CopyButton text={lineHeight} itemKey={`${tag}-height`}>
-                      <Text variant="code" className="text-xs">Line: {lineHeight}</Text>
+                      <Text variant="code" className="text-xs">
+                        Line: {lineHeight}
+                      </Text>
                     </CopyButton>
                   </div>
                 </div>
               </div>
-              <div 
-                style={{ 
-                  fontSize, 
-                  lineHeight, 
-                  letterSpacing: letterSpacing || '0em', 
-                  fontWeight 
+              <div
+                style={{
+                  fontSize,
+                  lineHeight,
+                  letterSpacing: letterSpacing || '0em',
+                  fontWeight,
                 }}
                 className="text-foreground"
               >
@@ -473,11 +525,16 @@ const TypographyTokensTemplate = () => {
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           {fontSizeData.map(({ name, fontSize, lineHeight, letterSpacing, pixels }) => (
-            <div key={name} className="border border-border rounded-lg p-4 hover:shadow-sm transition-shadow">
+            <div
+              key={name}
+              className="border border-border rounded-lg p-4 hover:shadow-sm transition-shadow"
+            >
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center space-x-3">
                   <CopyButton text={name} itemKey={`size-${name}`}>
-                    <Text variant="code" className="text-xs font-medium">{name}</Text>
+                    <Text variant="code" className="text-xs font-medium">
+                      {name}
+                    </Text>
                   </CopyButton>
                   <div className="flex items-center space-x-2 text-xs text-muted-foreground">
                     <CopyButton text={fontSize} itemKey={`size-${name}-rem`}>
@@ -490,11 +547,11 @@ const TypographyTokensTemplate = () => {
                   </div>
                 </div>
               </div>
-              <div 
-                style={{ 
-                  fontSize, 
-                  lineHeight, 
-                  letterSpacing 
+              <div
+                style={{
+                  fontSize,
+                  lineHeight,
+                  letterSpacing,
                 }}
                 className="text-foreground"
               >
@@ -512,11 +569,18 @@ const TypographyTokensTemplate = () => {
         </Heading>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {fontWeightData.map(({ name, value, weight }) => (
-            <div key={name} className="border border-border rounded-lg p-4 text-center hover:shadow-sm transition-shadow">
+            <div
+              key={name}
+              className="border border-border rounded-lg p-4 text-center hover:shadow-sm transition-shadow"
+            >
               <div className="mb-3">
-                <Text variant="small" weight="medium">{name}</Text>
+                <Text variant="small" weight="medium">
+                  {name}
+                </Text>
                 <CopyButton text={value} itemKey={`weight-${name}`}>
-                  <Text variant="code" className="text-xs text-muted-foreground block">{value}</Text>
+                  <Text variant="code" className="text-xs text-muted-foreground block">
+                    {value}
+                  </Text>
                 </CopyButton>
               </div>
               <div style={{ fontWeight: weight }} className="text-lg">
@@ -540,24 +604,32 @@ const TypographyTokensTemplate = () => {
                   <Badge variant="outline">{variant}</Badge>
                   <div className="flex items-center space-x-3 text-sm text-muted-foreground">
                     <CopyButton text={fontSize} itemKey={`body-${variant}-size`}>
-                      <Text variant="code" className="text-xs">{fontSize} ({pixels})</Text>
+                      <Text variant="code" className="text-xs">
+                        {fontSize} ({pixels})
+                      </Text>
                     </CopyButton>
                     <CopyButton text={lineHeight} itemKey={`body-${variant}-height`}>
-                      <Text variant="code" className="text-xs">Line: {lineHeight}</Text>
+                      <Text variant="code" className="text-xs">
+                        Line: {lineHeight}
+                      </Text>
                     </CopyButton>
                   </div>
                 </div>
               </div>
-              <div 
-                style={{ 
-                  fontSize, 
-                  lineHeight, 
-                  letterSpacing: letterSpacing || '0em', 
-                  fontWeight 
+              <div
+                style={{
+                  fontSize,
+                  lineHeight,
+                  letterSpacing: letterSpacing || '0em',
+                  fontWeight,
                 }}
                 className="text-foreground"
               >
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor
+                incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+                exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute
+                irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+                pariatur.
               </div>
             </div>
           ))}
@@ -573,7 +645,9 @@ const TypographyTokensTemplate = () => {
           <div className="border border-border rounded-lg p-6 space-y-4">
             <div className="flex items-center justify-between">
               <Text weight="semibold">Sans Serif</Text>
-              <Badge variant="default" size="sm">Default</Badge>
+              <Badge variant="default" size="sm">
+                Default
+              </Badge>
             </div>
             <CopyButton text={typography.fontFamily.sans} itemKey="font-sans">
               <Text variant="code" className="text-xs text-muted-foreground leading-relaxed block">
@@ -583,15 +657,20 @@ const TypographyTokensTemplate = () => {
             <div style={{ fontFamily: typography.fontFamily.sans }} className="text-xl">
               The quick brown fox jumps over the lazy dog
             </div>
-            <div style={{ fontFamily: typography.fontFamily.sans }} className="text-sm text-muted-foreground">
+            <div
+              style={{ fontFamily: typography.fontFamily.sans }}
+              className="text-sm text-muted-foreground"
+            >
               ABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789
             </div>
           </div>
-          
+
           <div className="border border-border rounded-lg p-6 space-y-4">
             <div className="flex items-center justify-between">
               <Text weight="semibold">Monospace</Text>
-              <Badge variant="secondary" size="sm">Code</Badge>
+              <Badge variant="secondary" size="sm">
+                Code
+              </Badge>
             </div>
             <CopyButton text={typography.fontFamily.mono} itemKey="font-mono">
               <Text variant="code" className="text-xs text-muted-foreground leading-relaxed block">
@@ -601,7 +680,10 @@ const TypographyTokensTemplate = () => {
             <div style={{ fontFamily: typography.fontFamily.mono }} className="text-lg">
               const message = 'Hello, World!';
             </div>
-            <div style={{ fontFamily: typography.fontFamily.mono }} className="text-sm text-muted-foreground">
+            <div
+              style={{ fontFamily: typography.fontFamily.mono }}
+              className="text-sm text-muted-foreground"
+            >
               function calculateSum(a, b) &#123;
               <br />
               &nbsp;&nbsp;return a + b;
@@ -613,7 +695,9 @@ const TypographyTokensTemplate = () => {
           <div className="border border-border rounded-lg p-6 space-y-4">
             <div className="flex items-center justify-between">
               <Text weight="semibold">Serif</Text>
-              <Badge variant="outline" size="sm">Editorial</Badge>
+              <Badge variant="outline" size="sm">
+                Editorial
+              </Badge>
             </div>
             <CopyButton text={typography.fontFamily.serif} itemKey="font-serif">
               <Text variant="code" className="text-xs text-muted-foreground leading-relaxed block">
@@ -623,7 +707,10 @@ const TypographyTokensTemplate = () => {
             <div style={{ fontFamily: typography.fontFamily.serif }} className="text-xl">
               The quick brown fox jumps over the lazy dog
             </div>
-            <div style={{ fontFamily: typography.fontFamily.serif }} className="text-sm text-muted-foreground italic">
+            <div
+              style={{ fontFamily: typography.fontFamily.serif }}
+              className="text-sm text-muted-foreground italic"
+            >
               Perfect for long-form content and editorial layouts
             </div>
           </div>
@@ -659,7 +746,15 @@ const SpacingTokensTemplate = () => {
     }
   };
 
-  const CopyButton = ({ text, itemKey, children }: { text: string; itemKey: string; children: React.ReactNode }) => {
+  const CopyButton = ({
+    text,
+    itemKey,
+    children,
+  }: {
+    text: string;
+    itemKey: string;
+    children: React.ReactNode;
+  }) => {
     const isCopied = copiedItem === itemKey;
     return (
       <button
@@ -690,7 +785,7 @@ const SpacingTokensTemplate = () => {
   function getSpacingDescription(key: string): string {
     const descriptions: Record<string, string> = {
       '0': 'No space - for flush layouts',
-      'px': 'Hairline - for fine borders and details', 
+      px: 'Hairline - for fine borders and details',
       '0.5': 'Micro spacing - for tight layouts',
       '1': 'Base grid unit - minimal spacing',
       '1.5': 'Small gaps - between related elements',
@@ -766,15 +861,15 @@ const SpacingTokensTemplate = () => {
   return (
     <div className="space-y-12 max-w-7xl">
       <div className="space-y-4">
-        <Heading level="h1">
-          Spacing Tokens
-        </Heading>
+        <Heading level="h1">Spacing Tokens</Heading>
         <Text variant="lead">
-          Consistent spacing scale based on a 4px grid system for harmonious layouts and visual rhythm.
+          Consistent spacing scale based on a 4px grid system for harmonious layouts and visual
+          rhythm.
         </Text>
         <div className="bg-muted/30 border border-border/50 rounded-xl p-4">
           <Text variant="small" className="text-muted-foreground">
-            <strong>Tip:</strong> Click on spacing values to copy them. Select different spacing values to see visual comparisons.
+            <strong>Tip:</strong> Click on spacing values to copy them. Select different spacing
+            values to see visual comparisons.
           </Text>
         </div>
       </div>
@@ -791,54 +886,66 @@ const SpacingTokensTemplate = () => {
             </Badge>
           </div>
           <div className="flex items-center space-x-2">
-            <Text variant="small" className="text-muted-foreground">Compare with:</Text>
-            <select 
-              value={selectedSpacing} 
+            <Text variant="small" className="text-muted-foreground">
+              Compare with:
+            </Text>
+            <select
+              value={selectedSpacing}
               onChange={(e) => setSelectedSpacing(e.target.value)}
               className="border border-border rounded px-2 py-1 text-sm bg-background"
             >
               {spacingData.slice(3, 15).map(({ name }) => (
-                <option key={name} value={name}>{name}</option>
+                <option key={name} value={name}>
+                  {name}
+                </option>
               ))}
             </select>
           </div>
         </div>
-        
+
         <div className="space-y-1">
           {spacingData.map(({ name, value, pixels, description }) => {
             const isSelected = name === selectedSpacing;
             return (
-              <div 
-                key={name} 
+              <div
+                key={name}
                 className={`flex items-center space-x-6 p-4 rounded-lg transition-all ${
                   isSelected ? 'bg-primary/5 border border-primary/20' : 'hover:bg-muted/30'
                 }`}
               >
                 <div className="w-12">
                   <CopyButton text={name} itemKey={`spacing-${name}`}>
-                    <Text variant="code" className="text-xs font-medium">{name}</Text>
+                    <Text variant="code" className="text-xs font-medium">
+                      {name}
+                    </Text>
                   </CopyButton>
                 </div>
                 <div className="w-24">
                   <CopyButton text={value} itemKey={`spacing-${name}-rem`}>
-                    <Text variant="small" className="text-muted-foreground">{value}</Text>
+                    <Text variant="small" className="text-muted-foreground">
+                      {value}
+                    </Text>
                   </CopyButton>
                 </div>
                 <div className="w-20">
                   <CopyButton text={pixels} itemKey={`spacing-${name}-px`}>
-                    <Text variant="small" className="text-muted-foreground">({pixels})</Text>
+                    <Text variant="small" className="text-muted-foreground">
+                      ({pixels})
+                    </Text>
                   </CopyButton>
                 </div>
                 <div className="flex-1">
-                  <Text variant="small" className="text-muted-foreground">{description}</Text>
+                  <Text variant="small" className="text-muted-foreground">
+                    {description}
+                  </Text>
                 </div>
                 <div className="flex items-center space-x-3">
-                  <div 
+                  <div
                     className="bg-primary h-6 rounded border"
                     style={{ width: value === '0rem' ? '2px' : value }}
                   />
                   {isSelected && (
-                    <div 
+                    <div
                       className="bg-secondary/60 h-6 rounded border border-secondary"
                       style={{ width: value === '0rem' ? '2px' : `calc(${value} * 1.5)` }}
                     />
@@ -857,14 +964,21 @@ const SpacingTokensTemplate = () => {
         </Heading>
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-6">
           {borderRadiusData.map(({ name, value, description }) => (
-            <div key={name} className="border border-border rounded-lg p-6 text-center hover:shadow-sm transition-shadow">
+            <div
+              key={name}
+              className="border border-border rounded-lg p-6 text-center hover:shadow-sm transition-shadow"
+            >
               <div className="mb-4">
-                <Text variant="small" weight="semibold" className="mb-1">{name}</Text>
+                <Text variant="small" weight="semibold" className="mb-1">
+                  {name}
+                </Text>
                 <CopyButton text={value} itemKey={`radius-${name}`}>
-                  <Text variant="code" className="text-xs text-muted-foreground">{value}</Text>
+                  <Text variant="code" className="text-xs text-muted-foreground">
+                    {value}
+                  </Text>
                 </CopyButton>
               </div>
-              <div 
+              <div
                 className="w-20 h-20 bg-gradient-to-br from-primary/20 to-secondary/20 border-2 border-primary/50 mx-auto mb-3 transition-transform hover:scale-105"
                 style={{ borderRadius: value }}
               />
@@ -886,13 +1000,17 @@ const SpacingTokensTemplate = () => {
             <div key={component} className="border border-border rounded-lg p-6">
               <div className="flex items-center justify-between mb-4">
                 <Text weight="semibold">{component}</Text>
-                <Badge variant="outline" size="sm">{variants.length} sizes</Badge>
+                <Badge variant="outline" size="sm">
+                  {variants.length} sizes
+                </Badge>
               </div>
               <div className="space-y-3">
                 {variants.map((variant: any) => (
                   <div key={variant.size} className="space-y-2">
                     <div className="flex items-center justify-between">
-                      <Text variant="small" weight="medium">{variant.size}</Text>
+                      <Text variant="small" weight="medium">
+                        {variant.size}
+                      </Text>
                       <div className="flex items-center space-x-2 text-xs text-muted-foreground">
                         {variant.x && (
                           <CopyButton text={variant.x} itemKey={`${component}-${variant.size}-x`}>
@@ -905,13 +1023,16 @@ const SpacingTokensTemplate = () => {
                           </CopyButton>
                         )}
                         {variant.padding && (
-                          <CopyButton text={variant.padding} itemKey={`${component}-${variant.size}-padding`}>
+                          <CopyButton
+                            text={variant.padding}
+                            itemKey={`${component}-${variant.size}-padding`}
+                          >
                             <span>{variant.padding}</span>
                           </CopyButton>
                         )}
                       </div>
                     </div>
-                    <div 
+                    <div
                       className="bg-muted/50 border border-border/50 rounded flex items-center justify-center text-xs text-muted-foreground"
                       style={{
                         padding: variant.padding || `${variant.y} ${variant.x}`,
@@ -935,10 +1056,16 @@ const SpacingTokensTemplate = () => {
         </Heading>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           <div className="border border-border rounded-lg p-6">
-            <Text weight="semibold" className="mb-4">Container Spacing</Text>
+            <Text weight="semibold" className="mb-4">
+              Container Spacing
+            </Text>
             <div className="space-y-4">
               {Object.entries(spacingSystem.layout.container).map(([size, spacing]) => (
-                <div key={size} className="border border-border/50 rounded" style={{ padding: spacing }}>
+                <div
+                  key={size}
+                  className="border border-border/50 rounded"
+                  style={{ padding: spacing }}
+                >
                   <div className="bg-muted/50 rounded p-2 text-center">
                     <Text variant="small" className="text-muted-foreground">
                       {size}: {spacing}
@@ -948,24 +1075,32 @@ const SpacingTokensTemplate = () => {
               ))}
             </div>
           </div>
-          
+
           <div className="border border-border rounded-lg p-6">
-            <Text weight="semibold" className="mb-4">Section Spacing</Text>
+            <Text weight="semibold" className="mb-4">
+              Section Spacing
+            </Text>
             <div className="space-y-2">
-              {Object.entries(spacingSystem.layout.section).slice(0, 4).map(([size, spacing]) => (
-                <div key={size} className="flex items-center space-x-4">
-                  <div className="w-12">
-                    <Text variant="small" weight="medium">{size}</Text>
+              {Object.entries(spacingSystem.layout.section)
+                .slice(0, 4)
+                .map(([size, spacing]) => (
+                  <div key={size} className="flex items-center space-x-4">
+                    <div className="w-12">
+                      <Text variant="small" weight="medium">
+                        {size}
+                      </Text>
+                    </div>
+                    <div
+                      className="bg-primary/20 h-3 rounded flex-1 max-w-32"
+                      style={{ width: `calc(${spacing} / 4)` }}
+                    />
+                    <CopyButton text={spacing} itemKey={`section-${size}`}>
+                      <Text variant="code" className="text-xs text-muted-foreground">
+                        {spacing}
+                      </Text>
+                    </CopyButton>
                   </div>
-                  <div 
-                    className="bg-primary/20 h-3 rounded flex-1 max-w-32"
-                    style={{ width: `calc(${spacing} / 4)` }}
-                  />
-                  <CopyButton text={spacing} itemKey={`section-${size}`}>
-                    <Text variant="code" className="text-xs text-muted-foreground">{spacing}</Text>
-                  </CopyButton>
-                </div>
-              ))}
+                ))}
             </div>
           </div>
         </div>
@@ -981,16 +1116,26 @@ const SpacingTokensTemplate = () => {
             <div key={breakpoint} className="space-y-3">
               <div className="flex items-center space-x-2">
                 <div className="w-3 h-3 bg-primary rounded-full"></div>
-                <Text weight="semibold" className="capitalize">{breakpoint}</Text>
+                <Text weight="semibold" className="capitalize">
+                  {breakpoint}
+                </Text>
               </div>
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between">
-                  <Text variant="small" className="text-muted-foreground">Multiplier:</Text>
-                  <Text variant="code" className="text-xs">{config.multiplier}x</Text>
+                  <Text variant="small" className="text-muted-foreground">
+                    Multiplier:
+                  </Text>
+                  <Text variant="code" className="text-xs">
+                    {config.multiplier}x
+                  </Text>
                 </div>
                 <div className="flex justify-between">
-                  <Text variant="small" className="text-muted-foreground">Max spacing:</Text>
-                  <Text variant="code" className="text-xs">{config.maxSpacing}</Text>
+                  <Text variant="small" className="text-muted-foreground">
+                    Max spacing:
+                  </Text>
+                  <Text variant="code" className="text-xs">
+                    {config.maxSpacing}
+                  </Text>
                 </div>
               </div>
             </div>
@@ -998,8 +1143,8 @@ const SpacingTokensTemplate = () => {
         </div>
         <div className="bg-background/50 rounded-lg p-4">
           <Text variant="small" className="text-muted-foreground leading-relaxed">
-            <strong>Best Practice:</strong> Use smaller spacing values on mobile devices to maximize content visibility. 
-            Large spacing values are automatically capped based on screen size.
+            <strong>Best Practice:</strong> Use smaller spacing values on mobile devices to maximize
+            content visibility. Large spacing values are automatically capped based on screen size.
           </Text>
         </div>
       </div>
@@ -1012,7 +1157,8 @@ export const SpacingTokens: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Spacing scale and border radius tokens for consistent layout and component styling.',
+        story:
+          'Spacing scale and border radius tokens for consistent layout and component styling.',
       },
     },
   },
@@ -1034,7 +1180,15 @@ const ShadowTokensTemplate = () => {
     }
   };
 
-  const CopyButton = ({ text, itemKey, children }: { text: string; itemKey: string; children: React.ReactNode }) => {
+  const CopyButton = ({
+    text,
+    itemKey,
+    children,
+  }: {
+    text: string;
+    itemKey: string;
+    children: React.ReactNode;
+  }) => {
     const isCopied = copiedItem === itemKey;
     return (
       <button
@@ -1073,55 +1227,57 @@ const ShadowTokensTemplate = () => {
 
   function getShadowDescription(name: string): string {
     const descriptions: Record<string, string> = {
-      'none': 'No elevation - flat on surface',
-      'xs': 'Subtle elevation - just lifted off surface',
-      'sm': 'Small elevation - buttons, small cards',
-      'md': 'Default elevation - cards, most UI elements',
-      'lg': 'Medium-high elevation - dropdowns, popovers',
-      'xl': 'High elevation - modals, large containers',
+      none: 'No elevation - flat on surface',
+      xs: 'Subtle elevation - just lifted off surface',
+      sm: 'Small elevation - buttons, small cards',
+      md: 'Default elevation - cards, most UI elements',
+      lg: 'Medium-high elevation - dropdowns, popovers',
+      xl: 'High elevation - modals, large containers',
       '2xl': 'Very high elevation - tooltips, overlays',
-      'inner': 'Inset shadow - pressed states, form inputs',
+      inner: 'Inset shadow - pressed states, form inputs',
     };
     return descriptions[name] || 'Custom shadow value';
   }
 
   function getZIndexDescription(name: string): string {
     const descriptions: Record<string, string> = {
-      'behind': 'Behind normal content',
-      'base': 'Normal document flow',
-      'docked': 'Slightly above normal content',
-      'dropdown': 'Dropdowns and popovers',
-      'sticky': 'Sticky headers and navigation',
-      'floating': 'Floating action buttons',
-      'fixed': 'Fixed position elements',
-      'overlay': 'Modal backdrops and overlays',
-      'modal': 'Modals and dialogs',
-      'notification': 'High priority notifications',
-      'tooltip': 'Tooltips and help text',
-      'maximum': 'Highest priority elements',
+      behind: 'Behind normal content',
+      base: 'Normal document flow',
+      docked: 'Slightly above normal content',
+      dropdown: 'Dropdowns and popovers',
+      sticky: 'Sticky headers and navigation',
+      floating: 'Floating action buttons',
+      fixed: 'Fixed position elements',
+      overlay: 'Modal backdrops and overlays',
+      modal: 'Modals and dialogs',
+      notification: 'High priority notifications',
+      tooltip: 'Tooltips and help text',
+      maximum: 'Highest priority elements',
     };
     return descriptions[name] || 'Custom z-index value';
   }
 
   function getZIndexForShadow(shadowName: string): number {
     const mapping: Record<string, string> = {
-      'none': 'base',
-      'xs': 'base', 
-      'sm': 'docked',
-      'md': 'docked',
-      'lg': 'dropdown',
-      'xl': 'modal',
+      none: 'base',
+      xs: 'base',
+      sm: 'docked',
+      md: 'docked',
+      lg: 'dropdown',
+      xl: 'modal',
       '2xl': 'tooltip',
-      'inner': 'base',
+      inner: 'base',
     };
     const zIndexName = mapping[shadowName] || 'base';
     return elevation.zIndex[zIndexName as keyof typeof elevation.zIndex] || 0;
   }
 
-  const componentElevationData = Object.entries(elevation.componentElevation).map(([component, config]) => ({
-    component,
-    config,
-  }));
+  const componentElevationData = Object.entries(elevation.componentElevation).map(
+    ([component, config]) => ({
+      component,
+      config,
+    }),
+  );
 
   const coloredShadowData = Object.entries(elevation.coloredShadow).map(([color, variants]) => ({
     color,
@@ -1133,11 +1289,10 @@ const ShadowTokensTemplate = () => {
       <div className="space-y-4">
         <div className="flex items-center justify-between">
           <div className="space-y-2">
-            <Heading level="h1">
-              Shadow & Elevation Tokens
-            </Heading>
+            <Heading level="h1">Shadow & Elevation Tokens</Heading>
             <Text variant="lead">
-              Elevation system for creating depth and visual hierarchy with shadows and z-index layers.
+              Elevation system for creating depth and visual hierarchy with shadows and z-index
+              layers.
             </Text>
           </div>
           <Badge variant={isDark ? 'default' : 'secondary'} size="lg">
@@ -1146,7 +1301,8 @@ const ShadowTokensTemplate = () => {
         </div>
         <div className="bg-muted/30 border border-border/50 rounded-xl p-4 space-y-2">
           <Text variant="small" className="text-muted-foreground">
-            <strong>Tip:</strong> Click on shadow values to copy them. Shadows automatically adapt for dark mode.
+            <strong>Tip:</strong> Click on shadow values to copy them. Shadows automatically adapt
+            for dark mode.
           </Text>
           <Text variant="xs" className="text-muted-foreground">
             🌑 Dark mode uses enhanced shadows with higher opacity for better visibility.
@@ -1166,64 +1322,83 @@ const ShadowTokensTemplate = () => {
             </Badge>
           </div>
           <div className="flex items-center space-x-2">
-            <Text variant="small" className="text-muted-foreground">Preview:</Text>
-            <select 
-              value={selectedElevation} 
+            <Text variant="small" className="text-muted-foreground">
+              Preview:
+            </Text>
+            <select
+              value={selectedElevation}
               onChange={(e) => setSelectedElevation(e.target.value)}
               className="border border-border rounded px-2 py-1 text-sm bg-background"
             >
-              {shadowData.filter(s => s.name !== 'none' && s.name !== 'inner').map(({ name }) => (
-                <option key={name} value={name}>{name}</option>
-              ))}
+              {shadowData
+                .filter((s) => s.name !== 'none' && s.name !== 'inner')
+                .map(({ name }) => (
+                  <option key={name} value={name}>
+                    {name}
+                  </option>
+                ))}
             </select>
           </div>
         </div>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {shadowData.map(({ name, value, description, zIndex }) => {
             const isSelected = name === selectedElevation;
-            const shadowValue = isDark && elevation.darkShadow[name as keyof typeof elevation.darkShadow] 
-              ? elevation.darkShadow[name as keyof typeof elevation.darkShadow] as string
-              : value;
-            
+            const shadowValue =
+              isDark && elevation.darkShadow[name as keyof typeof elevation.darkShadow]
+                ? (elevation.darkShadow[name as keyof typeof elevation.darkShadow] as string)
+                : value;
+
             // Special handling for different shadow types
             const displayShadow = name === 'none' ? 'none' : shadowValue;
             const cardLabel = name === 'none' ? 'Flat' : name === 'inner' ? 'Inset' : 'Card';
-            
+
             // Ensure shadow value is valid CSS
             const safeShadowValue = displayShadow;
-            
+
             return (
               <div key={name} className="space-y-4">
                 <div className="text-center space-y-2">
                   <div className="flex items-center justify-center space-x-2">
                     <Text weight="semibold">{name}</Text>
-                    {isSelected && <Badge variant="default" size="sm">Preview</Badge>}
+                    {isSelected && (
+                      <Badge variant="default" size="sm">
+                        Preview
+                      </Badge>
+                    )}
                   </div>
                   <CopyButton text={`shadow-${name}`} itemKey={`shadow-class-${name}`}>
                     <Text variant="code" className="text-xs text-muted-foreground">
                       shadow-{name}
                     </Text>
                   </CopyButton>
-                  <Text variant="xs" className="text-muted-foreground">{description}</Text>
+                  <Text variant="xs" className="text-muted-foreground">
+                    {description}
+                  </Text>
                   {zIndex > 0 && (
-                    <Badge variant="outline" size="sm">z-index: {zIndex}</Badge>
+                    <Badge variant="outline" size="sm">
+                      z-index: {zIndex}
+                    </Badge>
                   )}
                 </div>
                 <div className="flex justify-center">
-                  <div 
+                  <div
                     className={`w-24 h-16 bg-card border border-border/50 rounded-lg flex items-center justify-center transition-all duration-200 ${
                       isSelected ? 'scale-110' : 'hover:scale-105'
                     }`}
                     style={{ boxShadow: safeShadowValue }}
                   >
-                    <Text variant="small" className="text-muted-foreground">{cardLabel}</Text>
+                    <Text variant="small" className="text-muted-foreground">
+                      {cardLabel}
+                    </Text>
                   </div>
                 </div>
                 <CopyButton text={shadowValue || 'none'} itemKey={`shadow-value-${name}`}>
                   <div className="text-xs text-muted-foreground break-all p-2 bg-muted/50 rounded text-center block hover:bg-muted transition-colors cursor-pointer">
                     <Text variant="code" className="text-xs">
-                      {(shadowValue || 'none').length > 60 ? `${(shadowValue || 'none').substring(0, 60)}...` : (shadowValue || 'none')}
+                      {(shadowValue || 'none').length > 60
+                        ? `${(shadowValue || 'none').substring(0, 60)}...`
+                        : shadowValue || 'none'}
                     </Text>
                   </div>
                 </CopyButton>
@@ -1240,25 +1415,35 @@ const ShadowTokensTemplate = () => {
         </Heading>
         <div className="space-y-2">
           {zIndexData.map(({ name, value, description }) => (
-            <div key={name} className="flex items-center space-x-6 p-4 border border-border rounded-lg hover:bg-muted/30 transition-colors">
+            <div
+              key={name}
+              className="flex items-center space-x-6 p-4 border border-border rounded-lg hover:bg-muted/30 transition-colors"
+            >
               <div className="w-20">
                 <CopyButton text={name} itemKey={`z-${name}`}>
-                  <Text variant="code" className="text-xs font-medium">{name}</Text>
+                  <Text variant="code" className="text-xs font-medium">
+                    {name}
+                  </Text>
                 </CopyButton>
               </div>
               <div className="w-20">
                 <CopyButton text={value.toString()} itemKey={`z-value-${name}`}>
-                  <Badge variant={value < 0 ? 'destructive' : value === 0 ? 'secondary' : 'default'} size="sm">
+                  <Badge
+                    variant={value < 0 ? 'destructive' : value === 0 ? 'secondary' : 'default'}
+                    size="sm"
+                  >
                     {value}
                   </Badge>
                 </CopyButton>
               </div>
               <div className="flex-1">
-                <Text variant="small" className="text-muted-foreground">{description}</Text>
+                <Text variant="small" className="text-muted-foreground">
+                  {description}
+                </Text>
               </div>
-              <div 
+              <div
                 className="w-16 h-8 bg-gradient-to-r from-primary/30 to-secondary/30 rounded border border-border"
-                style={{ 
+                style={{
                   opacity: Math.max(0.1, Math.min(1, (value + 100) / 2000)),
                 }}
               />
@@ -1276,7 +1461,9 @@ const ShadowTokensTemplate = () => {
           {componentElevationData.map(({ component, config }) => (
             <div key={component} className="border border-border rounded-lg p-6">
               <div className="flex items-center justify-between mb-4">
-                <Text weight="semibold" className="capitalize">{component}</Text>
+                <Text weight="semibold" className="capitalize">
+                  {component}
+                </Text>
                 <Badge variant="outline" size="sm">
                   {Object.keys(config).length} states
                 </Badge>
@@ -1287,21 +1474,35 @@ const ShadowTokensTemplate = () => {
                     return (
                       <div key={state} className="space-y-2">
                         <div className="flex items-center justify-between">
-                          <Text variant="small" weight="medium">{state}</Text>
+                          <Text variant="small" weight="medium">
+                            {state}
+                          </Text>
                           <div className="flex items-center space-x-2">
-                            <CopyButton text={value.shadow} itemKey={`comp-${component}-${state}-shadow`}>
-                              <Badge variant="secondary" size="sm">Shadow</Badge>
+                            <CopyButton
+                              text={value.shadow}
+                              itemKey={`comp-${component}-${state}-shadow`}
+                            >
+                              <Badge variant="secondary" size="sm">
+                                Shadow
+                              </Badge>
                             </CopyButton>
-                            <CopyButton text={value.zIndex.toString()} itemKey={`comp-${component}-${state}-z`}>
-                              <Badge variant="outline" size="sm">z: {value.zIndex}</Badge>
+                            <CopyButton
+                              text={value.zIndex.toString()}
+                              itemKey={`comp-${component}-${state}-z`}
+                            >
+                              <Badge variant="outline" size="sm">
+                                z: {value.zIndex}
+                              </Badge>
                             </CopyButton>
                           </div>
                         </div>
-                        <div 
+                        <div
                           className="h-8 bg-muted/50 rounded border flex items-center justify-center"
                           style={{ boxShadow: value.shadow }}
                         >
-                          <Text variant="xs" className="text-muted-foreground">{state}</Text>
+                          <Text variant="xs" className="text-muted-foreground">
+                            {state}
+                          </Text>
                         </div>
                       </div>
                     );
@@ -1309,18 +1510,22 @@ const ShadowTokensTemplate = () => {
                     return (
                       <div key={state} className="space-y-2">
                         <div className="flex items-center justify-between">
-                          <Text variant="small" weight="medium">{state}</Text>
+                          <Text variant="small" weight="medium">
+                            {state}
+                          </Text>
                           <CopyButton text={value as string} itemKey={`comp-${component}-${state}`}>
                             <Text variant="code" className="text-xs text-muted-foreground">
                               {(value as string).split(' ')[0]}...
                             </Text>
                           </CopyButton>
                         </div>
-                        <div 
+                        <div
                           className="h-8 bg-muted/50 rounded border flex items-center justify-center"
                           style={{ boxShadow: value as string }}
                         >
-                          <Text variant="xs" className="text-muted-foreground">{state}</Text>
+                          <Text variant="xs" className="text-muted-foreground">
+                            {state}
+                          </Text>
                         </div>
                       </div>
                     );
@@ -1341,19 +1546,28 @@ const ShadowTokensTemplate = () => {
           {coloredShadowData.map(({ color, variants }) => (
             <div key={color} className="space-y-4">
               <div className="text-center">
-                <Text weight="semibold" className="capitalize">{color}</Text>
-                <Text variant="small" className="text-muted-foreground">Brand shadows</Text>
+                <Text weight="semibold" className="capitalize">
+                  {color}
+                </Text>
+                <Text variant="small" className="text-muted-foreground">
+                  Brand shadows
+                </Text>
               </div>
               <div className="space-y-3">
                 {variants.map(({ size, shadow }) => (
                   <div key={size} className="space-y-2">
-                    <Text variant="small" weight="medium" className="text-center">{size}</Text>
-                    <div 
+                    <Text variant="small" weight="medium" className="text-center">
+                      {size}
+                    </Text>
+                    <div
                       className="h-12 bg-card rounded border border-border/50 flex items-center justify-center"
                       style={{ boxShadow: shadow }}
                     >
                       <CopyButton text={shadow} itemKey={`colored-${color}-${size}`}>
-                        <Text variant="xs" className="text-muted-foreground hover:text-foreground transition-colors">
+                        <Text
+                          variant="xs"
+                          className="text-muted-foreground hover:text-foreground transition-colors"
+                        >
                           Click to copy
                         </Text>
                       </CopyButton>
@@ -1428,7 +1642,15 @@ const MotionTokensTemplate = () => {
     }
   };
 
-  const CopyButton = ({ text, itemKey, children }: { text: string; itemKey: string; children: React.ReactNode }) => {
+  const CopyButton = ({
+    text,
+    itemKey,
+    children,
+  }: {
+    text: string;
+    itemKey: string;
+    children: React.ReactNode;
+  }) => {
     const isCopied = copiedItem === itemKey;
     return (
       <button
@@ -1447,9 +1669,9 @@ const MotionTokensTemplate = () => {
   };
 
   const triggerAnimation = (key: string) => {
-    setIsAnimating(prev => ({ ...prev, [key]: true }));
+    setIsAnimating((prev) => ({ ...prev, [key]: true }));
     setTimeout(() => {
-      setIsAnimating(prev => ({ ...prev, [key]: false }));
+      setIsAnimating((prev) => ({ ...prev, [key]: false }));
     }, 2000);
   };
 
@@ -1474,44 +1696,44 @@ const MotionTokensTemplate = () => {
 
   function getDurationDescription(name: string): string {
     const descriptions: Record<string, string> = {
-      'instant': 'Instant feedback for micro-interactions',
-      'fast': 'Fast transitions for hover states and toggles',
-      'normal': 'Standard UI transitions (recommended default)',
-      'moderate': 'Moderate transitions for content changes',
-      'slow': 'Slow transitions for major layout changes',
-      'slower': 'Extra slow for complex animations',
-      'slowest': 'Very slow for dramatic effects and loading',
+      instant: 'Instant feedback for micro-interactions',
+      fast: 'Fast transitions for hover states and toggles',
+      normal: 'Standard UI transitions (recommended default)',
+      moderate: 'Moderate transitions for content changes',
+      slow: 'Slow transitions for major layout changes',
+      slower: 'Extra slow for complex animations',
+      slowest: 'Very slow for dramatic effects and loading',
     };
     return descriptions[name] || 'Custom duration value';
   }
 
   function getEasingDescription(name: string): string {
     const descriptions: Record<string, string> = {
-      'linear': 'Constant speed throughout animation',
-      'default': 'Subtle ease for most UI interactions',
-      'in': 'Acceleration from rest (slow start)',
-      'out': 'Deceleration to rest (slow end)',
-      'inOut': 'Acceleration then deceleration',
-      'bounce': 'Playful overshoot effect',
-      'sharp': 'Quick, decisive motion',
-      'smooth': 'Gentle, flowing motion',
-      'elastic': 'Spring-like motion with overshoot',
+      linear: 'Constant speed throughout animation',
+      default: 'Subtle ease for most UI interactions',
+      in: 'Acceleration from rest (slow start)',
+      out: 'Deceleration to rest (slow end)',
+      inOut: 'Acceleration then deceleration',
+      bounce: 'Playful overshoot effect',
+      sharp: 'Quick, decisive motion',
+      smooth: 'Gentle, flowing motion',
+      elastic: 'Spring-like motion with overshoot',
     };
     return descriptions[name] || 'Custom easing function';
   }
 
   function getPresetDescription(name: string): string {
     const descriptions: Record<string, string> = {
-      'button': 'Optimized for button hover and focus states',
-      'modal': 'Smooth modal and dialog enter/exit',
-      'dropdown': 'Quick dropdown and menu reveals',
-      'page': 'Page transitions and route changes',
-      'tooltip': 'Fast tooltip appearance and disappearance',
-      'spinner': 'Continuous loading spinner rotation',
-      'accordion': 'Smooth accordion expand/collapse',
-      'tabs': 'Tab switching and content changes',
-      'validation': 'Form validation feedback with bounce',
-      'notification': 'Notification slide-in with spring',
+      button: 'Optimized for button hover and focus states',
+      modal: 'Smooth modal and dialog enter/exit',
+      dropdown: 'Quick dropdown and menu reveals',
+      page: 'Page transitions and route changes',
+      tooltip: 'Fast tooltip appearance and disappearance',
+      spinner: 'Continuous loading spinner rotation',
+      accordion: 'Smooth accordion expand/collapse',
+      tabs: 'Tab switching and content changes',
+      validation: 'Form validation feedback with bounce',
+      notification: 'Notification slide-in with spring',
     };
     return descriptions[name] || 'Custom animation preset';
   }
@@ -1519,15 +1741,15 @@ const MotionTokensTemplate = () => {
   return (
     <div className="space-y-12 max-w-7xl">
       <div className="space-y-4">
-        <Heading level="h1">
-          Motion & Animation Tokens
-        </Heading>
+        <Heading level="h1">Motion & Animation Tokens</Heading>
         <Text variant="lead">
-          Consistent timing and easing for smooth, purposeful animations that enhance user experience.
+          Consistent timing and easing for smooth, purposeful animations that enhance user
+          experience.
         </Text>
         <div className="bg-muted/30 border border-border/50 rounded-xl p-4">
           <Text variant="small" className="text-muted-foreground">
-            <strong>Tip:</strong> Click on timing values to copy them. Click "Preview" buttons to see animations in action.
+            <strong>Tip:</strong> Click on timing values to copy them. Click "Preview" buttons to
+            see animations in action.
           </Text>
         </div>
       </div>
@@ -1550,14 +1772,18 @@ const MotionTokensTemplate = () => {
               <div key={name} className="border border-border rounded-lg p-6 space-y-4">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-3">
-                    <Text weight="semibold" className="capitalize">{name}</Text>
+                    <Text weight="semibold" className="capitalize">
+                      {name}
+                    </Text>
                     <CopyButton text={value} itemKey={`duration-${name}`}>
-                      <Badge variant="secondary" size="sm">{value}</Badge>
+                      <Badge variant="secondary" size="sm">
+                        {value}
+                      </Badge>
                     </CopyButton>
                   </div>
-                  <Button 
-                    variant="outline" 
-                    size="sm" 
+                  <Button
+                    variant="outline"
+                    size="sm"
                     onClick={() => triggerAnimation(animKey)}
                     disabled={isActive}
                   >
@@ -1568,13 +1794,13 @@ const MotionTokensTemplate = () => {
                   {description}
                 </Text>
                 <div className="bg-muted/50 rounded-lg p-4 overflow-hidden">
-                  <div 
+                  <div
                     className={`h-3 bg-gradient-to-r from-primary to-secondary rounded-full transition-all ${
                       isActive ? 'w-full' : 'w-[20%]'
                     }`}
-                    style={{ 
+                    style={{
                       transitionDuration: isActive ? value : '150ms',
-                      transitionTimingFunction: 'ease-out'
+                      transitionTimingFunction: 'ease-out',
                     }}
                   />
                 </div>
@@ -1602,10 +1828,12 @@ const MotionTokensTemplate = () => {
               <div key={name} className="border border-border rounded-lg p-6 space-y-4">
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
-                    <Text weight="semibold" className="capitalize">{name}</Text>
-                    <Button 
-                      variant="outline" 
-                      size="sm" 
+                    <Text weight="semibold" className="capitalize">
+                      {name}
+                    </Text>
+                    <Button
+                      variant="outline"
+                      size="sm"
                       onClick={() => triggerAnimation(animKey)}
                       disabled={isActive}
                     >
@@ -1613,7 +1841,10 @@ const MotionTokensTemplate = () => {
                     </Button>
                   </div>
                   <CopyButton text={value} itemKey={`easing-${name}`}>
-                    <Text variant="code" className="text-xs text-muted-foreground block bg-muted/50 p-2 rounded hover:bg-muted transition-colors">
+                    <Text
+                      variant="code"
+                      className="text-xs text-muted-foreground block bg-muted/50 p-2 rounded hover:bg-muted transition-colors"
+                    >
                       {value.length > 30 ? `${value.substring(0, 30)}...` : value}
                     </Text>
                   </CopyButton>
@@ -1622,11 +1853,11 @@ const MotionTokensTemplate = () => {
                   </Text>
                 </div>
                 <div className="bg-muted/50 rounded-lg p-4 h-16 relative overflow-hidden">
-                  <div 
+                  <div
                     className={`absolute w-4 h-4 bg-primary rounded-full transition-all duration-1000 ${
                       isActive ? 'translate-x-[200px]' : 'translate-x-0'
                     }`}
-                    style={{ 
+                    style={{
                       transitionTimingFunction: value,
                       top: '50%',
                       transform: `translateY(-50%) translateX(${isActive ? '200px' : '0px'})`,
@@ -1660,10 +1891,12 @@ const MotionTokensTemplate = () => {
               <div key={name} className="border border-border rounded-lg p-6 space-y-4">
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
-                    <Text weight="semibold" className="capitalize">{name}</Text>
-                    <Button 
-                      variant="outline" 
-                      size="sm" 
+                    <Text weight="semibold" className="capitalize">
+                      {name}
+                    </Text>
+                    <Button
+                      variant="outline"
+                      size="sm"
                       onClick={() => triggerAnimation(animKey)}
                       disabled={isActive}
                     >
@@ -1672,7 +1905,9 @@ const MotionTokensTemplate = () => {
                   </div>
                   <div className="flex items-center space-x-2">
                     <CopyButton text={duration} itemKey={`preset-${name}-duration`}>
-                      <Badge variant="secondary" size="sm">{duration}</Badge>
+                      <Badge variant="secondary" size="sm">
+                        {duration}
+                      </Badge>
                     </CopyButton>
                     <CopyButton text={easing} itemKey={`preset-${name}-easing`}>
                       <Badge variant="outline" size="sm">
@@ -1685,16 +1920,18 @@ const MotionTokensTemplate = () => {
                   </Text>
                 </div>
                 <div className="bg-muted/50 rounded-lg p-4 min-h-[4rem] flex items-center justify-center">
-                  <div 
+                  <div
                     className={`px-4 py-2 bg-primary text-primary-foreground rounded transition-all ${
                       isActive ? 'scale-110 shadow-lg' : 'scale-100'
                     }`}
-                    style={{ 
+                    style={{
                       transitionDuration: duration,
                       transitionTimingFunction: easing,
                     }}
                   >
-                    <Text variant="small" weight="medium">{name}</Text>
+                    <Text variant="small" weight="medium">
+                      {name}
+                    </Text>
                   </div>
                 </div>
               </div>
@@ -1709,41 +1946,48 @@ const MotionTokensTemplate = () => {
           Keyframe Animations
         </Heading>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {Object.entries(motion.keyframes).slice(0, 6).map(([name, keyframe]) => {
-            const animKey = `keyframe-${name}`;
-            const isActive = isAnimating[animKey];
-            return (
-              <div key={name} className="border border-border rounded-lg p-6 space-y-4">
-                <div className="flex items-center justify-between">
-                  <Text weight="semibold" className="capitalize">{name.replace(/([A-Z])/g, ' $1').trim()}</Text>
-                  <Button 
-                    variant="outline" 
-                    size="sm" 
-                    onClick={() => triggerAnimation(animKey)}
-                    disabled={isActive}
-                  >
-                    {isActive ? 'Playing...' : 'Preview'}
-                  </Button>
+          {Object.entries(motion.keyframes)
+            .slice(0, 6)
+            .map(([name, keyframe]) => {
+              const animKey = `keyframe-${name}`;
+              const isActive = isAnimating[animKey];
+              return (
+                <div key={name} className="border border-border rounded-lg p-6 space-y-4">
+                  <div className="flex items-center justify-between">
+                    <Text weight="semibold" className="capitalize">
+                      {name.replace(/([A-Z])/g, ' $1').trim()}
+                    </Text>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => triggerAnimation(animKey)}
+                      disabled={isActive}
+                    >
+                      {isActive ? 'Playing...' : 'Preview'}
+                    </Button>
+                  </div>
+                  <div className="bg-muted/50 rounded-lg p-4 h-16 flex items-center justify-center overflow-hidden">
+                    <div
+                      className={`w-8 h-8 bg-primary rounded ${
+                        isActive ? getAnimationClass(name) : ''
+                      }`}
+                      style={{
+                        animationDuration: isActive ? '1s' : '0s',
+                        animationFillMode: 'forwards',
+                      }}
+                    />
+                  </div>
+                  <CopyButton text={JSON.stringify(keyframe, null, 2)} itemKey={`keyframe-${name}`}>
+                    <Text
+                      variant="code"
+                      className="text-xs text-muted-foreground bg-muted/50 p-2 rounded block hover:bg-muted transition-colors"
+                    >
+                      @keyframes {name}
+                    </Text>
+                  </CopyButton>
                 </div>
-                <div className="bg-muted/50 rounded-lg p-4 h-16 flex items-center justify-center overflow-hidden">
-                  <div 
-                    className={`w-8 h-8 bg-primary rounded ${
-                      isActive ? getAnimationClass(name) : ''
-                    }`}
-                    style={{
-                      animationDuration: isActive ? '1s' : '0s',
-                      animationFillMode: 'forwards',
-                    }}
-                  />
-                </div>
-                <CopyButton text={JSON.stringify(keyframe, null, 2)} itemKey={`keyframe-${name}`}>
-                  <Text variant="code" className="text-xs text-muted-foreground bg-muted/50 p-2 rounded block hover:bg-muted transition-colors">
-                    @keyframes {name}
-                  </Text>
-                </CopyButton>
-              </div>
-            );
-          })}
+              );
+            })}
         </div>
       </div>
 
@@ -1759,8 +2003,9 @@ const MotionTokensTemplate = () => {
               <Text weight="semibold">Reduced Motion Support</Text>
             </div>
             <Text variant="small" className="text-muted-foreground leading-relaxed">
-              All animations automatically respect the user's motion preferences via <code>prefers-reduced-motion</code>. 
-              When reduced motion is preferred, animations are either disabled or significantly reduced.
+              All animations automatically respect the user's motion preferences via{' '}
+              <code>prefers-reduced-motion</code>. When reduced motion is preferred, animations are
+              either disabled or significantly reduced.
             </Text>
             <div className="bg-background/50 rounded-lg p-4">
               <CopyButton text={motion.reducedMotion.mediaQuery} itemKey="reduced-motion-query">
@@ -1770,17 +2015,24 @@ const MotionTokensTemplate = () => {
               </CopyButton>
             </div>
           </div>
-          
+
           <div className="space-y-4">
             <div className="flex items-center space-x-2">
               <div className="w-3 h-3 bg-warning rounded-full"></div>
               <Text weight="semibold">Performance Guidelines</Text>
             </div>
             <div className="space-y-3 text-sm text-muted-foreground leading-relaxed">
-              <div>• Use <code>transform</code> and <code>opacity</code> for the smoothest animations</div>
-              <div>• Avoid animating layout properties like <code>width</code>, <code>height</code>, <code>padding</code></div>
+              <div>
+                • Use <code>transform</code> and <code>opacity</code> for the smoothest animations
+              </div>
+              <div>
+                • Avoid animating layout properties like <code>width</code>, <code>height</code>,{' '}
+                <code>padding</code>
+              </div>
               <div>• Keep animation durations under 500ms for UI interactions</div>
-              <div>• Use <code>will-change</code> sparingly and remove after animation</div>
+              <div>
+                • Use <code>will-change</code> sparingly and remove after animation
+              </div>
               <div>• Test performance on lower-end devices</div>
             </div>
           </div>
@@ -1789,47 +2041,85 @@ const MotionTokensTemplate = () => {
 
       <style jsx>{`
         @keyframes fadeIn {
-          0% { opacity: 0; }
-          100% { opacity: 1; }
+          0% {
+            opacity: 0;
+          }
+          100% {
+            opacity: 1;
+          }
         }
         @keyframes slideIn {
-          0% { transform: translateX(-100%); }
-          100% { transform: translateX(0); }
+          0% {
+            transform: translateX(-100%);
+          }
+          100% {
+            transform: translateX(0);
+          }
         }
         @keyframes scaleIn {
-          0% { transform: scale(0.8); }
-          100% { transform: scale(1); }
+          0% {
+            transform: scale(0.8);
+          }
+          100% {
+            transform: scale(1);
+          }
         }
         @keyframes bounce {
-          0%, 100% { transform: translateY(-25%); }
-          50% { transform: translateY(0); }
+          0%,
+          100% {
+            transform: translateY(-25%);
+          }
+          50% {
+            transform: translateY(0);
+          }
         }
         @keyframes spin {
-          0% { transform: rotate(0deg); }
-          100% { transform: rotate(360deg); }
+          0% {
+            transform: rotate(0deg);
+          }
+          100% {
+            transform: rotate(360deg);
+          }
         }
         @keyframes pulse {
-          0%, 100% { opacity: 1; }
-          50% { opacity: 0.5; }
+          0%,
+          100% {
+            opacity: 1;
+          }
+          50% {
+            opacity: 0.5;
+          }
         }
-        .animate-fade-in { animation: fadeIn 1s ease-out; }
-        .animate-slide-in { animation: slideIn 1s ease-out; }
-        .animate-scale-in { animation: scaleIn 1s ease-out; }
-        .animate-bounce { animation: bounce 1s ease-in-out infinite; }
-        .animate-spin { animation: spin 1s linear infinite; }
-        .animate-pulse { animation: pulse 1s ease-in-out infinite; }
+        .animate-fade-in {
+          animation: fadeIn 1s ease-out;
+        }
+        .animate-slide-in {
+          animation: slideIn 1s ease-out;
+        }
+        .animate-scale-in {
+          animation: scaleIn 1s ease-out;
+        }
+        .animate-bounce {
+          animation: bounce 1s ease-in-out infinite;
+        }
+        .animate-spin {
+          animation: spin 1s linear infinite;
+        }
+        .animate-pulse {
+          animation: pulse 1s ease-in-out infinite;
+        }
       `}</style>
     </div>
   );
 
   function getAnimationClass(name: string): string {
     const classMap: Record<string, string> = {
-      'fadeIn': 'animate-fade-in',
-      'slideInLeft': 'animate-slide-in',
-      'scaleIn': 'animate-scale-in',
-      'bounce': 'animate-bounce',
-      'spin': 'animate-spin',
-      'pulse': 'animate-pulse',
+      fadeIn: 'animate-fade-in',
+      slideInLeft: 'animate-slide-in',
+      scaleIn: 'animate-scale-in',
+      bounce: 'animate-bounce',
+      spin: 'animate-spin',
+      pulse: 'animate-pulse',
     };
     return classMap[name] || 'animate-pulse';
   }
