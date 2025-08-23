@@ -38,15 +38,6 @@
   color-scheme: light dark;
 }
 
-/* Universal reset with modern CSS */
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
 /* Base typography and color */
 html {
   /* Use rem for scalable typography */

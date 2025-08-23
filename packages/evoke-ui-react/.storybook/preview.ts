@@ -1,6 +1,9 @@
 import type { Preview } from '@storybook/react-vite';
 import { withThemeProvider } from './decorators/withThemeProvider';
 
+import '../src/styles/tailwind.css';
+import '../src/styles/index.scss';
+
 const preview: Preview = {
   parameters: {
     actions: {
