@@ -4,7 +4,6 @@ import { Heading } from './atoms/Heading/Heading';
 import { Text } from './atoms/Text/Text';
 import { Badge } from './atoms/Badge/Badge';
 import { Button } from './atoms/Button/Button';
-import { useTheme } from './hooks/useTheme';
 import { colors } from './tokens/colors';
 import { typography } from './tokens/typography';
 import { spacingSystem } from './tokens/spacing';
@@ -28,9 +27,8 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-// Enhanced Color Tokens with Interactive Theme Switching
+// Enhanced Color Tokens
 const ColorTokensTemplate = () => {
-  const { isDark, toggleTheme } = useTheme();
   const [copiedItem, setCopiedItem] = useState<string | null>(null);
 
   const copyToClipboard = async (text: string, key: string) => {
@@ -65,8 +63,7 @@ const ColorTokensTemplate = () => {
               className={`w-16 h-16 rounded-xl border-2 border-border/50 flex-shrink-0 shadow-sm transition-transform group-hover:scale-105 cursor-pointer ${tailwindClass}`}
               onClick={() => copyToClipboard(tailwindClass, swatchKey)}
               title={`Click to copy Tailwind class: ${tailwindClass}`}
-            >
-            </div>
+            ></div>
             {isCopied && (
               <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 px-2 py-1 bg-foreground text-background text-xs rounded whitespace-nowrap animate-pulse z-50">
                 Copied!
@@ -79,7 +76,7 @@ const ColorTokensTemplate = () => {
                 {name}
               </Text>
               <Badge variant="secondary" size="sm">
-                Tailwind
+                OKLCH
               </Badge>
             </div>
             <div className="space-y-1">
@@ -211,28 +208,17 @@ const ColorTokensTemplate = () => {
   return (
     <div className="space-y-12 max-w-7xl">
       <div className="space-y-6">
-        <div className="flex items-center justify-between">
-          <div className="space-y-2">
-            <Heading level="h1">Color Tokens</Heading>
-            <Text variant="lead">
-              Our color system uses OKLCH color space for perceptually uniform color manipulation
-              and better accessibility.
-            </Text>
-          </div>
-          <div className="flex items-center space-x-3">
-            <Badge variant={isDark ? 'default' : 'secondary'} size="lg">
-              {isDark ? 'Dark' : 'Light'} Theme
-            </Badge>
-            <Button variant="outline" size="sm" onClick={toggleTheme}>
-              Switch to {isDark ? 'Light' : 'Dark'}
-            </Button>
-          </div>
+        <div className="space-y-2">
+          <Heading level="h1">Color Tokens</Heading>
+          <Text variant="lead">
+            Our color system uses OKLCH color space for perceptually uniform color manipulation and
+            better accessibility.
+          </Text>
         </div>
 
         <div className="bg-muted/30 border border-border/50 rounded-xl p-4 space-y-2">
           <Text variant="small" className="text-muted-foreground">
             <strong>Tip:</strong> Click on color swatches or values to copy them to your clipboard.
-            Toggle between light and dark themes to see how colors adapt.
           </Text>
           <Text variant="small" className="text-muted-foreground">
             🎨 Color swatches use Tailwind classes that automatically use CSS variables. Click
@@ -1124,7 +1110,6 @@ export const SpacingTokens: Story = {
 const ShadowTokensTemplate = () => {
   const [copiedItem, setCopiedItem] = useState<string | null>(null);
   const [selectedElevation, setSelectedElevation] = useState<string>('md');
-  const { isDark } = useTheme();
 
   const copyToClipboard = async (text: string, key: string) => {
     try {
@@ -1168,7 +1153,6 @@ const ShadowTokensTemplate = () => {
     description: getShadowDescription(name),
     zIndex: getZIndexForShadow(name),
   }));
-
 
   const zIndexData = Object.entries(elevation.zIndex).map(([name, value]) => ({
     name,
@@ -1238,25 +1222,16 @@ const ShadowTokensTemplate = () => {
   return (
     <div className="space-y-12 max-w-7xl">
       <div className="space-y-4">
-        <div className="flex items-center justify-between">
-          <div className="space-y-2">
-            <Heading level="h1">Shadow & Elevation Tokens</Heading>
-            <Text variant="lead">
-              Elevation system for creating depth and visual hierarchy with shadows and z-index
-              layers.
-            </Text>
-          </div>
-          <Badge variant={isDark ? 'default' : 'secondary'} size="lg">
-            {isDark ? 'Dark' : 'Light'} Shadows
-          </Badge>
+        <div className="space-y-2">
+          <Heading level="h1">Shadow & Elevation Tokens</Heading>
+          <Text variant="lead">
+            Elevation system for creating depth and visual hierarchy with shadows and z-index
+            layers.
+          </Text>
         </div>
         <div className="bg-muted/30 border border-border/50 rounded-xl p-4 space-y-2">
           <Text variant="small" className="text-muted-foreground">
-            <strong>Tip:</strong> Click on shadow values to copy them. Shadows automatically adapt
-            for dark mode.
-          </Text>
-          <Text variant="small" className="text-muted-foreground">
-            🌑 Dark mode uses enhanced shadows with higher opacity for better visibility.
+            <strong>Tip:</strong> Click on shadow values to copy them.
           </Text>
         </div>
       </div>
@@ -1295,10 +1270,7 @@ const ShadowTokensTemplate = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {shadowData.map(({ name, value, description, zIndex }) => {
             const isSelected = name === selectedElevation;
-            const shadowValue =
-              isDark && elevation.darkShadow[name as keyof typeof elevation.darkShadow]
-                ? (elevation.darkShadow[name as keyof typeof elevation.darkShadow] as string)
-                : value;
+            const shadowValue = value;
 
             // Special handling for different shadow types
             const displayShadow = name === 'none' ? 'none' : shadowValue;

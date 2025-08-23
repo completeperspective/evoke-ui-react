@@ -1,5 +1,4 @@
 import type { Preview } from '@storybook/react-vite';
-import { withThemeProvider } from './decorators/withThemeProvider';
 
 import './globals.css';
 
@@ -24,7 +23,7 @@ const preview: Preview = {
       canvas: { sourceState: 'shown' },
     },
     backgrounds: {
-      disable: true, // We use our own theme switcher instead
+      default: 'light',
     },
     viewport: {
       viewports: {
@@ -56,23 +55,6 @@ const preview: Preview = {
             height: '900px',
           },
         },
-      },
-    },
-  },
-  decorators: [withThemeProvider],
-  globalTypes: {
-    theme: {
-      name: 'Theme',
-      description: 'Global theme for components',
-      toolbar: {
-        icon: 'paintbrush',
-        items: [
-          { value: 'light', title: 'Light' },
-          { value: 'dark', title: 'Dark' },
-          { value: 'system', title: 'System' },
-        ],
-        showName: true,
-        dynamicTitle: true,
       },
     },
   },

@@ -47,14 +47,10 @@ export {
 // Utility functions
 export { cn } from './utils/cn';
 
-// Theme utilities
+// Color utilities
 export * from './utils/colors';
-export * from './utils/theme';
-export * from './utils/storage';
 
-// Theme system
-export * from './providers';
-export * from './hooks';
+// Types
 export * from './types';
 
 // Component exports - Atomic Design Architecture

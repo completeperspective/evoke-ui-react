@@ -6,25 +6,13 @@
 // Global type definitions (CSS modules, etc.)
 import './global.d';
 
-// Theme-related types
+// Color-related types
 export type {
   OklchColor,
-  ThemeConfig,
   ColorTokenOverride,
-  ColorTokens,
-  TypographyTokens,
-  SpacingTokens,
-  MotionTokens,
-  ComponentTokens,
-  RuntimeThemeConfig,
-  ThemeContextValue,
-  ThemeProviderProps,
-  CSSVariableConfig,
-  StoredThemePreference,
-  ThemeSwitchOptions,
 } from './theme';
 
-export { defaultThemes, isValidThemeConfig, isValidOklchColor } from './theme';
+export { isValidOklchColor } from './theme';
 
 // Re-export token types from tokens for convenience (with explicit renaming to avoid conflicts)
 export type { 

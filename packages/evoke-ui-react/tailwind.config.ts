@@ -74,10 +74,10 @@ const config: Config = {
         },
 
         // Status Colors
-        success: 'oklch(var(--ui-color-status-success))',
-        warning: 'oklch(var(--ui-color-status-warning))',
-        error: 'oklch(var(--ui-color-status-error))',
-        info: 'oklch(var(--ui-color-status-info))',
+        success: 'var(--ui-color-success)',
+        warning: 'oklch(var(--ui-color-warning))',
+        error: 'oklch(var(--ui-color-error))',
+        info: 'oklch(var(--ui-color-info))',
       },
 
       fontFamily: {

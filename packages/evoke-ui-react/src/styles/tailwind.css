@@ -1,9 +1,5 @@
 @import 'tailwindcss';
 
-:root {
-  --ui-color-primary: 0.7 0.17 200.1;
-}
-
 /**
  * Tailwind CSS v4 Configuration with OKLCH Design Tokens
  * Using CSS-first configuration with @theme directive
@@ -58,10 +54,10 @@
   --color-gray-950: oklch(var(--ui-color-gray-950));
 
   /* Status Colors */
-  --color-success: oklch(var(--ui-color-status-success));
-  --color-warning: oklch(var(--ui-color-status-warning));
-  --color-error: oklch(var(--ui-color-status-error));
-  --color-info: oklch(var(--ui-color-status-info));
+  --color-success: oklch(var(--ui-color-success));
+  --color-warning: oklch(var(--ui-color-warning));
+  --color-error: oklch(var(--ui-color-error));
+  --color-info: oklch(var(--ui-color-info));
 
   /* ================================
    * TYPOGRAPHY SYSTEM

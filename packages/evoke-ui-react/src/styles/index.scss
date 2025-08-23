@@ -8,7 +8,7 @@
  * ================================ */
 
 // Import design tokens as CSS variables
-//@use 'tokens';
+@use 'tokens';
 
 // Note: Tailwind CSS is processed by Vite plugin, not imported here
 
@@ -17,10 +17,10 @@
  * ================================ */
 
 // Component-specific styles (will be populated as components are added)
-//@use 'components';
+@use 'components';
 
 // Custom utility classes
-//@use 'utilities';
+@use 'utilities';
 
 /* ================================
  * BASE STYLES
