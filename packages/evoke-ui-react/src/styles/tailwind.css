@@ -148,6 +148,34 @@
   --spacing-96: var(--ui-space-96);
 
   /* ================================
+   * T-SHIRT SIZED SPACING TOKENS
+   * Developer-friendly semantic spacing
+   * ================================ */
+
+  /* T-shirt sizes for semantic spacing */
+  --spacing-xxs: var(--ui-space-xxs);
+  --spacing-xs: var(--ui-space-xs);
+  --spacing-sm: var(--ui-space-sm);
+  --spacing-md: var(--ui-space-md);
+  --spacing-lg: var(--ui-space-lg);
+  --spacing-xl: var(--ui-space-xl);
+  --spacing-xxl: var(--ui-space-xxl);
+  --spacing-xxxl: var(--ui-space-xxxl);
+
+  /* Component-specific semantic tokens */
+  --spacing-component-xs: var(--ui-space-component-xs);
+  --spacing-component-sm: var(--ui-space-component-sm);
+  --spacing-component-md: var(--ui-space-component-md);
+  --spacing-component-lg: var(--ui-space-component-lg);
+
+  /* Layout semantic tokens */
+  --spacing-layout-xs: var(--ui-space-layout-xs);
+  --spacing-layout-sm: var(--ui-space-layout-sm);
+  --spacing-layout-md: var(--ui-space-layout-md);
+  --spacing-layout-lg: var(--ui-space-layout-lg);
+  --spacing-layout-xl: var(--ui-space-layout-xl);
+
+  /* ================================
    * BORDER RADIUS
    * ================================ */
 
@@ -196,3 +224,91 @@
   --shadow-2xl: var(--ui-shadow-2xl);
   --shadow-inner: var(--ui-shadow-inner);
 }
+
+/* ================================
+ * CUSTOM T-SHIRT SIZED UTILITY CLASSES
+ * Developer-friendly semantic spacing utilities
+ * ================================ */
+
+/* Padding Classes - T-shirt sizes */
+.p-xxs { padding: var(--spacing-xxs); }
+.p-xs { padding: var(--spacing-xs); }
+.p-sm { padding: var(--spacing-sm); }
+.p-md { padding: var(--spacing-md); }
+.p-lg { padding: var(--spacing-lg); }
+.p-xl { padding: var(--spacing-xl); }
+.p-xxl { padding: var(--spacing-xxl); }
+.p-xxxl { padding: var(--spacing-xxxl); }
+
+/* Padding X-axis Classes */
+.px-xxs { padding-left: var(--spacing-xxs); padding-right: var(--spacing-xxs); }
+.px-xs { padding-left: var(--spacing-xs); padding-right: var(--spacing-xs); }
+.px-sm { padding-left: var(--spacing-sm); padding-right: var(--spacing-sm); }
+.px-md { padding-left: var(--spacing-md); padding-right: var(--spacing-md); }
+.px-lg { padding-left: var(--spacing-lg); padding-right: var(--spacing-lg); }
+.px-xl { padding-left: var(--spacing-xl); padding-right: var(--spacing-xl); }
+.px-xxl { padding-left: var(--spacing-xxl); padding-right: var(--spacing-xxl); }
+.px-xxxl { padding-left: var(--spacing-xxxl); padding-right: var(--spacing-xxxl); }
+
+/* Padding Y-axis Classes */
+.py-xxs { padding-top: var(--spacing-xxs); padding-bottom: var(--spacing-xxs); }
+.py-xs { padding-top: var(--spacing-xs); padding-bottom: var(--spacing-xs); }
+.py-sm { padding-top: var(--spacing-sm); padding-bottom: var(--spacing-sm); }
+.py-md { padding-top: var(--spacing-md); padding-bottom: var(--spacing-md); }
+.py-lg { padding-top: var(--spacing-lg); padding-bottom: var(--spacing-lg); }
+.py-xl { padding-top: var(--spacing-xl); padding-bottom: var(--spacing-xl); }
+.py-xxl { padding-top: var(--spacing-xxl); padding-bottom: var(--spacing-xxl); }
+.py-xxxl { padding-top: var(--spacing-xxxl); padding-bottom: var(--spacing-xxxl); }
+
+/* Margin Classes - T-shirt sizes */
+.m-xxs { margin: var(--spacing-xxs); }
+.m-xs { margin: var(--spacing-xs); }
+.m-sm { margin: var(--spacing-sm); }
+.m-md { margin: var(--spacing-md); }
+.m-lg { margin: var(--spacing-lg); }
+.m-xl { margin: var(--spacing-xl); }
+.m-xxl { margin: var(--spacing-xxl); }
+.m-xxxl { margin: var(--spacing-xxxl); }
+
+/* Margin X-axis Classes */
+.mx-xxs { margin-left: var(--spacing-xxs); margin-right: var(--spacing-xxs); }
+.mx-xs { margin-left: var(--spacing-xs); margin-right: var(--spacing-xs); }
+.mx-sm { margin-left: var(--spacing-sm); margin-right: var(--spacing-sm); }
+.mx-md { margin-left: var(--spacing-md); margin-right: var(--spacing-md); }
+.mx-lg { margin-left: var(--spacing-lg); margin-right: var(--spacing-lg); }
+.mx-xl { margin-left: var(--spacing-xl); margin-right: var(--spacing-xl); }
+.mx-xxl { margin-left: var(--spacing-xxl); margin-right: var(--spacing-xxl); }
+.mx-xxxl { margin-left: var(--spacing-xxxl); margin-right: var(--spacing-xxxl); }
+
+/* Margin Y-axis Classes */
+.my-xxs { margin-top: var(--spacing-xxs); margin-bottom: var(--spacing-xxs); }
+.my-xs { margin-top: var(--spacing-xs); margin-bottom: var(--spacing-xs); }
+.my-sm { margin-top: var(--spacing-sm); margin-bottom: var(--spacing-sm); }
+.my-md { margin-top: var(--spacing-md); margin-bottom: var(--spacing-md); }
+.my-lg { margin-top: var(--spacing-lg); margin-bottom: var(--spacing-lg); }
+.my-xl { margin-top: var(--spacing-xl); margin-bottom: var(--spacing-xl); }
+.my-xxl { margin-top: var(--spacing-xxl); margin-bottom: var(--spacing-xxl); }
+.my-xxxl { margin-top: var(--spacing-xxxl); margin-bottom: var(--spacing-xxxl); }
+
+/* Gap Classes - T-shirt sizes */
+.gap-xxs { gap: var(--spacing-xxs); }
+.gap-xs { gap: var(--spacing-xs); }
+.gap-sm { gap: var(--spacing-sm); }
+.gap-md { gap: var(--spacing-md); }
+.gap-lg { gap: var(--spacing-lg); }
+.gap-xl { gap: var(--spacing-xl); }
+.gap-xxl { gap: var(--spacing-xxl); }
+.gap-xxxl { gap: var(--spacing-xxxl); }
+
+/* Component Padding Classes */
+.p-component-xs { padding: var(--spacing-component-xs); }
+.p-component-sm { padding: var(--spacing-component-sm); }
+.p-component-md { padding: var(--spacing-component-md); }
+.p-component-lg { padding: var(--spacing-component-lg); }
+
+/* Layout Spacing Classes */
+.space-layout-xs { margin: var(--spacing-layout-xs); }
+.space-layout-sm { margin: var(--spacing-layout-sm); }
+.space-layout-md { margin: var(--spacing-layout-md); }
+.space-layout-lg { margin: var(--spacing-layout-lg); }
+.space-layout-xl { margin: var(--spacing-layout-xl); }
