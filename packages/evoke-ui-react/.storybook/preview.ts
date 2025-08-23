@@ -1,9 +1,7 @@
 import type { Preview } from '@storybook/react-vite';
 
-import './globals.css';
-
 import '../src/styles/tailwind.css';
-//import '../src/styles/index.scss';
+import '../src/styles/index.scss';
 
 // consumer overriders
 

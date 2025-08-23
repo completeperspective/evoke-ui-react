@@ -59,11 +59,9 @@ const SpacingTokensTemplate = () => {
           {/* Enhanced Header */}
           <div className="flex items-center justify-between pb-4 border-b border-border/20">
             <div className="space-y-2">
-              <div className="flex items-center space-x-3">
-                <Text weight="semibold" className="text-lg">
-                  {name}
-                </Text>
-                <Badge variant="outline" size="sm" className="font-mono text-xs">
+              <div className="flex items-center gap-sm">
+                <Text>{name}</Text>
+                <Badge variant="info" size="sm" className="font-mono text-xs ml-10">
                   {pixels}
                 </Badge>
               </div>
@@ -93,11 +91,7 @@ const SpacingTokensTemplate = () => {
             <div className="space-y-3">
               <div className="flex items-center space-x-2">
                 <div className="w-3 h-3 bg-success rounded-full"></div>
-                <Text
-                  variant="small"
-                  weight="medium"
-                  className="text-success"
-                >
+                <Text variant="small" weight="medium" className="text-success">
                   Margin
                 </Text>
               </div>
@@ -115,11 +109,7 @@ const SpacingTokensTemplate = () => {
               <div className="space-y-3">
                 <div className="flex items-center space-x-2">
                   <div className="w-3 h-3 bg-warning rounded-full"></div>
-                  <Text
-                    variant="small"
-                    weight="medium"
-                    className="text-warning"
-                  >
+                  <Text variant="small" weight="medium" className="text-warning">
                     Gap (Flex)
                   </Text>
                 </div>
@@ -205,7 +195,7 @@ const SpacingTokensTemplate = () => {
     'T-Shirt Sizes (Semantic)': [
       {
         name: 'XXS',
-        cssVar: '--ui-space-xxs',
+        cssVar: '--ui-spacing-xxs',
         tailwindClass: 'p-xxs / m-xxs / gap-xxs',
         value: '0.125rem',
         pixels: '2px',
@@ -214,7 +204,7 @@ const SpacingTokensTemplate = () => {
       },
       {
         name: 'XS',
-        cssVar: '--ui-space-xs',
+        cssVar: '--ui-spacing-xs',
         tailwindClass: 'p-xs / m-xs / gap-xs',
         value: '0.25rem',
         pixels: '4px',
@@ -223,7 +213,7 @@ const SpacingTokensTemplate = () => {
       },
       {
         name: 'SM',
-        cssVar: '--ui-space-sm',
+        cssVar: '--ui-spacing-sm',
         tailwindClass: 'p-sm / m-sm / gap-sm',
         value: '0.5rem',
         pixels: '8px',
@@ -232,7 +222,7 @@ const SpacingTokensTemplate = () => {
       },
       {
         name: 'MD',
-        cssVar: '--ui-space-md',
+        cssVar: '--ui-spacing-md',
         tailwindClass: 'p-md / m-md / gap-md',
         value: '1rem',
         pixels: '16px',
@@ -241,7 +231,7 @@ const SpacingTokensTemplate = () => {
       },
       {
         name: 'LG',
-        cssVar: '--ui-space-lg',
+        cssVar: '--ui-spacing-lg',
         tailwindClass: 'p-lg / m-lg / gap-lg',
         value: '1.5rem',
         pixels: '24px',
@@ -250,7 +240,7 @@ const SpacingTokensTemplate = () => {
       },
       {
         name: 'XL',
-        cssVar: '--ui-space-xl',
+        cssVar: '--ui-spacing-xl',
         tailwindClass: 'p-xl / m-xl / gap-xl',
         value: '2rem',
         pixels: '32px',
@@ -259,7 +249,7 @@ const SpacingTokensTemplate = () => {
       },
       {
         name: 'XXL',
-        cssVar: '--ui-space-xxl',
+        cssVar: '--ui-spacing-xxl',
         tailwindClass: 'p-xxl / m-xxl / gap-xxl',
         value: '3rem',
         pixels: '48px',
@@ -268,202 +258,12 @@ const SpacingTokensTemplate = () => {
       },
       {
         name: 'XXXL',
-        cssVar: '--ui-space-xxxl',
+        cssVar: '--ui-spacing-xxxl',
         tailwindClass: 'p-xxxl / m-xxxl / gap-xxxl',
         value: '4rem',
         pixels: '64px',
         description: 'Maximum spacing - extreme visual separation',
         useCase: 'Hero sections, major layout divisions, page headers',
-      },
-    ],
-    'Micro Spacing (0-4px)': [
-      {
-        name: '0',
-        cssVar: '--ui-space-0',
-        tailwindClass: 'p-0 / m-0 / gap-0',
-        value: '0rem',
-        pixels: '0px',
-        description: 'Zero spacing - removes all space between elements',
-        useCase: 'Resetting spacing, tight layouts, overlapping elements',
-      },
-      {
-        name: 'px',
-        cssVar: '--ui-space-px',
-        tailwindClass: 'p-px / m-px',
-        value: '0.0625rem',
-        pixels: '1px',
-        description: 'Single pixel spacing - minimal separation',
-        useCase: 'Hairline borders, subtle separations, precise adjustments',
-      },
-      {
-        name: '0.5',
-        cssVar: '--ui-space-0_5',
-        tailwindClass: 'p-0.5 / m-0.5 / gap-0.5',
-        value: '0.125rem',
-        pixels: '2px',
-        description: 'Extra small spacing - very tight layouts',
-        useCase: 'Dense UI components, compact forms, icon spacing',
-      },
-      {
-        name: '1',
-        cssVar: '--ui-space-1',
-        tailwindClass: 'p-1 / m-1 / gap-1',
-        value: '0.25rem',
-        pixels: '4px',
-        description: 'Small spacing - base unit of 4px grid',
-        useCase: 'Small padding inside buttons, tight element spacing',
-      },
-    ],
-    'Small Spacing (6-12px)': [
-      {
-        name: '1.5',
-        cssVar: '--ui-space-1_5',
-        tailwindClass: 'p-1.5 / m-1.5 / gap-1.5',
-        value: '0.375rem',
-        pixels: '6px',
-        description: 'Small+ spacing - slightly more breathing room',
-        useCase: 'Small component padding, close element relationships',
-      },
-      {
-        name: '2',
-        cssVar: '--ui-space-2',
-        tailwindClass: 'p-2 / m-2 / gap-2',
-        value: '0.5rem',
-        pixels: '8px',
-        description: 'Small spacing - comfortable for small elements',
-        useCase: 'Badge padding, small button spacing, form field gaps',
-      },
-      {
-        name: '2.5',
-        cssVar: '--ui-space-2_5',
-        tailwindClass: 'p-2.5 / m-2.5 / gap-2.5',
-        value: '0.625rem',
-        pixels: '10px',
-        description: 'Small+ spacing - between small and medium',
-        useCase: 'Input field padding, card content spacing',
-      },
-      {
-        name: '3',
-        cssVar: '--ui-space-3',
-        tailwindClass: 'p-3 / m-3 / gap-3',
-        value: '0.75rem',
-        pixels: '12px',
-        description: 'Medium-small spacing - common for component interiors',
-        useCase: 'Button padding, small card padding, list item spacing',
-      },
-    ],
-    'Medium Spacing (14-24px)': [
-      {
-        name: '3.5',
-        cssVar: '--ui-space-3_5',
-        tailwindClass: 'p-3.5 / m-3.5 / gap-3.5',
-        value: '0.875rem',
-        pixels: '14px',
-        description: 'Medium- spacing - slightly larger component spacing',
-        useCase: 'Form field padding, medium button spacing',
-      },
-      {
-        name: '4',
-        cssVar: '--ui-space-4',
-        tailwindClass: 'p-4 / m-4 / gap-4',
-        value: '1rem',
-        pixels: '16px',
-        description: 'Medium spacing - standard component padding',
-        useCase: 'Card padding, section spacing, standard margins',
-      },
-      {
-        name: '5',
-        cssVar: '--ui-space-5',
-        tailwindClass: 'p-5 / m-5 / gap-5',
-        value: '1.25rem',
-        pixels: '20px',
-        description: 'Medium+ spacing - comfortable component breathing room',
-        useCase: 'Large card padding, section separations, content areas',
-      },
-      {
-        name: '6',
-        cssVar: '--ui-space-6',
-        tailwindClass: 'p-6 / m-6 / gap-6',
-        value: '1.5rem',
-        pixels: '24px',
-        description: 'Large-medium spacing - generous component padding',
-        useCase: 'Modal padding, main content areas, form sections',
-      },
-    ],
-    'Large Spacing (28-48px)': [
-      {
-        name: '7',
-        cssVar: '--ui-space-7',
-        tailwindClass: 'p-7 / m-7 / gap-7',
-        value: '1.75rem',
-        pixels: '28px',
-        description: 'Large- spacing - substantial separation',
-        useCase: 'Large section padding, modal content spacing',
-      },
-      {
-        name: '8',
-        cssVar: '--ui-space-8',
-        tailwindClass: 'p-8 / m-8 / gap-8',
-        value: '2rem',
-        pixels: '32px',
-        description: 'Large spacing - major component separation',
-        useCase: 'Page section padding, large card margins, hero sections',
-      },
-      {
-        name: '10',
-        cssVar: '--ui-space-10',
-        tailwindClass: 'p-10 / m-10 / gap-10',
-        value: '2.5rem',
-        pixels: '40px',
-        description: 'Extra large spacing - significant visual breaks',
-        useCase: 'Page margins, section separations, layout spacing',
-      },
-      {
-        name: '12',
-        cssVar: '--ui-space-12',
-        tailwindClass: 'p-12 / m-12 / gap-12',
-        value: '3rem',
-        pixels: '48px',
-        description: 'Very large spacing - major layout separations',
-        useCase: 'Page-level spacing, hero section padding, major separations',
-      },
-    ],
-    'Extra Large Spacing (64px+)': [
-      {
-        name: '16',
-        cssVar: '--ui-space-16',
-        tailwindClass: 'p-16 / m-16 / gap-16',
-        value: '4rem',
-        pixels: '64px',
-        description: 'Extra large spacing - major visual hierarchy',
-        useCase: 'Page header margins, section breaks, landing page spacing',
-      },
-      {
-        name: '20',
-        cssVar: '--ui-space-20',
-        tailwindClass: 'p-20 / m-20 / gap-20',
-        value: '5rem',
-        pixels: '80px',
-        description: 'Huge spacing - dramatic visual separation',
-        useCase: 'Landing page sections, hero area margins',
-      },
-      {
-        name: '24',
-        cssVar: '--ui-space-24',
-        tailwindClass: 'p-24 / m-24 / gap-24',
-        value: '6rem',
-        pixels: '96px',
-        description: 'Massive spacing - major page-level separations',
-        useCase: 'Page-level margins, major section breaks',
-      },
-      {
-        name: '32',
-        cssVar: '--ui-space-32',
-        tailwindClass: 'p-32 / m-32 / gap-32',
-        value: '8rem',
-        pixels: '128px',
-        description: 'Maximum spacing - extreme visual separation',
-        useCase: 'Landing page hero sections, major layout blocks',
       },
     ],
   };
@@ -515,7 +315,7 @@ const SpacingTokensTemplate = () => {
       name: 'Full',
       cssVar: '--ui-radius-full',
       tailwindClass: 'rounded-full',
-      value: '9999px',
+      value: '100%',
       description: 'Full radius - perfect circle/pill shape',
     },
   ];
@@ -526,7 +326,7 @@ const SpacingTokensTemplate = () => {
       <div className="space-y-6">
         <div className="space-y-2">
           <Heading level="h1">Spacing Tokens</Heading>
-          <Text variant="lead">
+          <Text variant="lead" className="mt-14">
             Consistent spacing values built on a 4px grid system for perfect alignment and visual
             rhythm. Use these tokens for padding, margins, and gaps throughout your components.
           </Text>
@@ -600,7 +400,7 @@ const SpacingTokensTemplate = () => {
                     {/* Enhanced Visual demo */}
                     <div className="flex items-center justify-center h-20 bg-accent/5 rounded-lg border border-accent/20">
                       <div
-                        className={`w-16 h-12 bg-accent flex items-center justify-center text-accent-foreground text-xs font-semibold ${radius.tailwindClass}`}
+                        className={`w-16 h-16 bg-accent flex items-center justify-center text-accent-foreground text-xs font-semibold ${radius.tailwindClass}`}
                       >
                         Demo
                       </div>
@@ -658,10 +458,10 @@ const SpacingTokensTemplate = () => {
           Spacing Guidelines
         </Heading>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
           <div className="space-y-3">
             <div className="w-8 h-8 bg-primary/20 rounded-lg flex items-center justify-center">
-              <div className="w-2 h-6 bg-primary rounded-full"></div>
+              <div className="w-4 h-4 bg-primary rounded-full"></div>
             </div>
             <Text weight="semibold">4px Grid System</Text>
             <Text variant="small" className="text-muted-foreground leading-relaxed">
@@ -676,8 +476,8 @@ const SpacingTokensTemplate = () => {
             </div>
             <Text weight="semibold">Component Hierarchy</Text>
             <Text variant="small" className="text-muted-foreground leading-relaxed">
-              Use smaller spacing (1-3) for component interiors, medium (4-8) for sections, and
-              large (12+) for page-level separation.
+              Use smaller spacing (XXS-SM) for component interiors, medium (MD-LG) for sections, and
+              large (XL-XXXL) for page-level separation.
             </Text>
           </div>
 
@@ -707,7 +507,7 @@ const SpacingTokensTemplate = () => {
                 Component Interior:
               </Text>
               <Text variant="small" className="text-muted-foreground">
-                p-3, p-4 (12px, 16px)
+                p-sm, p-md (8px, 16px)
               </Text>
             </div>
             <div>
@@ -715,7 +515,7 @@ const SpacingTokensTemplate = () => {
                 Between Sections:
               </Text>
               <Text variant="small" className="text-muted-foreground">
-                mb-8, mb-12 (32px, 48px)
+                mb-xl, mb-xxl (32px, 48px)
               </Text>
             </div>
             <div>
@@ -723,7 +523,7 @@ const SpacingTokensTemplate = () => {
                 List Item Spacing:
               </Text>
               <Text variant="small" className="text-muted-foreground">
-                gap-2, gap-3 (8px, 12px)
+                gap-xs, gap-sm (4px, 8px)
               </Text>
             </div>
             <div>
@@ -731,7 +531,7 @@ const SpacingTokensTemplate = () => {
                 Page Margins:
               </Text>
               <Text variant="small" className="text-muted-foreground">
-                mx-4, mx-8 (16px, 32px)
+                mx-md, mx-xl (16px, 32px)
               </Text>
             </div>
           </div>

@@ -63,7 +63,7 @@
 .textLines {
   display: flex;
   flex-direction: column;
-  gap: var(--ui-space-2);
+  gap: var(--ui-spacing-xs);
   width: 100%;
   
   .skeleton {
@@ -273,13 +273,13 @@
 // Enhanced responsive adjustments
 @include sm {
   .textLines {
-    gap: var(--ui-space-2_5);
+    gap: var(--ui-spacing-xs);
   }
 }
 
 @include md {
   .textLines {
-    gap: var(--ui-space-3);
+    gap: var(--ui-spacing-sm);
   }
 }
 
@@ -299,7 +299,7 @@
 // Container query support for adaptive sizing
 @container (max-width: 300px) {
   .textLines {
-    gap: var(--ui-space-1_5);
+    gap: var(--ui-spacing-xxs);
     
     .skeleton {
       &.lastLine {
@@ -311,6 +311,6 @@
 
 @container (min-width: 500px) {
   .textLines {
-    gap: var(--ui-space-3);
+    gap: var(--ui-spacing-sm);
   }
 }

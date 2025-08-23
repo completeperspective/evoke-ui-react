@@ -42,7 +42,7 @@
     }
     
     .label {
-      padding: 0 var(--ui-space-4);
+      padding: 0 var(--ui-spacing-md);
       white-space: nowrap;
     }
   }
@@ -57,7 +57,7 @@
     }
     
     .label {
-      padding: var(--ui-space-4) 0;
+      padding: var(--ui-spacing-md) 0;
       writing-mode: vertical-rl;
       text-orientation: mixed;
     }
@@ -124,14 +124,14 @@
   .labeledSeparator {
     &.horizontal {
       .label {
-        padding: 0 var(--ui-space-3);
+        padding: 0 var(--ui-spacing-sm);
         font-size: var(--ui-font-size-xs);
       }
     }
     
     &.vertical {
       .label {
-        padding: var(--ui-space-3) 0;
+        padding: var(--ui-spacing-sm) 0;
         font-size: var(--ui-font-size-xs);
       }
     }

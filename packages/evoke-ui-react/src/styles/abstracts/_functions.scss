@@ -359,15 +359,15 @@
  */
 @function component-size($key) {
   $size-map: (
-    xs: var(--ui-space-6),
+    xs: var(--ui-spacing-lg),
     // 24px
-    sm: var(--ui-space-8),
+    sm: var(--ui-spacing-xl),
     // 32px
-    md: var(--ui-space-10),
-    // 40px
-    lg: var(--ui-space-12),
+    md: var(--ui-spacing-xxl),
     // 48px
-    xl: var(--ui-space-14), // 56px
+    lg: var(--ui-spacing-xxxl),
+    // 64px
+    xl: 4.5rem, // 72px
   );
 
   @if map-has-key($size-map, $key) {

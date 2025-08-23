@@ -110,70 +110,32 @@
   --line-height-9xl: var(--ui-line-height-9xl);
 
   /* ================================
-   * SPACING SYSTEM - 4PX GRID
-   * ================================ */
-
-  --spacing-0: var(--ui-space-0);
-  --spacing-px: var(--ui-space-px);
-  --spacing-0_5: var(--ui-space-0_5);
-  --spacing-1: var(--ui-space-1);
-  --spacing-1_5: var(--ui-space-1_5);
-  --spacing-2: var(--ui-space-2);
-  --spacing-2_5: var(--ui-space-2_5);
-  --spacing-3: var(--ui-space-3);
-  --spacing-3_5: var(--ui-space-3_5);
-  --spacing-4: var(--ui-space-4);
-  --spacing-5: var(--ui-space-5);
-  --spacing-6: var(--ui-space-6);
-  --spacing-7: var(--ui-space-7);
-  --spacing-8: var(--ui-space-8);
-  --spacing-9: var(--ui-space-9);
-  --spacing-10: var(--ui-space-10);
-  --spacing-11: var(--ui-space-11);
-  --spacing-12: var(--ui-space-12);
-  --spacing-14: var(--ui-space-14);
-  --spacing-16: var(--ui-space-16);
-  --spacing-18: var(--ui-space-18);
-  --spacing-20: var(--ui-space-20);
-  --spacing-24: var(--ui-space-24);
-  --spacing-28: var(--ui-space-28);
-  --spacing-32: var(--ui-space-32);
-  --spacing-36: var(--ui-space-36);
-  --spacing-40: var(--ui-space-40);
-  --spacing-44: var(--ui-space-44);
-  --spacing-48: var(--ui-space-48);
-  --spacing-56: var(--ui-space-56);
-  --spacing-64: var(--ui-space-64);
-  --spacing-80: var(--ui-space-80);
-  --spacing-96: var(--ui-space-96);
-
-  /* ================================
    * T-SHIRT SIZED SPACING TOKENS
    * Developer-friendly semantic spacing
    * ================================ */
 
   /* T-shirt sizes for semantic spacing */
-  --spacing-xxs: var(--ui-space-xxs);
-  --spacing-xs: var(--ui-space-xs);
-  --spacing-sm: var(--ui-space-sm);
-  --spacing-md: var(--ui-space-md);
-  --spacing-lg: var(--ui-space-lg);
-  --spacing-xl: var(--ui-space-xl);
-  --spacing-xxl: var(--ui-space-xxl);
-  --spacing-xxxl: var(--ui-space-xxxl);
+  --spacing-xxs: var(--ui-spacing-xxs);
+  --spacing-xs: var(--ui-spacing-xs);
+  --spacing-sm: var(--ui-spacing-sm);
+  --spacing-md: var(--ui-spacing-md);
+  --spacing-lg: var(--ui-spacing-lg);
+  --spacing-xl: var(--ui-spacing-xl);
+  --spacing-xxl: var(--ui-spacing-xxl);
+  --spacing-xxxl: var(--ui-spacing-xxxl);
 
   /* Component-specific semantic tokens */
-  --spacing-component-xs: var(--ui-space-component-xs);
-  --spacing-component-sm: var(--ui-space-component-sm);
-  --spacing-component-md: var(--ui-space-component-md);
-  --spacing-component-lg: var(--ui-space-component-lg);
+  --spacing-component-xs: var(--ui-spacing-component-xs);
+  --spacing-component-sm: var(--ui-spacing-component-sm);
+  --spacing-component-md: var(--ui-spacing-component-md);
+  --spacing-component-lg: var(--ui-spacing-component-lg);
 
   /* Layout semantic tokens */
-  --spacing-layout-xs: var(--ui-space-layout-xs);
-  --spacing-layout-sm: var(--ui-space-layout-sm);
-  --spacing-layout-md: var(--ui-space-layout-md);
-  --spacing-layout-lg: var(--ui-space-layout-lg);
-  --spacing-layout-xl: var(--ui-space-layout-xl);
+  --spacing-layout-xs: var(--ui-spacing-layout-xs);
+  --spacing-layout-sm: var(--ui-spacing-layout-sm);
+  --spacing-layout-md: var(--ui-spacing-layout-md);
+  --spacing-layout-lg: var(--ui-spacing-layout-lg);
+  --spacing-layout-xl: var(--ui-spacing-layout-xl);
 
   /* ================================
    * BORDER RADIUS

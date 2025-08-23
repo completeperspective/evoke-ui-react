@@ -31,7 +31,7 @@
   font-size: var(--ui-font-size-sm);
   font-weight: var(--ui-font-weight-normal);
   line-height: var(--ui-line-height-sm);
-  padding: var(--ui-space-3) var(--ui-space-4);
+  padding: var(--ui-spacing-sm) var(--ui-spacing-md);
   transition: all var(--ui-duration-fast) var(--ui-easing-out);
   width: 100%;
   position: relative;
@@ -123,11 +123,11 @@
 
   // Enhanced file input styling
   &[type='file'] {
-    padding: var(--ui-space-2);
+    padding: var(--ui-spacing-xs);
     
     &::file-selector-button {
-      margin-right: var(--ui-space-3);
-      padding: var(--ui-space-2) var(--ui-space-4);
+      margin-right: var(--ui-spacing-sm);
+      padding: var(--ui-spacing-xs) var(--ui-spacing-md);
       background: linear-gradient(135deg, oklch(var(--ui-color-muted)), oklch(var(--ui-color-muted) / 0.9));
       border: none;
       border-radius: var(--ui-radius-sm);
@@ -169,7 +169,7 @@
       background: oklch(var(--ui-color-muted-foreground));
       border-radius: 50%;
       cursor: pointer;
-      margin-left: var(--ui-space-2);
+      margin-left: var(--ui-spacing-xs);
       
       &:hover {
         background: oklch(var(--ui-color-destructive));
@@ -269,11 +269,11 @@
   transition: all var(--ui-duration-fast) var(--ui-easing-out);
   
   &.startIcon {
-    left: var(--ui-space-4);
+    left: var(--ui-spacing-md);
   }
   
   &.endIcon {
-    right: var(--ui-space-4);
+    right: var(--ui-spacing-md);
   }
 
   // Enhanced icon color transitions based on input state
@@ -296,7 +296,7 @@
 }
 
 .feedback {
-  margin-top: var(--ui-space-2);
+  margin-top: var(--ui-spacing-xs);
 }
 
 .feedbackText {
@@ -325,7 +325,7 @@
 // Enhanced responsive adjustments
 @include sm {
   .input {
-    padding: var(--ui-space-3_5) var(--ui-space-4);
+    padding: var(--ui-spacing-sm) var(--ui-spacing-md);
     font-size: var(--ui-font-size-base);
     
     &.withStartIcon {
@@ -342,18 +342,18 @@
     height: 1.25rem;
     
     &.startIcon {
-      left: var(--ui-space-4);
+      left: var(--ui-spacing-md);
     }
     
     &.endIcon {
-      right: var(--ui-space-4);
+      right: var(--ui-spacing-md);
     }
   }
 }
 
 @include md {
   .input {
-    padding: var(--ui-space-4) var(--ui-space-5);
+    padding: var(--ui-spacing-md) var(--ui-spacing-lg);
     
     &.withStartIcon {
       padding-left: 3.25rem;
@@ -366,11 +366,11 @@
 
   .icon {
     &.startIcon {
-      left: var(--ui-space-5);
+      left: var(--ui-spacing-lg);
     }
     
     &.endIcon {
-      right: var(--ui-space-5);
+      right: var(--ui-spacing-lg);
     }
   }
 }

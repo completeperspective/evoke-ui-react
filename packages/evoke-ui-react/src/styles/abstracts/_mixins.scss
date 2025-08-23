@@ -129,7 +129,7 @@
  * Centered Container
  * Center content with maximum width and horizontal padding
  */
-@mixin container($max-width: 1200px, $padding: var(--ui-space-4)) {
+@mixin container($max-width: 1200px, $padding: var(--ui-spacing-md)) {
   width: 100%;
   max-width: $max-width;
   margin-left: auto;
@@ -268,7 +268,7 @@
  * Card Style
  * Standard card appearance with theme support
  */
-@mixin card($padding: var(--ui-space-6)) {
+@mixin card($padding: var(--ui-spacing-lg)) {
   @include component-base;
 
   background-color: oklch(var(--ui-color-card));
@@ -294,7 +294,7 @@
   font-family: inherit;
   font-size: var(--ui-font-size-sm);
   line-height: var(--ui-line-height-sm);
-  padding: var(--ui-space-2) var(--ui-space-3);
+  padding: var(--ui-spacing-xs) var(--ui-spacing-sm);
   transition: all var(--ui-duration-fast) var(--ui-easing-out);
   width: 100%;
 
@@ -511,7 +511,7 @@
  */
 @mixin pill {
   border-radius: 9999px;
-  padding: var(--ui-space-1) var(--ui-space-3);
+  padding: var(--ui-spacing-xxs) var(--ui-spacing-sm);
   display: inline-flex;
   align-items: center;
   justify-content: center;
