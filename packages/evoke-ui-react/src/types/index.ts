@@ -14,9 +14,5 @@ export type {
 
 export { isValidOklchColor } from './theme';
 
-// Re-export token types from tokens for convenience (with explicit renaming to avoid conflicts)
-export type { 
-  ColorToken, 
-  TypographyToken,
-  ThemeConfig as BaseThemeConfigFromTokens 
-} from '../tokens';
+// Token types removed - now using CSS variables only
+// Types related to tokens have been removed to simplify the system

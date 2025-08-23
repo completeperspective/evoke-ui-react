@@ -5,44 +5,8 @@
 
 export const VERSION = '0.1.0';
 
-// Design Tokens - Complete token system with OKLCH colors  
-export {
-  colors,
-  gray,
-  brand,
-  status,
-  semantic,
-  typography,
-  fontFamily,
-  fontWeight,
-  fontSize,
-  headings,
-  body,
-  code,
-  spacingSystem,
-  spacing,
-  componentSpacing,
-  layout,
-  responsive,
-  motion,
-  duration,
-  easing,
-  presets,
-  keyframes,
-  reducedMotion,
-  elevation,
-  shadow,
-  coloredShadow,
-  zIndex,
-  componentElevation,
-  darkShadow,
-  tokens,
-  generateCSSVariables,
-  generateDarkCSSVariables,
-  type ColorToken,
-  type TypographyToken,
-  type DesignTokens,
-} from './tokens';
+// Design Tokens removed - now using CSS variables only
+// All tokens are defined in src/styles/ folder as CSS variables
 
 // Utility functions
 export { cn } from './utils/cn';
