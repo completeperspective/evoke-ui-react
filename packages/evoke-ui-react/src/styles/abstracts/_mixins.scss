@@ -191,9 +191,10 @@
 /**
  * Dark Theme
  * Apply styles only in dark theme
+ * Usage: @include dark { .selector { styles } }
  */
 @mixin dark {
-  .dark & {
+  .dark {
     @content;
   }
 
@@ -205,9 +206,10 @@
 /**
  * Light Theme
  * Apply styles only in light theme (default)
+ * Usage: @include light { .selector { styles } }
  */
 @mixin light {
-  :root:not(.dark) & {
+  :root:not(.dark) {
     @content;
   }
 
@@ -341,8 +343,266 @@
 }
 
 /**
+ * Enhanced Elevation System
+ * Beautiful shadow combinations for depth and hierarchy
+ */
+@mixin elevation($level: 1) {
+  @if $level == 0 {
+    box-shadow: none;
+  } @else if $level == 1 {
+    box-shadow: 
+      0 1px 3px 0 rgba(0, 0, 0, 0.1),
+      0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  } @else if $level == 2 {
+    box-shadow: 
+      0 4px 6px -1px rgba(0, 0, 0, 0.1),
+      0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  } @else if $level == 3 {
+    box-shadow: 
+      0 10px 15px -3px rgba(0, 0, 0, 0.1),
+      0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  } @else if $level == 4 {
+    box-shadow: 
+      0 20px 25px -5px rgba(0, 0, 0, 0.1),
+      0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  } @else if $level == 5 {
+    box-shadow: 
+      0 25px 50px -12px rgba(0, 0, 0, 0.25),
+      0 0 0 1px rgba(255, 255, 255, 0.05);
+  }
+
+  @include dark {
+    @if $level == 1 {
+      box-shadow: 
+        0 1px 3px 0 rgba(0, 0, 0, 0.4),
+        0 1px 2px 0 rgba(0, 0, 0, 0.2);
+    } @else if $level == 2 {
+      box-shadow: 
+        0 4px 6px -1px rgba(0, 0, 0, 0.4),
+        0 2px 4px -1px rgba(0, 0, 0, 0.25);
+    } @else if $level == 3 {
+      box-shadow: 
+        0 10px 15px -3px rgba(0, 0, 0, 0.4),
+        0 4px 6px -2px rgba(0, 0, 0, 0.25);
+    } @else if $level == 4 {
+      box-shadow: 
+        0 20px 25px -5px rgba(0, 0, 0, 0.4),
+        0 10px 10px -5px rgba(0, 0, 0, 0.25);
+    } @else if $level == 5 {
+      box-shadow: 
+        0 25px 50px -12px rgba(0, 0, 0, 0.8),
+        0 0 0 1px rgba(255, 255, 255, 0.1);
+    }
+  }
+}
+
+/**
+ * Enhanced Interactive States
+ * Beautiful hover and active state transitions
+ */
+@mixin enhanced-interactive($hover-lift: true, $active-press: true) {
+  @include interactive;
+  transition: all var(--ui-duration-fast) var(--ui-easing-out);
+  
+  @if $hover-lift {
+    &:hover:not(:disabled):not([aria-disabled="true"]) {
+      transform: translateY(-2px);
+      @include elevation(2);
+      
+      @include reduced-motion {
+        transform: none;
+        box-shadow: none;
+      }
+    }
+  }
+  
+  @if $active-press {
+    &:active:not(:disabled):not([aria-disabled="true"]) {
+      transform: translateY(0);
+      @include elevation(1);
+      transition-duration: var(--ui-duration-instant);
+      
+      @include reduced-motion {
+        transform: none;
+        box-shadow: none;
+      }
+    }
+  }
+}
+
+/**
+ * Shimmer Animation
+ * Beautiful loading animation for skeleton components
+ */
+@mixin shimmer($gradient-color: rgba(255, 255, 255, 0.3)) {
+  position: relative;
+  overflow: hidden;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      $gradient-color,
+      transparent
+    );
+    transform: translateX(-100%);
+    animation: shimmer var(--ui-duration-slower) infinite;
+  }
+  
+  @include dark {
+    &::after {
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.1),
+        transparent
+      );
+    }
+  }
+  
+  @include reduced-motion {
+    &::after {
+      animation: pulse var(--ui-duration-slow) ease-in-out infinite;
+    }
+  }
+}
+
+/**
+ * Gradient Border
+ * Modern gradient border effect
+ */
+@mixin gradient-border(
+  $width: 1px,
+  $radius: var(--ui-radius-md),
+  $gradient: linear-gradient(135deg, oklch(var(--ui-color-primary)), oklch(var(--ui-color-accent)))
+) {
+  position: relative;
+  background: $gradient;
+  border-radius: $radius;
+  padding: $width;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: $width;
+    left: $width;
+    right: $width;
+    bottom: $width;
+    background: oklch(var(--ui-color-background));
+    border-radius: calc($radius - $width);
+    z-index: 1;
+  }
+  
+  > * {
+    position: relative;
+    z-index: 2;
+  }
+}
+
+/**
+ * Pill Shape
+ * Modern pill-shaped component styling
+ */
+@mixin pill {
+  border-radius: 9999px;
+  padding: var(--ui-space-1) var(--ui-space-3);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--ui-font-size-sm);
+  font-weight: var(--ui-font-weight-medium);
+  line-height: 1;
+  white-space: nowrap;
+}
+
+/**
+ * Floating Action Button
+ * Material Design inspired FAB styling
+ */
+@mixin fab {
+  @include enhanced-interactive;
+  @include elevation(3);
+  
+  border-radius: 50%;
+  width: 3.5rem;
+  height: 3.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  
+  &:hover:not(:disabled) {
+    @include elevation(4);
+  }
+  
+  &:active:not(:disabled) {
+    @include elevation(2);
+  }
+}
+
+/**
+ * Backdrop Blur
+ * Modern glassmorphism effect with improved browser support
+ */
+@mixin backdrop-blur($blur: 10px, $opacity: 0.8) {
+  backdrop-filter: blur($blur) saturate(180%);
+  -webkit-backdrop-filter: blur($blur) saturate(180%);
+  background-color: rgba(255, 255, 255, $opacity);
+  
+  @include dark {
+    background-color: rgba(0, 0, 0, $opacity * 0.9);
+  }
+  
+  @supports not (backdrop-filter: blur($blur)) {
+    background-color: rgba(255, 255, 255, $opacity * 1.2);
+    
+    @include dark {
+      background-color: rgba(0, 0, 0, $opacity * 1.1);
+    }
+  }
+}
+
+/**
+ * Smooth Corners
+ * Apple-style smooth corner radius
+ */
+@mixin smooth-corners($radius: var(--ui-radius-lg)) {
+  border-radius: $radius;
+  
+  // Enhance with mask for smoother corners in supporting browsers
+  @supports (mask: paint(smooth-corners)) {
+    mask: paint(smooth-corners);
+    border-radius: 0;
+  }
+}
+
+/**
+ * Enhanced Focus Ring
+ * Beautiful, modern focus indicators
+ */
+@mixin enhanced-focus-ring($color: var(--ui-color-ring), $offset: 2px) {
+  &:focus-visible {
+    outline: 2px solid oklch($color);
+    outline-offset: $offset;
+    box-shadow: 
+      0 0 0 4px oklch($color / 0.1),
+      0 0 0 2px oklch($color);
+    
+    @include reduced-motion {
+      box-shadow: 0 0 0 2px oklch($color);
+    }
+  }
+}
+
+/**
  * Animation Keyframes
- * Common animation keyframes
+ * Enhanced animation keyframes with smooth motion
  */
 @keyframes spin {
   0% {
@@ -372,5 +632,47 @@
   50% {
     transform: translateY(0);
     animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-0.5rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(1rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
   }
 }

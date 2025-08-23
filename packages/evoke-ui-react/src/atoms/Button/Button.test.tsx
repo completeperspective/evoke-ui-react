@@ -1,4 +1,5 @@
 import React from 'react';
+import { describe, it, expect, vi } from 'vitest';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Button, type ButtonProps } from './Button';
@@ -162,7 +163,7 @@ describe('Button Component', () => {
 
   describe('Interactions', () => {
     it('calls onClick when clicked', async () => {
-      const handleClick = jest.fn();
+      const handleClick = vi.fn();
       renderButton({ onClick: handleClick });
       
       const button = screen.getByRole('button');
@@ -172,7 +173,7 @@ describe('Button Component', () => {
     });
 
     it('does not call onClick when disabled', async () => {
-      const handleClick = jest.fn();
+      const handleClick = vi.fn();
       renderButton({ onClick: handleClick, disabled: true });
       
       const button = screen.getByRole('button');
@@ -182,7 +183,7 @@ describe('Button Component', () => {
     });
 
     it('does not call onClick when loading', async () => {
-      const handleClick = jest.fn();
+      const handleClick = vi.fn();
       renderButton({ onClick: handleClick, loading: true });
       
       const button = screen.getByRole('button');
@@ -192,7 +193,7 @@ describe('Button Component', () => {
     });
 
     it('handles keyboard navigation', async () => {
-      const handleClick = jest.fn();
+      const handleClick = vi.fn();
       renderButton({ onClick: handleClick });
       
       const button = screen.getByRole('button');

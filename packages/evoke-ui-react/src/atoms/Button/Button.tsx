@@ -86,6 +86,13 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ) => {
     const isDisabled = disabled || loading;
 
+    // Generate additional CSS classes for enhanced styling
+    const enhancedClasses = cn(
+      styles.button,
+      variant && styles[`variant-${variant}`],
+      size && styles[`size-${size}`]
+    );
+
     const buttonContent = (
       <>
         {loading && (
@@ -108,7 +115,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     if (asChild) {
       return (
         <span
-          className={cn(buttonVariants({ variant, size }), styles.button, className)}
+          className={cn(buttonVariants({ variant, size }), enhancedClasses, className)}
           {...props}
         >
           {buttonContent}
@@ -118,7 +125,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 
     return (
       <button
-        className={cn(buttonVariants({ variant, size }), styles.button, className)}
+        className={cn(buttonVariants({ variant, size }), enhancedClasses, className)}
         ref={ref}
         disabled={isDisabled}
         aria-disabled={isDisabled}

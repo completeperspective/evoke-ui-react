@@ -1,6 +1,6 @@
 /**
- * Input Component Styles
- * Custom styles for input field with icon support
+ * Input Component Styles - Enhanced Visual Design
+ * Beautiful, modern input styling with depth and sophisticated interactions
  */
 @use '../../styles/abstracts' as *;
 
@@ -19,62 +19,165 @@
 }
 
 .input {
-  @include input-field;
+  @include component-base;
+  @include enhanced-focus-ring;
+  @include elevation(0);
   
-  // Enhanced focus styles
-  &:focus {
-    border-color: oklch(var(--ui-color-ring));
-    box-shadow: 0 0 0 1px oklch(var(--ui-color-ring));
+  background-color: oklch(var(--ui-color-background));
+  border: 1px solid oklch(var(--ui-color-border));
+  border-radius: var(--ui-radius-md);
+  color: oklch(var(--ui-color-foreground));
+  font-family: inherit;
+  font-size: var(--ui-font-size-sm);
+  font-weight: var(--ui-font-weight-normal);
+  line-height: var(--ui-line-height-sm);
+  padding: var(--ui-space-3) var(--ui-space-4);
+  transition: all var(--ui-duration-fast) var(--ui-easing-out);
+  width: 100%;
+  position: relative;
+
+  // Beautiful gradient overlay for enhanced visual appeal
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, transparent 0%, oklch(var(--ui-color-primary) / 0.02) 50%, transparent 100%);
+    border-radius: inherit;
+    opacity: 0;
+    transition: opacity var(--ui-duration-fast) var(--ui-easing-out);
+    pointer-events: none;
+    z-index: 1;
   }
 
-  // State-specific styles
-  &[aria-invalid='true'] {
-    border-color: oklch(var(--ui-color-destructive));
+  // Enhanced hover state
+  &:hover:not(:disabled):not(:focus) {
+    border-color: oklch(var(--ui-color-primary) / 0.3);
+    @include elevation(1);
     
-    &:focus {
-      border-color: oklch(var(--ui-color-destructive));
-      box-shadow: 0 0 0 1px oklch(var(--ui-color-destructive));
+    &::before {
+      opacity: 1;
+    }
+
+    @include reduced-motion {
+      box-shadow: none;
     }
   }
 
-  // Icon padding adjustments
+  // Beautiful focus state with glow effect
+  &:focus {
+    border-color: oklch(var(--ui-color-ring));
+    @include elevation(2);
+    box-shadow: 
+      0 0 0 3px oklch(var(--ui-color-ring) / 0.1),
+      0 4px 6px -1px rgba(0, 0, 0, 0.1),
+      0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    outline: none;
+    
+    &::before {
+      opacity: 1;
+    }
+
+    @include reduced-motion {
+      box-shadow: 0 0 0 2px oklch(var(--ui-color-ring));
+    }
+  }
+
+  // Enhanced error state styling
+  &[aria-invalid='true'] {
+    border-color: oklch(var(--ui-color-destructive));
+    background-color: oklch(var(--ui-color-destructive) / 0.02);
+    
+    &::before {
+      background: linear-gradient(135deg, transparent 0%, oklch(var(--ui-color-destructive) / 0.05) 50%, transparent 100%);
+      opacity: 1;
+    }
+    
+    &:focus {
+      border-color: oklch(var(--ui-color-destructive));
+      box-shadow: 
+        0 0 0 3px oklch(var(--ui-color-destructive) / 0.1),
+        0 4px 6px -1px rgba(239, 68, 68, 0.1),
+        0 2px 4px -1px rgba(239, 68, 68, 0.06);
+        
+      @include reduced-motion {
+        box-shadow: 0 0 0 2px oklch(var(--ui-color-destructive));
+      }
+    }
+
+    &:hover:not(:disabled):not(:focus) {
+      border-color: oklch(var(--ui-color-destructive) / 0.8);
+    }
+  }
+
+  // Icon padding adjustments with enhanced spacing
   &.withStartIcon {
-    padding-left: 2.5rem;
+    padding-left: 2.75rem;
   }
 
   &.withEndIcon {
-    padding-right: 2.5rem;
+    padding-right: 2.75rem;
   }
 
-  // File input specific styles
+  // Enhanced file input styling
   &[type='file'] {
-    padding: 0;
+    padding: var(--ui-space-2);
     
     &::file-selector-button {
       margin-right: var(--ui-space-3);
-      padding: var(--ui-space-2) var(--ui-space-3);
-      background-color: oklch(var(--ui-color-muted));
+      padding: var(--ui-space-2) var(--ui-space-4);
+      background: linear-gradient(135deg, oklch(var(--ui-color-muted)), oklch(var(--ui-color-muted) / 0.9));
       border: none;
       border-radius: var(--ui-radius-sm);
       color: oklch(var(--ui-color-muted-foreground));
       cursor: pointer;
       font-size: var(--ui-font-size-sm);
-      transition: background-color var(--ui-duration-fast) var(--ui-easing-out);
+      font-weight: var(--ui-font-weight-medium);
+      transition: all var(--ui-duration-fast) var(--ui-easing-out);
+      @include elevation(0);
       
       &:hover {
-        background-color: oklch(var(--ui-color-accent));
+        background: linear-gradient(135deg, oklch(var(--ui-color-accent)), oklch(var(--ui-color-accent) / 0.9));
+        @include elevation(1);
+        transform: translateY(-1px);
+        
+        @include reduced-motion {
+          transform: none;
+          box-shadow: none;
+        }
+      }
+
+      &:active {
+        transform: translateY(0);
+        @include elevation(0);
+        
+        @include reduced-motion {
+          transform: none;
+        }
       }
     }
   }
 
-  // Search input specific styles
+  // Clean search input styling
   &[type='search'] {
     &::-webkit-search-cancel-button {
       appearance: none;
+      width: 1rem;
+      height: 1rem;
+      background: oklch(var(--ui-color-muted-foreground));
+      border-radius: 50%;
+      cursor: pointer;
+      margin-left: var(--ui-space-2);
+      
+      &:hover {
+        background: oklch(var(--ui-color-destructive));
+      }
     }
   }
 
-  // Number input specific styles
+  // Enhanced number input styling
   &[type='number'] {
     &::-webkit-outer-spin-button,
     &::-webkit-inner-spin-button {
@@ -86,26 +189,43 @@
     -moz-appearance: textfield;
   }
 
-  // Placeholder styling
+  // Refined placeholder styling
   &::placeholder {
     color: oklch(var(--ui-color-muted-foreground));
-    opacity: 1;
+    opacity: 0.8;
+    font-weight: var(--ui-font-weight-normal);
+    transition: all var(--ui-duration-fast) var(--ui-easing-out);
   }
 
-  // Disabled state
+  &:focus::placeholder {
+    opacity: 0.5;
+    transform: translateY(-1px);
+    
+    @include reduced-motion {
+      transform: none;
+    }
+  }
+
+  // Enhanced disabled state
   &:disabled {
-    background-color: oklch(var(--ui-color-muted));
+    background-color: oklch(var(--ui-color-muted) / 0.5);
     color: oklch(var(--ui-color-muted-foreground));
     cursor: not-allowed;
-    opacity: 0.6;
+    opacity: 0.7;
+    border-color: oklch(var(--ui-color-border) / 0.5);
+    box-shadow: none;
 
     &::placeholder {
       color: oklch(var(--ui-color-muted-foreground));
       opacity: 0.5;
     }
+
+    &::before {
+      opacity: 0;
+    }
   }
 
-  // High contrast mode support
+  // High contrast mode enhancements
   @include high-contrast {
     border: 2px solid currentColor;
     
@@ -113,12 +233,24 @@
       outline: 3px solid;
       outline-offset: 2px;
     }
+
+    &::before {
+      display: none;
+    }
   }
 
-  // Dark theme adjustments
+  // Dark theme specific adjustments
   @include dark {
+    &::before {
+      background: linear-gradient(135deg, transparent 0%, rgba(255, 255, 255, 0.02) 50%, transparent 100%);
+    }
+
+    &[aria-invalid='true']::before {
+      background: linear-gradient(135deg, transparent 0%, oklch(var(--ui-color-destructive) / 0.1) 50%, transparent 100%);
+    }
+
     &[type='file']::file-selector-button {
-      background-color: oklch(var(--ui-color-muted));
+      background: linear-gradient(135deg, oklch(var(--ui-color-muted)), oklch(var(--ui-color-muted) / 0.8));
       color: oklch(var(--ui-color-muted-foreground));
     }
   }
@@ -129,64 +261,85 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 1rem;
-  height: 1rem;
+  width: 1.125rem;
+  height: 1.125rem;
   color: oklch(var(--ui-color-muted-foreground));
-  z-index: 1;
+  z-index: 2;
   pointer-events: none;
+  transition: all var(--ui-duration-fast) var(--ui-easing-out);
   
   &.startIcon {
-    left: var(--ui-space-3);
+    left: var(--ui-space-4);
   }
   
   &.endIcon {
-    right: var(--ui-space-3);
+    right: var(--ui-space-4);
   }
 
-  // Adjust icon color based on input state
+  // Enhanced icon color transitions based on input state
+  .input:hover:not(:disabled) + & {
+    color: oklch(var(--ui-color-primary) / 0.7);
+  }
+
+  .input:focus + & {
+    color: oklch(var(--ui-color-primary));
+  }
+
   .input[aria-invalid='true'] + & {
     color: oklch(var(--ui-color-destructive));
   }
 
   .input:disabled + & {
     opacity: 0.5;
+    color: oklch(var(--ui-color-muted-foreground));
   }
 }
 
 .feedback {
-  margin-top: var(--ui-space-1);
+  margin-top: var(--ui-space-2);
 }
 
 .feedbackText {
   display: block;
   font-size: var(--ui-font-size-xs);
   line-height: var(--ui-line-height-xs);
+  font-weight: var(--ui-font-weight-medium);
+  letter-spacing: 0.025em;
+  animation: slideUp var(--ui-duration-fast) var(--ui-easing-out);
   
   &.error {
     color: oklch(var(--ui-color-destructive));
-    font-weight: var(--ui-font-weight-medium);
+    font-weight: var(--ui-font-weight-semibold);
   }
   
   &.helper {
     color: oklch(var(--ui-color-muted-foreground));
+    font-weight: var(--ui-font-weight-normal);
+  }
+  
+  @include reduced-motion {
+    animation: none;
   }
 }
 
-// Responsive adjustments
+// Enhanced responsive adjustments
 @include sm {
   .input {
+    padding: var(--ui-space-3_5) var(--ui-space-4);
+    font-size: var(--ui-font-size-base);
+    
     &.withStartIcon {
-      padding-left: 2.75rem;
+      padding-left: 3rem;
     }
 
     &.withEndIcon {
-      padding-right: 2.75rem;
+      padding-right: 3rem;
     }
   }
 
   .icon {
-    width: 1.125rem;
-    height: 1.125rem;
+    width: 1.25rem;
+    height: 1.25rem;
     
     &.startIcon {
       left: var(--ui-space-4);
@@ -198,22 +351,26 @@
   }
 }
 
-// Animation for feedback text
-.feedbackText {
-  animation: fadeIn var(--ui-duration-fast) var(--ui-easing-out);
-  
-  @include reduced-motion {
-    animation: none;
-  }
-}
+@include md {
+  .input {
+    padding: var(--ui-space-4) var(--ui-space-5);
+    
+    &.withStartIcon {
+      padding-left: 3.25rem;
+    }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-0.25rem);
+    &.withEndIcon {
+      padding-right: 3.25rem;
+    }
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+
+  .icon {
+    &.startIcon {
+      left: var(--ui-space-5);
+    }
+    
+    &.endIcon {
+      right: var(--ui-space-5);
+    }
   }
 }

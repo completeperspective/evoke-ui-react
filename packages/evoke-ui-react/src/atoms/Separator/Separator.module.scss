@@ -1,17 +1,27 @@
 /**
- * Separator Component Styles
- * Visual dividers for content sections
+ * Separator Component Styles - Enhanced Visual Design
+ * Elegant, sophisticated visual dividers with refined aesthetics
  */
 @use '../../styles/abstracts' as *;
 
 .separator {
   @include component-base;
   
-  // Smooth transitions for variant changes
-  transition: background-color var(--ui-duration-fast) var(--ui-easing-out);
-  
-  // Ensure proper rendering of thin lines
+  // Enhanced transitions for variant changes
+  transition: all var(--ui-duration-fast) var(--ui-easing-out);
   flex-shrink: 0;
+  position: relative;
+  
+  // Enhanced default styling with subtle gradient
+  background: linear-gradient(
+    135deg,
+    oklch(var(--ui-color-border) / 0.8) 0%,
+    oklch(var(--ui-color-border) / 0.4) 50%,
+    oklch(var(--ui-color-border) / 0.8) 100%
+  );
+  
+  // Subtle shadow for depth
+  box-shadow: 0 0 1px oklch(var(--ui-color-border) / 0.3);
 }
 
 // Labeled separator container
