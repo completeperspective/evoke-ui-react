@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { useState } from 'react';
-import { Heading } from './atoms/Heading/Heading';
-import { Text } from './atoms/Text/Text';
-import { Badge } from './atoms/Badge/Badge';
+import { Heading } from '../atoms/Heading/Heading';
+import { Text } from '../atoms/Text/Text';
+import { Badge } from '../atoms/Badge/Badge';
 
 const meta = {
-  title: 'Design System/Tokens',
+  title: 'Design System/Color',
   parameters: {
     layout: 'padded',
     docs: {
@@ -15,7 +15,6 @@ const meta = {
       },
     },
   },
-  tags: ['autodocs'],
 } satisfies Meta;
 
 export default meta;
@@ -374,95 +373,6 @@ export const ColorTokens: Story = {
     docs: {
       description: {
         story: 'Complete reference of color tokens used throughout the design system.',
-      },
-    },
-  },
-};
-
-// Simplified notice for removed token stories
-const RemovedTokensTemplate = () => {
-  return (
-    <div className="space-y-8 max-w-4xl">
-      <div className="space-y-4">
-        <Heading level="h1">Design Tokens Simplified</Heading>
-        <Text variant="lead">
-          TypeScript token definitions have been removed to simplify the system and prevent sync
-          issues with dynamic theming.
-        </Text>
-      </div>
-
-      <div className="bg-muted/30 border border-border/50 rounded-xl p-6 space-y-4">
-        <div className="flex items-center space-x-3">
-          <Badge variant="default">Important Change</Badge>
-          <Text weight="semibold">Single Source of Truth: CSS Variables</Text>
-        </div>
-        <div className="space-y-3">
-          <Text variant="small" className="text-muted-foreground leading-relaxed">
-            All design tokens (typography, spacing, motion, shadows) are now exclusively defined as
-            CSS variables in the <code>src/styles/</code> folder. This approach:
-          </Text>
-          <ul className="space-y-2 text-sm text-muted-foreground ml-4">
-            <li>• Eliminates sync issues between TypeScript and CSS</li>
-            <li>• Supports dynamic theming at runtime</li>
-            <li>• Reduces bundle size and complexity</li>
-            <li>• Provides better performance for theme switching</li>
-          </ul>
-        </div>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="border border-border rounded-lg p-6 space-y-4">
-          <Text weight="semibold">✅ Available Tokens</Text>
-          <div className="space-y-2 text-sm text-muted-foreground">
-            <div>• Colors (via CSS variables and Tailwind classes)</div>
-            <div>• Typography (font families, sizes, weights)</div>
-            <div>• Spacing (margin, padding, gaps)</div>
-            <div>• Shadows and elevation</div>
-            <div>• Border radius values</div>
-            <div>• Animation durations and easings</div>
-          </div>
-        </div>
-
-        <div className="border border-border rounded-lg p-6 space-y-4">
-          <Text weight="semibold">📍 Where to Find Tokens</Text>
-          <div className="space-y-2 text-sm text-muted-foreground">
-            <div>• <code>src/styles/abstracts/_variables.scss</code></div>
-            <div>• <code>src/styles/tokens.scss</code></div>
-            <div>• Tailwind CSS configuration</div>
-            <div>• Browser DevTools (inspect CSS variables)</div>
-          </div>
-        </div>
-      </div>
-
-      <div className="bg-gradient-to-br from-primary/5 to-accent/5 border border-primary/20 rounded-xl p-6">
-        <Text weight="semibold" className="mb-3">
-          Migration Guide
-        </Text>
-        <div className="space-y-3 text-sm text-muted-foreground">
-          <div>
-            <strong>Instead of:</strong> <code>import {`{ spacing }`} from './tokens'</code>
-          </div>
-          <div>
-            <strong>Use:</strong> Tailwind classes like <code>p-4</code>, <code>mx-2</code> or CSS
-            variables like <code>var(--ui-space-4)</code>
-          </div>
-          <div className="pt-2">
-            <strong>Example:</strong> <code className="bg-muted px-2 py-1 rounded">
-              padding: var(--ui-space-4); /* or */ className="p-4"
-            </code>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-export const TokenMigration: Story = {
-  render: RemovedTokensTemplate,
-  parameters: {
-    docs: {
-      description: {
-        story: 'Information about the migration from TypeScript tokens to CSS-only approach.',
       },
     },
   },
