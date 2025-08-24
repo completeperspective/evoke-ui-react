@@ -42,11 +42,11 @@ importers:
         specifier: ^5.3.3
         version: 5.9.2
 
-  examples/test-consumer:
+  examples/react-app:
     dependencies:
       '@evoke-ui/react':
-        specifier: file:../../packages/evoke-ui-react/evoke-ui-react-0.2.0.tgz
-        version: file:packages/evoke-ui-react/evoke-ui-react-0.2.0.tgz(@types/react-dom@19.1.7)(@types/react@19.1.11)(react-dom@19.1.1)(react@19.1.1)
+        specifier: file:../../packages/evoke-ui-react/evoke-ui-react-0.2.2.tgz
+        version: file:packages/evoke-ui-react/evoke-ui-react-0.2.2.tgz(@types/react-dom@19.1.7)(@types/react@19.1.11)(react-dom@19.1.1)(react@19.1.1)
       react:
         specifier: ^19.1.1
         version: 19.1.1
@@ -9057,11 +9057,11 @@ packages:
     engines: {node: '>=12.20'}
     dev: true
 
-  file:packages/evoke-ui-react/evoke-ui-react-0.2.0.tgz(@types/react-dom@19.1.7)(@types/react@19.1.11)(react-dom@19.1.1)(react@19.1.1):
-    resolution: {integrity: sha512-knAlC6kXU6VtPBsLL5RjcEOCwuzhCErQDejAVIxV7RitZGLF1jdBHp7Jq8Yx1rf0a5Tbn5tR9p/+M+PUhyxJWA==, tarball: file:packages/evoke-ui-react/evoke-ui-react-0.2.0.tgz}
-    id: file:packages/evoke-ui-react/evoke-ui-react-0.2.0.tgz
+  file:packages/evoke-ui-react/evoke-ui-react-0.2.2.tgz(@types/react-dom@19.1.7)(@types/react@19.1.11)(react-dom@19.1.1)(react@19.1.1):
+    resolution: {integrity: sha512-2QSBmAYoxrd5rOiiPuI37J9nd0oNaFVwGumAoyfyY01v9252f0qzf0jun4U/VGC1Dvvri1yiF6CxL3oQ1agBhQ==, tarball: file:packages/evoke-ui-react/evoke-ui-react-0.2.2.tgz}
+    id: file:packages/evoke-ui-react/evoke-ui-react-0.2.2.tgz
     name: '@evoke-ui/react'
-    version: 0.2.0
+    version: 0.2.2
     peerDependencies:
       react: ^18.0.0
       react-dom: ^18.0.0

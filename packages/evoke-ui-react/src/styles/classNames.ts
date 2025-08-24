@@ -74,3 +74,8 @@ export const cardClasses = {
   content: 'evoke-card-content',
   footer: 'evoke-card-footer',
 } as const;
+
+// SearchBar molecular component class names
+export const searchBarClasses = {
+  searchBar: 'evoke-search-bar',
+} as const;

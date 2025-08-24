@@ -8,3 +8,6 @@ export * from './FormField';
 
 // Card - Flexible container with optional header, content, and footer
 export * from './Card';
+
+// SearchBar - Search interface with input, icon, action button, and suggestions
+export * from './SearchBar';

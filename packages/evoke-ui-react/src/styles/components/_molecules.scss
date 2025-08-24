@@ -110,6 +110,32 @@
   }
 }
 
+// Slide-in animation for suggestions dropdown
+@keyframes slide-in-from-top-suggestions {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+    max-height: 0;
+  }
+  
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    max-height: 240px;
+  }
+}
+
+// Search icon pulse animation for loading state
+@keyframes search-pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  
+  50% {
+    opacity: 0.5;
+  }
+}
+
 // Fade-in animation for form field states
 @keyframes fade-in {
   from {
@@ -273,6 +299,235 @@
     // Hide decorative elements that don't make sense in print
     [aria-hidden="true"] {
       display: none !important;
+    }
+  }
+}
+
+/* ================================
+ * SEARCH BAR COMPONENT
+ * ================================ */
+
+.evoke-search-bar {
+  // Enhanced focus management for the search container
+  &:focus-within {
+    // Ensure smooth transitions for focus states
+    transition-property: border-color, box-shadow;
+    transition-duration: 200ms;
+    transition-timing-function: ease-out;
+  }
+  
+  // Ensure proper stacking context for suggestions dropdown
+  position: relative;
+  z-index: 1;
+  
+  &:focus-within,
+  &:has(.suggestions-open) {
+    z-index: 50;
+  }
+  
+  // Smooth transitions for search icon state changes
+  .search-icon {
+    transition-property: color, transform;
+    transition-duration: 200ms;
+    transition-timing-function: ease-out;
+  }
+  
+  // Enhanced keyboard navigation feedback
+  input:focus-visible {
+    // Remove default outline since parent handles focus ring
+    outline: none;
+  }
+  
+  // Loading spinner animation
+  .loading-spinner {
+    animation-duration: 1s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+  }
+  
+  // Suggestions dropdown enhancements
+  .suggestions-dropdown {
+    // Ensure proper backdrop blur support where available
+    @supports (backdrop-filter: blur(8px)) {
+      backdrop-filter: blur(8px) saturate(180%);
+      background-color: rgba(255, 255, 255, 0.8);
+      
+      .dark & {
+        background-color: rgba(15, 23, 42, 0.8);
+      }
+    }
+    
+    // Firefox scrollbar styling
+    scrollbar-width: thin;
+    scrollbar-color: oklch(var(--ui-color-border)) transparent;
+
+    // Custom scrollbar styling
+    &::-webkit-scrollbar {
+      width: 4px;
+    }
+    
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    
+    &::-webkit-scrollbar-thumb {
+      background: oklch(var(--ui-color-border));
+      border-radius: 2px;
+    }
+    
+    &::-webkit-scrollbar-thumb:hover {
+      background: oklch(var(--ui-color-border-hover));
+    }
+  }
+  
+  // Suggestion item hover and focus states
+  .suggestion-item {
+    // Smooth transitions for interaction states
+    transition-property: background-color, color, transform;
+    transition-duration: 150ms;
+    transition-timing-function: ease-out;
+    
+    // Subtle scale effect on hover for better feedback
+    &:hover {
+      transform: translateX(2px);
+    }
+    
+    // Enhanced active state
+    &:active {
+      transform: scale(0.98) translateX(2px);
+    }
+    
+    // Keyboard navigation highlight
+    &[aria-selected="true"] {
+      // Enhanced visibility for keyboard navigation
+      outline: 1px solid oklch(var(--ui-color-primary));
+      outline-offset: -1px;
+    }
+  }
+  
+  // Clear button enhancements
+  .clear-button {
+    // Smooth transitions for hover states
+    transition-property: color, transform, opacity;
+    transition-duration: 150ms;
+    transition-timing-function: ease-out;
+    
+    // Subtle scale on hover
+    &:hover {
+      transform: scale(1.1);
+    }
+    
+    &:active {
+      transform: scale(0.95);
+    }
+  }
+  
+  // Action button enhancements
+  .action-button {
+    // Smooth transitions for all states
+    transition-property: background-color, color, transform, box-shadow;
+    transition-duration: 200ms;
+    transition-timing-function: ease-out;
+    
+    // Ensure proper focus management
+    @include enhanced-focus-ring;
+    
+    // Enhanced hover state
+    &:hover {
+      transform: translateY(-1px);
+    }
+    
+    &:active {
+      transform: translateY(0);
+    }
+  }
+  
+  // Reduced motion preferences
+  @media (prefers-reduced-motion: reduce) {
+    &,
+    * {
+      transition: none !important;
+      animation: none !important;
+      transform: none !important;
+    }
+    
+    .loading-spinner {
+      animation: none !important;
+      // Show a simple static indicator instead
+      &::after {
+        content: '⏳';
+        display: inline-block;
+      }
+    }
+    
+    .suggestion-item:hover {
+      transform: none !important;
+    }
+    
+    .clear-button:hover,
+    .action-button:hover {
+      transform: none !important;
+    }
+  }
+  
+  // High contrast mode enhancements
+  @media (prefers-contrast: high) {
+    // Enhanced border visibility
+    border-width: 2px !important;
+    
+    // Ensure sufficient contrast for suggestions
+    .suggestions-dropdown {
+      border-width: 2px !important;
+      border-color: oklch(var(--ui-color-foreground)) !important;
+    }
+    
+    .suggestion-item {
+      // Enhanced contrast for highlighted items
+      &[aria-selected="true"] {
+        background-color: oklch(var(--ui-color-primary)) !important;
+        color: oklch(var(--ui-color-primary-foreground)) !important;
+        outline-width: 2px !important;
+      }
+    }
+    
+    // Ensure buttons have sufficient contrast
+    .action-button {
+      border: 2px solid currentColor !important;
+    }
+    
+    .clear-button {
+      background-color: oklch(var(--ui-color-background)) !important;
+      border: 1px solid oklch(var(--ui-color-foreground)) !important;
+      border-radius: 50% !important;
+    }
+  }
+  
+  // Print styles
+  @media print {
+    // Ensure search bar is visible but simplified in print
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    
+    // Hide interactive elements that don't make sense in print
+    .suggestions-dropdown,
+    .clear-button,
+    .action-button {
+      display: none !important;
+    }
+    
+    // Show the current search value clearly
+    input {
+      border: 2px solid #000 !important;
+      background: white !important;
+      color: #000 !important;
+    }
+    
+    // Add a print indicator
+    &::after {
+      content: " (Search Field)";
+      font-size: 0.75rem;
+      color: #666;
+      margin-left: 0.5rem;
     }
   }
 }

@@ -102,10 +102,10 @@ const WelcomeTemplate = () => (
           </div>
           <div className="flex items-center space-x-4">
             <Badge variant="info" size="sm">
-              v0.1.0
+              v0.2.0
             </Badge>
             <Badge variant="success" size="sm" startIcon={<CheckIcon />}>
-              React 18
+              React 18+
             </Badge>
           </div>
         </div>

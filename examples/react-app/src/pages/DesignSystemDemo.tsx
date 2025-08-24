@@ -1,13 +1,36 @@
 import { useState } from 'react';
-import { Button, Input, Text, Badge, Heading, Label, Skeleton, Separator } from '@evoke-ui/react';
+import { 
+  Button, 
+  Input, 
+  Text, 
+  Badge, 
+  Heading, 
+  Label, 
+  Skeleton, 
+  Separator,
+  SearchBar,
+  Card,
+  CardHeader,
+  CardContent
+} from '@evoke-ui/react';
 
 function DesignSystemDemo() {
   const [inputValue, setInputValue] = useState('');
   const [loading, setLoading] = useState(false);
+  const [searchValue, setSearchValue] = useState('');
+  const [searchError, setSearchError] = useState(false);
 
   const handleLoadingTest = () => {
     setLoading(true);
     setTimeout(() => setLoading(false), 2000);
+  };
+
+  const handleSearch = (value: string) => {
+    console.log('Searching for:', value);
+    if (value === 'error') {
+      setSearchError(true);
+      setTimeout(() => setSearchError(false), 3000);
+    }
   };
 
   return (
@@ -24,6 +47,99 @@ function DesignSystemDemo() {
           - the optimized design system CSS bundle containing only the necessary styles for Evoke UI
           components.
         </Text>
+
+        {/* SearchBar Focus Test Section */}
+        <section className="mb-8">
+          <Heading level="h2" className="mb-4">
+            SearchBar Component - Focus State Testing
+          </Heading>
+          <div className="space-y-6">
+            {/* Basic SearchBar */}
+            <Card>
+              <CardHeader>
+                <Heading level="h3">Basic SearchBar</Heading>
+              </CardHeader>
+              <CardContent>
+                <SearchBar
+                  placeholder="Search products..."
+                  value={searchValue}
+                  onChange={setSearchValue}
+                  onSearch={handleSearch}
+                  showClearButton
+                />
+                <Text className="mt-2 text-sm text-gray-600">
+                  Focus on this input to test focus ring styles
+                </Text>
+              </CardContent>
+            </Card>
+
+            {/* SearchBar with Action Button */}
+            <Card>
+              <CardHeader>
+                <Heading level="h3">SearchBar with Action Button</Heading>
+              </CardHeader>
+              <CardContent>
+                <SearchBar
+                  placeholder="Search with button..."
+                  showActionButton
+                  actionButtonText="Search"
+                  showClearButton
+                  onSearch={handleSearch}
+                />
+                <Text className="mt-2 text-sm text-gray-600">
+                  Test focus states with both clear and action buttons
+                </Text>
+              </CardContent>
+            </Card>
+
+            {/* SearchBar with Error State */}
+            <Card>
+              <CardHeader>
+                <Heading level="h3">SearchBar with Error State</Heading>
+              </CardHeader>
+              <CardContent>
+                <SearchBar
+                  placeholder="Type 'error' to trigger error state..."
+                  error={searchError ? "Invalid search term" : undefined}
+                  showClearButton
+                  onSearch={handleSearch}
+                />
+                <Text className="mt-2 text-sm text-gray-600">
+                  Type 'error' to see error state focus ring
+                </Text>
+              </CardContent>
+            </Card>
+
+            {/* SearchBar Variants */}
+            <Card>
+              <CardHeader>
+                <Heading level="h3">SearchBar Variants</Heading>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <SearchBar
+                  variant="default"
+                  placeholder="Default variant..."
+                  showClearButton
+                />
+                <SearchBar
+                  variant="compact"
+                  size="sm"
+                  placeholder="Compact variant..."
+                  showClearButton
+                />
+                <SearchBar
+                  variant="prominent"
+                  size="lg"
+                  placeholder="Prominent variant..."
+                  showClearButton
+                  showActionButton
+                />
+              </CardContent>
+            </Card>
+          </div>
+        </section>
+
+        <Separator className="my-8" />
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* Button Section */}
@@ -56,11 +172,11 @@ function DesignSystemDemo() {
           {/* Input Section */}
           <section>
             <Heading level="h2" className="mb-4">
-              Input & Forms
+              Input & Forms - Focus Testing
             </Heading>
             <div className="space-y-4">
               <div>
-                <Label htmlFor="test-input">Test Input</Label>
+                <Label htmlFor="test-input">Standard Input (Focus to test ring)</Label>
                 <Input
                   id="test-input"
                   placeholder="Type something..."
@@ -69,16 +185,33 @@ function DesignSystemDemo() {
                 />
               </div>
               <div>
-                <Label htmlFor="disabled-input">Disabled Input</Label>
+                <Label htmlFor="error-state-input">Input with Error State</Label>
+                <Input 
+                  id="error-state-input" 
+                  placeholder="Focus to see error focus ring"
+                  state="error"
+                  error="This field has an error"
+                />
+              </div>
+              <div>
+                <Label htmlFor="success-state-input">Input with Success State</Label>
+                <Input 
+                  id="success-state-input" 
+                  placeholder="Focus to see success focus ring"
+                  state="success"
+                />
+              </div>
+              <div>
+                <Label htmlFor="disabled-input">Disabled Input (No focus)</Label>
                 <Input id="disabled-input" placeholder="This is disabled" disabled />
               </div>
               <div>
-                <Label htmlFor="error-input">Input with Error</Label>
-                <Input
-                  id="error-input"
-                  placeholder="This has an error"
-                  className="border-red-500 focus:ring-red-500"
-                />
+                <Label>Input Sizes with Focus</Label>
+                <div className="space-y-2">
+                  <Input size="sm" placeholder="Small input - focus me" />
+                  <Input size="md" placeholder="Medium input - focus me" />
+                  <Input size="lg" placeholder="Large input - focus me" />
+                </div>
               </div>
             </div>
           </section>
