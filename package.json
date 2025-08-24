@@ -1,6 +1,6 @@
 {
   "name": "evoke-ui-workspace",
-  "private": true,
+  "private": false,
   "type": "module",
   "scripts": {
     "build": "pnpm --filter @evoke-ui/react build",

@@ -370,4 +370,39 @@ All tasks completed successfully. The @evoke-ui/react package is now:
 **Package Status**: Ready for NPM publication
 
 ---
+
+## 🎯 **NEXT PHASE PRIORITIES** - _Aligned with PLANNING.md_
+
+With Phase 1 + Build Package Distribution complete, our next priorities are:
+
+### **Phase 2: Molecular Components (Week 2-3)**
+
+#### **Primary Focus: 5-7 Molecular Components**
+- [ ] **FormField Component** - Label + Input + Error with comprehensive state management
+- [ ] **SearchBar Component** - Input + Icon + Button combination with CVA variants
+- [ ] **Card Component** - Container + Header + Content + Footer with flexible layouts
+- [ ] **ListItem Component** - Icon + Text + Action patterns with CVA architecture
+- [ ] **Stat Component** - Label + Value + Change indicator with status variants
+
+#### **Architecture Approach**
+- Follow established CVA-first patterns from atomic components
+- Maintain ~50%+ SCSS reduction through utility-first approach
+- Ensure comprehensive TypeScript support with VariantProps
+- Create corresponding Storybook stories and test coverage
+- Update automated package testing to include molecular components
+
+#### **Success Criteria**
+- Same quality standards as atomic components
+- Full backward compatibility and type safety
+- Comprehensive Storybook documentation
+- Complete test coverage with both jest and visual regression
+- Package size remains under 50KB gzipped target
+
+### **Phase 3: Advanced Features**
+- [ ] 2-3 organism component examples (DataTable, Modal, Navigation)
+- [ ] Next.js example application
+- [ ] Documentation site deployment
+- [ ] NPM registry publication
+
+---
 *Last Updated: 2025-08-24*

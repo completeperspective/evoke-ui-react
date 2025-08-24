@@ -1,6 +1,7 @@
 {
   "name": "@evoke-ui/react",
-  "version": "0.2.0",
+  "version": "0.2.1",
+  "private": false,
   "description": "A themable React component library built on shadcn/ui with OKLCH color space and runtime theming",
   "type": "module",
   "main": "./dist/index.js",
