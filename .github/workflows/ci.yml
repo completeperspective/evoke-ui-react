@@ -83,7 +83,7 @@ jobs:
       - name: Run unit tests
         working-directory: packages/evoke-ui-react
         run: |
-          pnpm test --run --coverage
+          pnpm run test -- --run
           echo "Unit tests completed"
 
       - name: Package integrity test
