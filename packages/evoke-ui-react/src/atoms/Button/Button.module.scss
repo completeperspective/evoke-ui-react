@@ -5,12 +5,12 @@
 @use '../../styles/abstracts' as *;
 
 .button {
-  // Enhanced accessibility for focus states
-  @include enhanced-focus-ring;
-  
   // Ensure text doesn't get selected during interaction
   user-select: none;
   -webkit-tap-highlight-color: transparent;
+  
+  // Enhanced accessibility for focus states
+  @include enhanced-focus-ring;
   
   // Reduced motion preferences
   @media (prefers-reduced-motion: reduce) {

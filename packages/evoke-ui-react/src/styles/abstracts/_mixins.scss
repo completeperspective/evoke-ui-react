@@ -408,11 +408,6 @@
     &:hover:not(:disabled):not([aria-disabled="true"]) {
       transform: translateY(-2px);
       @include elevation(2);
-      
-      @include reduced-motion {
-        transform: none;
-        box-shadow: none;
-      }
     }
   }
   
@@ -421,11 +416,19 @@
       transform: translateY(0);
       @include elevation(1);
       transition-duration: var(--ui-duration-instant);
-      
-      @include reduced-motion {
-        transform: none;
-        box-shadow: none;
-      }
+    }
+  }
+  
+  // Reduced motion overrides for all states
+  @include reduced-motion {
+    &:hover:not(:disabled):not([aria-disabled="true"]) {
+      transform: none;
+      box-shadow: none;
+    }
+    
+    &:active:not(:disabled):not([aria-disabled="true"]) {
+      transform: none;
+      box-shadow: none;
     }
   }
 }
@@ -593,8 +596,10 @@
     box-shadow: 
       0 0 0 4px oklch($color / 0.1),
       0 0 0 2px oklch($color);
-    
-    @include reduced-motion {
+  }
+  
+  @include reduced-motion {
+    &:focus-visible {
       box-shadow: 0 0 0 2px oklch($color);
     }
   }

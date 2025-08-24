@@ -10,12 +10,12 @@
 }
 
 .input {
-  // Enhanced accessibility for focus states
-  @include enhanced-focus-ring;
-  
   // Ensure text doesn't get selected during file input interaction
   user-select: auto;
   -webkit-tap-highlight-color: transparent;
+  
+  // Enhanced accessibility for focus states
+  @include enhanced-focus-ring;
   
   // Enhanced gradient overlay for visual appeal (CVA cannot handle ::before)
   &::before {
@@ -56,16 +56,17 @@
     
     &:hover {
       transform: translateY(-1px);
-      
-      @include reduced-motion {
-        transform: none;
-      }
     }
 
     &:active {
       transform: translateY(0);
-      
-      @include reduced-motion {
+    }
+  }
+  
+  // Reduced motion overrides for file input buttons
+  @include reduced-motion {
+    &[type='file']::file-selector-button {
+      &:hover, &:active {
         transform: none;
       }
     }
@@ -74,15 +75,18 @@
   // Enhanced placeholder animation (CVA cannot handle complex placeholder states)
   &:focus::placeholder {
     transform: translateY(-1px);
-    
-    @include reduced-motion {
-      transform: none;
-    }
   }
 
   // Disabled state gradient removal
   &:disabled::before {
     opacity: 0;
+  }
+  
+  // Reduced motion overrides for placeholder animations
+  @include reduced-motion {
+    &:focus::placeholder {
+      transform: none !important;
+    }
   }
   
   // Reduced motion preferences
@@ -91,10 +95,6 @@
     
     &::before {
       transition: none !important;
-    }
-    
-    &:focus::placeholder {
-      transform: none !important;
     }
   }
   

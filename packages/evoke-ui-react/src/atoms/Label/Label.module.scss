@@ -6,12 +6,13 @@
 
 .label {
   @include component-base;
-  @include enhanced-focus-ring;
   
   // Text rendering optimization
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -webkit-tap-highlight-color: transparent;
+  
+  @include enhanced-focus-ring;
   
   // Disabled state for form controls  
   &:has(+ input:disabled), &:has(+ textarea:disabled), &:has(+ select:disabled) {

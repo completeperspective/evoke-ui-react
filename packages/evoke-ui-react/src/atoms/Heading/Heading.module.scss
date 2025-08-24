@@ -49,10 +49,10 @@
 
 // Utility classes for enhanced functionality
 .focusable {
-  @include enhanced-focus-ring;
-  
   // Ensure focusable headings are interactive
   cursor: pointer;
+  
+  @include enhanced-focus-ring;
   
   // Enhanced focus states
   &:focus {

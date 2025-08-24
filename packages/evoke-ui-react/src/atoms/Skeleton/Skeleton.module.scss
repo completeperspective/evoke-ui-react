@@ -5,12 +5,12 @@
 @use '../../styles/abstracts' as *;
 
 .skeleton {
-  // Enhanced accessibility for screen readers and focus management
-  @include enhanced-focus-ring;
-  
   // Prevent text selection during loading states
   user-select: none;
   -webkit-tap-highlight-color: transparent;
+  
+  // Enhanced accessibility for screen readers and focus management
+  @include enhanced-focus-ring;
   
   // Shimmer animation (when CVA animation="shimmer")
   &.shimmer {
