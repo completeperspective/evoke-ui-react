@@ -1,0 +1,138 @@
+/**
+ * Molecular Component Styles - Consolidated from CSS Modules
+ * 
+ * Contains essential styles that CVA cannot handle for molecular components:
+ * - Accessibility features (focus management, screen reader support)
+ * - Advanced animations and transitions
+ * - Complex responsive behavior
+ * - SCSS-specific features
+ */
+@use '../abstracts' as *;
+
+/* ================================
+ * FORM FIELD COMPONENT
+ * ================================ */
+
+.evoke-form-field {
+  // Ensure proper focus management within the form field
+  &:focus-within {
+    outline: none;
+  }
+  
+  // Subtle shake animation for error states
+  &.animate-shake-subtle {
+    animation: shake-subtle 0.3s ease-in-out;
+  }
+  
+  // Reduced motion preferences
+  @media (prefers-reduced-motion: reduce) {
+    &.animate-shake-subtle {
+      animation: none !important;
+    }
+    
+    * {
+      transition: none !important;
+      animation: none !important;
+    }
+  }
+  
+  // High contrast mode enhancements
+  @media (prefers-contrast: high) {
+    // Enhance visual separation between form field elements
+    .evoke-form-field-description {
+      font-weight: 500 !important;
+      
+      &[role="alert"] {
+        font-weight: 700 !important;
+        text-decoration: underline;
+      }
+    }
+  }
+  
+  // Enhanced accessibility for screen readers
+  .evoke-form-field-description {
+    // Ensure descriptions are properly announced
+    &[role="alert"] {
+      // Error messages get priority announcement
+      speak: literal;
+      speak-as: spell-out;
+    }
+  }
+  
+  // Print styles for forms
+  @media print {
+    // Ensure form fields are visible in print
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    
+    // Hide interactive elements that don't make sense in print
+    [aria-hidden="true"] {
+      display: none !important;
+    }
+    
+    // Ensure required indicators are visible
+    [aria-label="required"]::after {
+      content: " (required)" !important;
+      font-weight: bold;
+    }
+  }
+}
+
+/* ================================
+ * ANIMATIONS
+ * ================================ */
+
+// Subtle shake animation for form validation errors
+@keyframes shake-subtle {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  
+  25% {
+    transform: translateX(-2px);
+  }
+  
+  75% {
+    transform: translateX(2px);
+  }
+}
+
+// Slide-in animation for descriptions and error messages
+@keyframes slide-in-from-top {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Fade-in animation for form field states
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  
+  to {
+    opacity: 1;
+  }
+}
+
+/* ================================
+ * UTILITY CLASSES FOR ANIMATIONS
+ * ================================ */
+
+.animate-shake-subtle {
+  animation: shake-subtle 0.3s ease-in-out;
+}
+
+.animate-slide-in-from-top {
+  animation: slide-in-from-top 0.2s ease-out;
+}
+
+.animate-fade-in {
+  animation: fade-in 0.15s ease-out;
+}

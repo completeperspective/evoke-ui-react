@@ -60,3 +60,9 @@ export const skeletonClasses = {
 export const separatorClasses = {
   separator: 'evoke-separator',
 } as const;
+
+// FormField molecular component class names
+export const formFieldClasses = {
+  formField: 'evoke-form-field',
+  description: 'evoke-form-field-description',
+} as const;
