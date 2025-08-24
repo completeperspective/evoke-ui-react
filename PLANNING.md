@@ -59,10 +59,13 @@ Building a production-ready, themable React component library on top of shadcn/u
 
 ### Documentation & Quality
 
-- **Docusaurus** or **Nextra** - Documentation site
+- **Storybook + GitHub Pages** - Component documentation and design system showcase
+  - Main branch deployment for published documentation
+  - PR preview deployments for visual review  
+  - Automated cleanup of temporary preview sites
 - **ESLint + Prettier** - Code quality
-- **Husky + lint-staged** - Pre-commit hooks
-- **GitHub Actions** - CI/CD pipeline
+- **Husky + lint-staged** - Pre-commit hooks  
+- **GitHub Actions** - CI/CD pipeline with multi-workflow deployment strategy
 
 ## Component Architecture
 
@@ -292,13 +295,44 @@ import customTheme from "./theme.config";
 - **Performance**: Bundle size monitoring
 - **Theme Testing**: Multi-theme snapshot tests
 
-### Documentation Requirements
+### Documentation Requirements & GitHub Pages Strategy
 
-- **Component Docs**: Props, examples, best practices
-- **Theme Docs**: Token reference, customization guide
-- **Migration Guide**: From vanilla shadcn/ui
-- **Design Guidelines**: When/how to use components
-- **API Reference**: Hooks, utilities, types
+#### **Storybook Documentation Architecture**
+
+- **Component Docs**: Interactive props, live examples, best practices with code snippets
+- **Design System Showcase**: Complete design token reference with copy-to-clipboard functionality
+- **Theme Customization Guide**: OKLCH color system documentation with visual examples
+- **Migration Guide**: From vanilla shadcn/ui with automated code transformation examples
+- **API Reference**: Comprehensive hooks, utilities, and TypeScript interface documentation
+- **Integration Guides**: Next.js, Vite, Remix setup instructions with working examples
+
+#### **GitHub Pages Deployment Strategy**
+
+**Main Documentation Site**
+- **URL**: `https://{username}.github.io/evoke-ui/`
+- **Source**: Main branch represents latest published version
+- **Content**: Complete component library documentation with all design tokens
+- **Features**: Search, mobile-responsive, accessibility-compliant, analytics-enabled
+
+**PR Preview System**
+- **URL Pattern**: `https://{username}.github.io/evoke-ui/pr-{number}/`
+- **Trigger**: Automatic deployment on PR creation/update
+- **Purpose**: Visual review and testing of component changes
+- **Cleanup**: Automatic removal when PR is closed or merged
+- **Integration**: Auto-comment preview URLs on PRs for easy access
+
+**Technical Implementation**
+- **Build Pipeline**: GitHub Actions workflows for deployment and cleanup
+- **Performance**: < 3 second load times, Lighthouse score > 95
+- **Accessibility**: WCAG 2.1 AA compliance, screen reader support
+- **SEO**: Proper meta tags, structured data, sitemap generation
+- **Analytics**: Component usage tracking, documentation performance metrics
+
+**Quality Gates**
+- All Storybook builds must pass before deployment
+- Accessibility audit with zero violations required
+- Visual regression testing for UI consistency
+- Link checking and documentation completeness validation
 
 ## Performance Targets
 
@@ -452,7 +486,10 @@ const componentVariants = cva(
    - **SearchBar** - Advanced search interface with suggestions, keyboard navigation, and loading states
 8. 2-3 organism examples (next priority)
 9. Next.js example app (planned)
-10. Basic documentation site (planned)
+10. GitHub Pages Storybook documentation site (next priority)
+   - Main branch deployment with published documentation
+   - PR preview system for visual component review
+   - Automated deployment and cleanup workflows
 
 ## CVA-First Architecture Implementation Status
 

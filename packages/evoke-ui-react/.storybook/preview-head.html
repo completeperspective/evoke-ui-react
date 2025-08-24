@@ -1,0 +1,126 @@
+<!-- GitHub Pages deployment optimizations -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Evoke UI React Component Library - A production-ready, themable component library built with React, TypeScript, and Tailwind CSS">
+<meta name="keywords" content="react, component library, design system, typescript, tailwind css, storybook, ui components">
+<meta name="author" content="Evoke UI Team">
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Evoke UI React - Component Library">
+<meta property="og:description" content="Production-ready React components with OKLCH theming, CVA-first architecture, and comprehensive accessibility">
+<meta property="og:site_name" content="Evoke UI">
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Evoke UI React - Component Library">
+<meta name="twitter:description" content="Production-ready React components with OKLCH theming, CVA-first architecture, and comprehensive accessibility">
+
+<!-- Favicon and PWA icons (will be served from assets) -->
+<link rel="icon" type="image/svg+xml" href="./favicon.svg">
+<link rel="icon" type="image/png" href="./favicon.png">
+
+<!-- Preconnect to external resources for performance -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<!-- Analytics placeholder - add your analytics code here -->
+<!-- <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script> -->
+
+<!-- GitHub Pages specific optimizations -->
+<script>
+  // Performance monitoring for GitHub Pages deployment
+  window.addEventListener('load', function() {
+    if (window.gtag) {
+      gtag('event', 'page_view', {
+        page_title: document.title,
+        page_location: window.location.href,
+        custom_map: {
+          dimension1: 'storybook_deployment'
+        }
+      });
+    }
+  });
+
+  // Add PR branding if in preview mode
+  if (window.__STORYBOOK_PR_BRANDING__) {
+    const branding = window.__STORYBOOK_PR_BRANDING__;
+    document.title = `🔍 PR #${branding.prNumber} Preview - Evoke UI`;
+    
+    // Add PR info to the page
+    window.addEventListener('DOMContentLoaded', function() {
+      const prBanner = document.createElement('div');
+      prBanner.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        background: linear-gradient(90deg, #f59e0b, #d97706);
+        color: white;
+        padding: 8px 16px;
+        font-size: 14px;
+        font-weight: 600;
+        text-align: center;
+        z-index: 10000;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      `;
+      prBanner.innerHTML = `
+        🔍 PR Preview #${branding.prNumber}: ${branding.prTitle} by @${branding.prAuthor}
+        <span style="margin-left: 16px; font-weight: normal;">Branch: ${branding.prBranch}</span>
+      `;
+      document.body.appendChild(prBanner);
+      
+      // Adjust body padding to account for banner
+      document.body.style.paddingTop = '48px';
+    });
+  }
+</script>
+
+<!-- Custom CSS for GitHub Pages deployment -->
+<style>
+  /* Ensure proper rendering on GitHub Pages */
+  html, body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+  }
+
+  /* Loading indicator for better UX */
+  .sb-show-main .sb-loading {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  }
+
+  .sb-show-main .sb-loading::after {
+    content: "Loading Evoke UI Documentation...";
+    color: white;
+    font-size: 16px;
+    font-weight: 500;
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+  }
+
+  /* Responsive improvements for GitHub Pages */
+  @media (max-width: 768px) {
+    .sb-show-main {
+      padding: 0 16px;
+    }
+  }
+  
+  /* High contrast mode support */
+  @media (prefers-contrast: high) {
+    .sb-show-main {
+      border: 2px solid currentColor;
+    }
+  }
+  
+  /* Reduced motion support */
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+</style>
