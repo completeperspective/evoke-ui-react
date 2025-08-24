@@ -61,8 +61,22 @@ const meta = {
     layout: 'fullscreen',
     docs: {
       description: {
-        component:
-          'Welcome to Evoke UI - A themable React component library built on shadcn/ui with OKLCH color space and runtime theming.',
+        component: `
+# Evoke UI - Production-Ready React Component Library
+
+## TL;DR
+Evoke UI is a production-ready, themable React component library built on shadcn/ui with OKLCH color space and runtime theming. It follows atomic design principles with CVA-first architecture, achieving 56.4% SCSS reduction while maintaining < 50KB gzipped bundle size. Features 8 atomic components with comprehensive Storybook documentation, accessibility-first design with ARIA support, and compatibility with Next.js, Remix, and Vite.
+
+## Key Features
+- **Runtime Theming**: CSS variables enable theme switching without rebuilds
+- **OKLCH Color Space**: Perceptually uniform color manipulation for better accessibility
+- **Atomic Design**: Systematic component hierarchy (atoms → molecules → organisms)  
+- **CVA-First Architecture**: 56.4% SCSS reduction across components
+- **Optimized Bundle**: < 50KB gzipped with tree-shaking support
+- **Modern Stack**: Built with Tailwind CSS v4, Sass, and TypeScript
+- **Accessibility**: ARIA support, keyboard navigation, and reduced motion
+- **Framework Agnostic**: Works with Next.js, Remix, and Vite
+        `.trim(),
       },
     },
   },
@@ -111,8 +125,8 @@ const WelcomeTemplate = () => (
             Component Library
           </Heading>
           <Text variant="lead" className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Built on shadcn/ui with OKLCH color space, runtime theming, and atomic design
-            principles. Craft exceptional user interfaces with confidence.
+            Production-ready React component library with OKLCH color space, CVA-first architecture, 
+            and &lt;50KB gzipped bundle. Built for Next.js, Remix, and Vite with accessibility-first design.
           </Text>
         </div>
 
@@ -147,8 +161,8 @@ const WelcomeTemplate = () => (
               Runtime Theming
             </Heading>
             <Text variant="muted">
-              Dynamic theme switching with OKLCH color space for perceptually uniform color
-              manipulation and better accessibility.
+              CSS variables enable theme switching without rebuilds. OKLCH color space provides
+              perceptually uniform color manipulation for enhanced accessibility.
             </Text>
           </div>
 
@@ -161,8 +175,8 @@ const WelcomeTemplate = () => (
               Accessibility First
             </Heading>
             <Text variant="muted">
-              Built with WCAG 2.1 AA compliance, proper ARIA attributes, keyboard navigation, and
-              screen reader support.
+              Built with ARIA support, keyboard navigation, screen reader compatibility, and
+              reduced motion support for inclusive user experiences.
             </Text>
           </div>
 
@@ -177,11 +191,11 @@ const WelcomeTemplate = () => (
               </div>
             </div>
             <Heading level="h3" spacing="tight" className="text-xl font-semibold">
-              Atomic Design
+              CVA-First Architecture
             </Heading>
             <Text variant="muted">
-              Systematic component hierarchy from atoms to organisms, ensuring consistency and
-              reusability across your application.
+              Class Variance Authority approach with atomic design principles (atoms → molecules → organisms).
+              Achieved 56.4% SCSS reduction across all components.
             </Text>
           </div>
 
@@ -205,11 +219,11 @@ const WelcomeTemplate = () => (
               <div className="w-6 h-6 bg-gradient-to-br from-secondary to-secondary/60 rounded"></div>
             </div>
             <Heading level="h3" spacing="tight" className="text-xl font-semibold">
-              Modern Styling
+              Modern Tech Stack
             </Heading>
             <Text variant="muted">
-              Tailwind CSS v4 with CSS-first configuration, Sass support, and
-              class-variance-authority for flexible styling.
+              Built with Tailwind CSS v4, Sass, and TypeScript. Compatible with Next.js, Remix,
+              and Vite for maximum flexibility in your projects.
             </Text>
           </div>
 
@@ -222,8 +236,8 @@ const WelcomeTemplate = () => (
               Performance Optimized
             </Heading>
             <Text variant="muted">
-              Tree-shakeable exports, optimized bundle sizes, and reduced motion support for fast,
-              efficient applications.
+              Tree-shakeable exports targeting &lt;50KB gzipped bundle size. 8 atomic components
+              with comprehensive Storybook documentation for efficient development.
             </Text>
           </div>
         </div>
@@ -236,7 +250,7 @@ const WelcomeTemplate = () => (
             Component Showcase
           </Heading>
           <Text variant="muted" className="text-lg">
-            Explore our comprehensive collection of atomic components
+            Explore our collection of 8 atomic components with comprehensive documentation
           </Text>
         </div>
 
@@ -337,13 +351,15 @@ const WelcomeTemplate = () => (
         <div className="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0">
           <div className="flex items-center space-x-4">
             <div className="w-6 h-6 bg-gradient-to-br from-primary to-primary/60 rounded flex items-center justify-center">
-              <StarIcon className="w-4 h-4" />
+              <div className="w-4 h-4">
+                <StarIcon />
+              </div>
             </div>
             <Text variant="muted">Evoke UI - Built with ❤️ and TypeScript</Text>
           </div>
           <div className="flex items-center space-x-6">
             <Text variant="small" className="text-muted-foreground">
-              Storybook v{process.env.STORYBOOK_VERSION || '9.1.3'}
+              Storybook v9.1.3
             </Text>
             <Badge variant="outline" size="sm">
               Design System
@@ -360,8 +376,19 @@ export const Welcome: Story = {
   parameters: {
     docs: {
       description: {
-        story:
-          'Welcome to Evoke UI - A comprehensive overview of the design system, features, and components.',
+        story: `
+**Welcome to Evoke UI** - A comprehensive overview of our production-ready React component library.
+
+This story showcases:
+- 🎨 **Runtime theming** with OKLCH color space
+- 📦 **CVA-first architecture** (56.4% SCSS reduction)
+- ⚡ **Optimized bundle** (<50KB gzipped with tree-shaking)
+- 🔧 **8 atomic components** with full TypeScript support
+- ♿ **Accessibility-first** design with ARIA support
+- 🚀 **Framework compatibility** with Next.js, Remix, and Vite
+
+Perfect for developers who need a robust, themable, and accessible component library built on modern web standards.
+        `.trim(),
       },
     },
   },
