@@ -311,8 +311,8 @@ describe('Heading Component', () => {
     it('renders balance prop', () => {
       renderHeading({ level: 'h2', balance: true });
       const heading = screen.getByRole('heading', { level: 2 });
-      // Balance class is applied via CSS module
-      expect(heading.className).toContain('_balance_');
+      // Balance class is applied via CSS class name constant
+      expect(heading.className).toContain('evoke-heading-balance');
     });
     
     it('applies compound variants correctly', () => {

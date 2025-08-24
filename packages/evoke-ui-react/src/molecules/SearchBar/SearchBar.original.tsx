@@ -3,12 +3,6 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '../../utils/cn';
 import { Input, type InputProps } from '../../atoms/Input';
 import { searchBarClasses } from '../../styles/classNames';
-import { 
-  useDebounce, 
-  useClickOutside, 
-  useKeyboardNavigation, 
-  useSearchHistory 
-} from '../../hooks';
 
 /**
  * SearchBar container variants
@@ -304,12 +298,6 @@ export interface SearchBarProps
   /** Debounce delay in milliseconds for onChange (default: 300) */
   debounceMs?: number;
 
-  // Search History
-  /** Enable search history functionality */
-  enableSearchHistory?: boolean;
-  /** LocalStorage key for search history */
-  searchHistoryKey?: string;
-
   // Input props passthrough
   /** Additional props to pass to the input */
   inputProps?: Omit<
@@ -360,7 +348,7 @@ export interface SearchBarProps
  * />
  * ```
  */
-const SearchBar = React.memo(React.forwardRef<HTMLInputElement, SearchBarProps>(
+const SearchBar = React.forwardRef<HTMLInputElement, SearchBarProps>(
   (
     {
       className,
@@ -392,8 +380,6 @@ const SearchBar = React.memo(React.forwardRef<HTMLInputElement, SearchBarProps>(
       recentSearchesLabel = 'Recent searches',
       onRecentSearchSelect,
       debounceMs = 300,
-      enableSearchHistory = false,
-      searchHistoryKey = 'search-history',
       inputProps = {},
       ...props
     },
@@ -402,58 +388,11 @@ const SearchBar = React.memo(React.forwardRef<HTMLInputElement, SearchBarProps>(
     const [internalValue, setInternalValue] = React.useState(defaultValue || '');
     const [isFocused, setIsFocused] = React.useState(false);
     const [showSuggestions, setShowSuggestions] = React.useState(false);
+    const [highlightedIndex, setHighlightedIndex] = React.useState(-1);
+    const [debounceTimeout, setDebounceTimeout] = React.useState<NodeJS.Timeout | null>(null);
 
+    const searchBarRef = React.useRef<HTMLDivElement>(null);
     const [inputElement, setInputElement] = React.useState<HTMLInputElement | null>(null);
-    
-    // Use our optimized hooks
-    const currentValue = value !== undefined ? value : internalValue;
-    const debouncedValue = useDebounce(currentValue, debounceMs);
-    
-    const searchBarRef = useClickOutside<HTMLDivElement>(() => {
-      setShowSuggestions(false);
-    });
-
-    // Search history hook (only if enabled)
-    const searchHistory = useSearchHistory(enableSearchHistory ? {
-      key: searchHistoryKey,
-      maxItems: 10,
-      deduplicate: true,
-    } : undefined);
-
-    // Combine all suggestions with search history if enabled
-    const allSuggestions = React.useMemo(() => {
-      const searchSuggestions = suggestions.slice(0, maxSuggestions);
-      
-      if (enableSearchHistory && searchHistory && currentValue.trim() === '' && searchHistory.history.length > 0) {
-        const recentSuggestions = searchHistory.history.slice(0, 5).map(term => ({
-          id: `recent-${term}`,
-          text: term,
-          type: 'recent' as const,
-        }));
-        return [...recentSuggestions, ...searchSuggestions];
-      }
-      
-      return searchSuggestions;
-    }, [suggestions, searchHistory?.history, currentValue, enableSearchHistory, maxSuggestions]);
-
-    const { 
-      selectedIndex, 
-      handleKeyDown: handleKeyboardNavigation,
-      setSelectedIndex,
-      resetSelection,
-    } = useKeyboardNavigation({
-      itemCount: allSuggestions.length,
-      onEnter: (index) => {
-        if (index >= 0 && allSuggestions[index]) {
-          handleSuggestionClick(allSuggestions[index]);
-        }
-      },
-      onEscape: () => {
-        setShowSuggestions(false);
-        resetSelection();
-      },
-      loop: true,
-    });
 
     // Merge refs helper function
     const mergeRefs = React.useCallback(
@@ -471,21 +410,9 @@ const SearchBar = React.memo(React.forwardRef<HTMLInputElement, SearchBarProps>(
       [ref],
     );
 
+    // Use controlled value if provided, otherwise use internal state
+    const currentValue = value !== undefined ? value : internalValue;
     const hasValue = Boolean(currentValue && currentValue.length > 0);
-
-    // Handle debounced search
-    React.useEffect(() => {
-      if (debouncedValue && onSearch && !disabled) {
-        onSearch(debouncedValue);
-      }
-    }, [debouncedValue, onSearch, disabled]);
-
-    // Controlled component sync
-    React.useEffect(() => {
-      if (value !== undefined) {
-        setInternalValue(value);
-      }
-    }, [value]);
 
     // Determine search bar state
     const searchBarState = disabled
@@ -507,109 +434,108 @@ const SearchBar = React.memo(React.forwardRef<HTMLInputElement, SearchBarProps>(
           ? 'focused'
           : 'default';
 
-    const hasSuggestions = showSuggestions && (allSuggestions.length > 0 || suggestionsLoading || (Array.isArray(suggestions) && allSuggestions.length === 0));
+    // Combine suggestions and recent searches
+    const displaySuggestions = React.useMemo(() => {
+      const filtered = suggestions.slice(0, maxSuggestions);
+      const recent = currentValue
+        ? recentSearches
+            .filter(
+              (search) =>
+                search.toLowerCase().includes(currentValue.toLowerCase()) &&
+                search !== currentValue,
+            )
+            .slice(0, 3)
+            .map((search) => ({ id: `recent-${search}`, text: search, type: 'recent' as const }))
+        : [];
+
+      return [...filtered, ...recent];
+    }, [suggestions, recentSearches, currentValue, maxSuggestions]);
+
+    const hasSuggestions = showSuggestions && (displaySuggestions.length > 0 || suggestionsLoading);
+
+    // Debounced change handler
+    const handleChange = React.useCallback(
+      (newValue: string) => {
+        if (value === undefined) {
+          setInternalValue(newValue);
+        }
+
+        if (debounceTimeout) {
+          clearTimeout(debounceTimeout);
+        }
+
+        const timeout = setTimeout(() => {
+          onChange?.(newValue);
+        }, debounceMs);
+
+        setDebounceTimeout(timeout);
+      },
+      [value, onChange, debounceMs],
+    );
+
+    // Clear debounce timeout on unmount
+    React.useEffect(() => {
+      return () => {
+        if (debounceTimeout) {
+          clearTimeout(debounceTimeout);
+        }
+      };
+    }, [debounceTimeout]);
 
     // Handle input change
-    const handleInputChange = React.useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       const newValue = event.target.value;
-      if (value === undefined) {
-        setInternalValue(newValue);
-      }
-      onChange?.(newValue);
-      
-      // Show suggestions if:
-      // 1. There are suggestions, OR
-      // 2. We're loading suggestions, OR 
-      // 3. We want to show "no suggestions" message (when suggestions array is provided but empty), OR
-      // 4. Search history is enabled and we have history items (for empty input)
-      const hasRealSuggestions = suggestions.length > 0;
-      const hasSearchHistory = enableSearchHistory && searchHistory?.history.length > 0;
-      const isExpectingResults = Array.isArray(suggestions); // suggestions array was provided
-      
-      if (newValue.trim() !== '') {
-        // For non-empty input, show suggestions if we have them, are loading, or expect results
-        if (hasRealSuggestions || suggestionsLoading || isExpectingResults) {
-          setShowSuggestions(true);
-        } else {
-          setShowSuggestions(false);
-        }
-      } else {
-        // For empty input, only show if we have search history
-        if (hasSearchHistory) {
-          setShowSuggestions(true);
-        } else {
-          setShowSuggestions(false);
-        }
-      }
-      resetSelection();
-    }, [value, onChange, enableSearchHistory, searchHistory?.history.length, suggestions, suggestionsLoading, resetSelection]);
+      handleChange(newValue);
+      setShowSuggestions(true);
+      setHighlightedIndex(-1);
+    };
 
     // Handle input focus
-    const handleInputFocus = React.useCallback((event: React.FocusEvent<HTMLInputElement>) => {
+    const handleInputFocus = (event: React.FocusEvent<HTMLInputElement>) => {
       setIsFocused(true);
-      
-      const hasRealSuggestions = suggestions.length > 0;
-      const hasSearchHistory = enableSearchHistory && searchHistory?.history.length > 0;
-      const isExpectingResults = Array.isArray(suggestions); // suggestions array was provided
-      
-      if (currentValue.trim() !== '') {
-        // For non-empty input, show suggestions if we have them, are loading, or expect results
-        if (hasRealSuggestions || suggestionsLoading || isExpectingResults) {
-          setShowSuggestions(true);
-        }
-      } else {
-        // For empty input, only show if we have search history
-        if (hasSearchHistory) {
-          setShowSuggestions(true);
-        }
-      }
+      setShowSuggestions(true);
       onFocus?.(event);
-    }, [currentValue, enableSearchHistory, searchHistory?.history.length, suggestions, suggestionsLoading, onFocus]);
+    };
 
     // Handle input blur
-    const handleInputBlur = React.useCallback((event: React.FocusEvent<HTMLInputElement>) => {
+    const handleInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
       setIsFocused(false);
       // Delay hiding suggestions to allow for clicks
       setTimeout(() => {
         setShowSuggestions(false);
-        resetSelection();
+        setHighlightedIndex(-1);
       }, 150);
       onBlur?.(event);
-    }, [onBlur, resetSelection]);
+    };
 
     // Handle search submission
-    const handleSearch = React.useCallback(() => {
+    const handleSearch = () => {
       if (!disabled && currentValue.trim()) {
-        const searchTerm = currentValue.trim();
-        if (enableSearchHistory && searchHistory) {
-          searchHistory.addToHistory(searchTerm);
-        }
-        onSearch?.(searchTerm);
+        onSearch?.(currentValue.trim());
         setShowSuggestions(false);
         inputElement?.blur();
       }
-    }, [disabled, currentValue, enableSearchHistory, searchHistory, onSearch, inputElement]);
+    };
 
     // Handle clear
-    const handleClear = React.useCallback(() => {
+    const handleClear = () => {
       if (value === undefined) {
         setInternalValue('');
       }
       onChange?.('');
       onClear?.();
       setShowSuggestions(false);
-      resetSelection();
       inputElement?.focus();
-    }, [value, onChange, onClear, resetSelection, inputElement]);
+    };
 
     // Handle action button click
-    const handleActionClick = React.useCallback(() => {
+    const handleActionClick = () => {
       onActionClick?.(currentValue);
       handleSearch();
-    }, [onActionClick, currentValue, handleSearch]);
+    };
 
     // Handle suggestion selection
-    const handleSuggestionClick = React.useCallback((suggestion: SearchSuggestion) => {
+    const handleSuggestionClick = (suggestion: SearchSuggestion) => {
       const newValue = suggestion.text;
 
       if (value === undefined) {
@@ -618,10 +544,6 @@ const SearchBar = React.memo(React.forwardRef<HTMLInputElement, SearchBarProps>(
 
       onChange?.(newValue);
 
-      if (enableSearchHistory && searchHistory) {
-        searchHistory.addToHistory(newValue);
-      }
-
       if (suggestion.type === 'recent') {
         onRecentSearchSelect?.(suggestion.text);
       } else {
@@ -629,16 +551,12 @@ const SearchBar = React.memo(React.forwardRef<HTMLInputElement, SearchBarProps>(
       }
 
       setShowSuggestions(false);
-      resetSelection();
       inputElement?.focus();
-    }, [value, onChange, enableSearchHistory, searchHistory, onRecentSearchSelect, onSuggestionSelect, resetSelection, inputElement]);
+    };
 
     // Handle keyboard navigation
-    const handleKeyDown = React.useCallback((event: React.KeyboardEvent<HTMLInputElement>) => {
-      if (showSuggestions && allSuggestions.length > 0) {
-        handleKeyboardNavigation(event as any);
-      } else {
-        // Handle basic keys when no suggestions
+    const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+      if (!showSuggestions || displaySuggestions.length === 0) {
         if (event.key === 'Enter') {
           event.preventDefault();
           handleSearch();
@@ -646,8 +564,53 @@ const SearchBar = React.memo(React.forwardRef<HTMLInputElement, SearchBarProps>(
           event.preventDefault();
           handleClear();
         }
+        return;
       }
-    }, [showSuggestions, allSuggestions.length, handleKeyboardNavigation, handleSearch, hasValue, handleClear]);
+
+      switch (event.key) {
+        case 'ArrowDown':
+          event.preventDefault();
+          setHighlightedIndex((prev) => (prev < displaySuggestions.length - 1 ? prev + 1 : 0));
+          break;
+
+        case 'ArrowUp':
+          event.preventDefault();
+          setHighlightedIndex((prev) => (prev > 0 ? prev - 1 : displaySuggestions.length - 1));
+          break;
+
+        case 'Enter':
+          event.preventDefault();
+          if (highlightedIndex >= 0 && highlightedIndex < displaySuggestions.length) {
+            handleSuggestionClick(displaySuggestions[highlightedIndex]);
+          } else {
+            handleSearch();
+          }
+          break;
+
+        case 'Escape':
+          event.preventDefault();
+          if (hasValue) {
+            handleClear();
+          } else {
+            setShowSuggestions(false);
+            inputElement?.blur();
+          }
+          break;
+      }
+    };
+
+    // Click outside handler
+    React.useEffect(() => {
+      const handleClickOutside = (event: MouseEvent) => {
+        if (searchBarRef.current && !searchBarRef.current.contains(event.target as Node)) {
+          setShowSuggestions(false);
+          setHighlightedIndex(-1);
+        }
+      };
+
+      document.addEventListener('mousedown', handleClickOutside);
+      return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, []);
 
     const hasActionButton = showActionButton || Boolean(actionButtonText);
     const shouldShowClear = showClearButton && hasValue && !loading && !disabled;
@@ -757,20 +720,13 @@ const SearchBar = React.memo(React.forwardRef<HTMLInputElement, SearchBarProps>(
           )}
         </div>
 
-        {/* Error Message */}
-        {error && (
-          <div className="absolute top-full left-0 right-0 mt-1 px-3 py-1 text-sm text-destructive bg-destructive/10 border border-destructive/20 rounded-md">
-            {error}
-          </div>
-        )}
-
         {/* Suggestions Dropdown */}
         {hasSuggestions && (
           <div
             className={cn(
               suggestionsVariants({
                 variant,
-                empty: allSuggestions.length === 0 && !suggestionsLoading,
+                empty: displaySuggestions.length === 0 && !suggestionsLoading,
               }),
             )}
           >
@@ -779,30 +735,29 @@ const SearchBar = React.memo(React.forwardRef<HTMLInputElement, SearchBarProps>(
                 <div className="animate-spin rounded-full border-2 border-current border-t-transparent w-4 h-4 mr-2" />
                 Loading suggestions...
               </div>
-            ) : allSuggestions.length > 0 ? (
+            ) : displaySuggestions.length > 0 ? (
               <>
                 {/* Recent Searches Section */}
                 {recentSearches.length > 0 &&
-                  allSuggestions.some((s) => s.type === 'recent') && (
+                  displaySuggestions.some((s) => s.type === 'recent') && (
                     <>
                       <div className="px-3 py-1 text-xs font-medium text-muted-foreground border-b">
                         {recentSearchesLabel}
                       </div>
-                      {allSuggestions
+                      {displaySuggestions
                         .filter((suggestion) => suggestion.type === 'recent')
                         .map((suggestion) => {
-                          const actualIndex = allSuggestions.indexOf(suggestion);
+                          const actualIndex = displaySuggestions.indexOf(suggestion);
                           return (
                             <div
                               key={suggestion.id}
                               className={cn(
                                 suggestionItemVariants({
-                                  highlighted: selectedIndex === actualIndex,
+                                  highlighted: highlightedIndex === actualIndex,
                                   type: 'recent',
                                 }),
                               )}
                               onClick={() => handleSuggestionClick(suggestion)}
-                              onMouseEnter={() => setSelectedIndex(actualIndex)}
                             >
                               <svg
                                 className="w-3 h-3 mr-2 text-muted-foreground"
@@ -822,22 +777,21 @@ const SearchBar = React.memo(React.forwardRef<HTMLInputElement, SearchBarProps>(
                   )}
 
                 {/* Regular Suggestions */}
-                {allSuggestions.some((s) => s.type !== 'recent') &&
-                  allSuggestions
+                {displaySuggestions.some((s) => s.type !== 'recent') &&
+                  displaySuggestions
                     .filter((suggestion) => suggestion.type !== 'recent')
                     .map((suggestion) => {
-                      const actualIndex = allSuggestions.indexOf(suggestion);
+                      const actualIndex = displaySuggestions.indexOf(suggestion);
                       return (
                         <div
                           key={suggestion.id}
                           className={cn(
                             suggestionItemVariants({
-                              highlighted: selectedIndex === actualIndex,
+                              highlighted: highlightedIndex === actualIndex,
                               type: 'suggestion',
                             }),
                           )}
                           onClick={() => handleSuggestionClick(suggestion)}
-                          onMouseEnter={() => setSelectedIndex(actualIndex)}
                         >
                           <svg
                             className="w-3 h-3 mr-2 text-muted-foreground"
@@ -864,7 +818,7 @@ const SearchBar = React.memo(React.forwardRef<HTMLInputElement, SearchBarProps>(
       </div>
     );
   },
-));
+);
 
 SearchBar.displayName = 'SearchBar';
 

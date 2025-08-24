@@ -11,6 +11,21 @@ export const VERSION = '0.1.0';
 // Utility functions
 export { cn } from './utils/cn';
 
+// Hooks
+export {
+  useDebounce,
+  useClickOutside,
+  useKeyboardNavigation,
+  useSearchHistory,
+} from './hooks';
+export type {
+  UseKeyboardNavigationOptions,
+  UseKeyboardNavigationReturn,
+  SearchHistoryItem,
+  UseSearchHistoryOptions,
+  UseSearchHistoryReturn,
+} from './hooks';
+
 // Color utilities
 export * from './utils/colors';
 

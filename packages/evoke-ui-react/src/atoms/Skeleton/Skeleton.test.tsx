@@ -204,7 +204,7 @@ describe('Skeleton Component', () => {
     it('applies textLines class for multi-line', () => {
       renderSkeleton({ shape: 'text', lines: 'lines2', className: 'custom-class' });
       const container = screen.getAllByRole('status')[0].parentElement;
-      expect(container?.className).toMatch(/.*textLines.*/);
+      expect(container?.className).toMatch(/.*evoke-skeleton-text-lines.*/);
       expect(container).toHaveClass('custom-class');
     });
 
@@ -379,7 +379,7 @@ describe('Skeleton Component', () => {
       render(<Skeleton ref={ref} shape="text" lines="lines2" />);
       
       expect(ref.current).toBeInstanceOf(HTMLDivElement);
-      expect(ref.current?.className).toMatch(/.*textLines.*/);
+      expect(ref.current?.className).toMatch(/.*evoke-skeleton-text-lines.*/);
     });
   });
 
