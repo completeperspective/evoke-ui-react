@@ -23,5 +23,5 @@ export default defineConfig({
   esbuildOptions(options) {
     options.jsx = 'automatic';
   },
-  onSuccess: 'npm run build:styles',
+  // CSS compilation handled by separate build:styles script
 });

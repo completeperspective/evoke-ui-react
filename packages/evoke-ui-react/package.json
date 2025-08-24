@@ -17,6 +17,7 @@
       "css": "./dist/styles.css"
     },
     "./styles.css": "./dist/styles.css",
+    "./tailwind.css": "./dist/tailwind.css",
     "./tailwind-v3": "./dist/tailwind-preset-v3.js"
   },
   "files": [
@@ -31,10 +32,9 @@
     "dev": "vite",
     "build": "npm run build:lib && npm run build:styles",
     "build:lib": "tsup",
-    "build:styles": "npm run build:sass && npm run build:tailwind && npm run combine:styles",
-    "build:sass": "sass src/styles/index.scss dist/styles-sass.css --style compressed",
-    "build:tailwind": "echo '/* Tailwind CSS output handled by Vite plugin in production */' > dist/styles-tailwind.css",
-    "combine:styles": "cat dist/styles-sass.css dist/styles-tailwind.css > dist/styles.css && rm dist/styles-sass.css dist/styles-tailwind.css",
+    "build:styles": "npm run build:sass && npm run build:tailwind",
+    "build:sass": "sass src/styles/index.scss dist/styles.css --style compressed",
+    "build:tailwind": "npx @tailwindcss/cli --input src/styles/tailwind.css --output dist/tailwind.css --minify",
     "build:watch": "concurrently \"npm run build:lib -- --watch\" \"npm run build:sass -- --watch\"",
     "type-check": "tsc --noEmit",
     "clean": "rm -rf dist",
@@ -62,6 +62,7 @@
     "@storybook/manager-api": "9.0.0-alpha.1",
     "@storybook/react-vite": "^9.0.8",
     "@storybook/theming": "9.0.0-alpha.1",
+    "@tailwindcss/cli": "^4.1.12",
     "@tailwindcss/vite": "^4.0.0-alpha.14",
     "@testing-library/jest-dom": "^6.2.0",
     "@testing-library/react": "^14.1.2",
