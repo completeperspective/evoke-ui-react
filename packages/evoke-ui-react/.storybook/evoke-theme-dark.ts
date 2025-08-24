@@ -8,7 +8,7 @@ const darkColors = {
   // --ui-color-secondary: oklch(0.27 0.015 247.86) → RGB equivalent for dark
   secondary: '#334155',
   // Dark background: oklch(0.13 0.013 247.86) → RGB equivalent
-  background: '#0f172a',
+  background: '#161616',
   // Dark content background
   contentBackground: '#1e293b',
   // Dark foreground: oklch(0.98 0.005 247.86) → RGB equivalent

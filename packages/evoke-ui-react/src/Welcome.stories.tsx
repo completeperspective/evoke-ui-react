@@ -10,19 +10,46 @@ import { Separator } from './atoms/Separator/Separator';
 
 // Mock icons for demonstration
 const StarIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+  <svg
+    width="16"
+    height="16"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
     <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26" />
   </svg>
 );
 
 const CheckIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+  <svg
+    width="16"
+    height="16"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
     <path d="M20 6 9 17l-5-5" />
   </svg>
 );
 
 const ArrowRightIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+  <svg
+    width="16"
+    height="16"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
     <path d="M5 12h14" />
     <path d="m12 5 7 7-7 7" />
   </svg>
@@ -34,11 +61,11 @@ const meta = {
     layout: 'fullscreen',
     docs: {
       description: {
-        component: 'Welcome to Evoke UI - A themable React component library built on shadcn/ui with OKLCH color space and runtime theming.',
+        component:
+          'Welcome to Evoke UI - A themable React component library built on shadcn/ui with OKLCH color space and runtime theming.',
       },
     },
   },
-  tags: ['autodocs'],
 } satisfies Meta;
 
 export default meta;
@@ -60,8 +87,12 @@ const WelcomeTemplate = () => (
             </Heading>
           </div>
           <div className="flex items-center space-x-4">
-            <Badge variant="info" size="sm">v0.1.0</Badge>
-            <Badge variant="success" size="sm" startIcon={<CheckIcon />}>React 18</Badge>
+            <Badge variant="info" size="sm">
+              v0.1.0
+            </Badge>
+            <Badge variant="success" size="sm" startIcon={<CheckIcon />}>
+              React 18
+            </Badge>
           </div>
         </div>
       </div>
@@ -71,17 +102,20 @@ const WelcomeTemplate = () => (
       {/* Hero Section */}
       <section className="text-center space-y-6 max-w-4xl mx-auto">
         <div className="space-y-4">
-          <Heading level="h1" className="text-4xl md:text-6xl font-bold bg-gradient-to-br from-foreground to-foreground/70 bg-clip-text text-transparent">
+          <Heading
+            level="h1"
+            className="text-4xl md:text-6xl font-bold bg-gradient-to-br from-foreground to-foreground/70 bg-clip-text text-transparent"
+          >
             Beautiful, Accessible
             <br />
             Component Library
           </Heading>
           <Text variant="lead" className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Built on shadcn/ui with OKLCH color space, runtime theming, and atomic design principles.
-            Craft exceptional user interfaces with confidence.
+            Built on shadcn/ui with OKLCH color space, runtime theming, and atomic design
+            principles. Craft exceptional user interfaces with confidence.
           </Text>
         </div>
-        
+
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
           <Button size="lg" endIcon={<ArrowRightIcon />}>
             Get Started
@@ -113,7 +147,8 @@ const WelcomeTemplate = () => (
               Runtime Theming
             </Heading>
             <Text variant="muted">
-              Dynamic theme switching with OKLCH color space for perceptually uniform color manipulation and better accessibility.
+              Dynamic theme switching with OKLCH color space for perceptually uniform color
+              manipulation and better accessibility.
             </Text>
           </div>
 
@@ -126,7 +161,8 @@ const WelcomeTemplate = () => (
               Accessibility First
             </Heading>
             <Text variant="muted">
-              Built with WCAG 2.1 AA compliance, proper ARIA attributes, keyboard navigation, and screen reader support.
+              Built with WCAG 2.1 AA compliance, proper ARIA attributes, keyboard navigation, and
+              screen reader support.
             </Text>
           </div>
 
@@ -144,7 +180,8 @@ const WelcomeTemplate = () => (
               Atomic Design
             </Heading>
             <Text variant="muted">
-              Systematic component hierarchy from atoms to organisms, ensuring consistency and reusability across your application.
+              Systematic component hierarchy from atoms to organisms, ensuring consistency and
+              reusability across your application.
             </Text>
           </div>
 
@@ -157,7 +194,8 @@ const WelcomeTemplate = () => (
               TypeScript Native
             </Heading>
             <Text variant="muted">
-              Fully typed with comprehensive interfaces, excellent IntelliSense, and compile-time safety for better developer experience.
+              Fully typed with comprehensive interfaces, excellent IntelliSense, and compile-time
+              safety for better developer experience.
             </Text>
           </div>
 
@@ -170,7 +208,8 @@ const WelcomeTemplate = () => (
               Modern Styling
             </Heading>
             <Text variant="muted">
-              Tailwind CSS v4 with CSS-first configuration, Sass support, and class-variance-authority for flexible styling.
+              Tailwind CSS v4 with CSS-first configuration, Sass support, and
+              class-variance-authority for flexible styling.
             </Text>
           </div>
 
@@ -183,7 +222,8 @@ const WelcomeTemplate = () => (
               Performance Optimized
             </Heading>
             <Text variant="muted">
-              Tree-shakeable exports, optimized bundle sizes, and reduced motion support for fast, efficient applications.
+              Tree-shakeable exports, optimized bundle sizes, and reduced motion support for fast,
+              efficient applications.
             </Text>
           </div>
         </div>
@@ -215,25 +255,15 @@ const WelcomeTemplate = () => (
                 state="success"
               />
             </div>
-            
+
             <div className="space-y-2">
-              <Label htmlFor="demo-name">
-                Full Name
-              </Label>
-              <Input
-                id="demo-name"
-                placeholder="Enter your name"
-                value="John Doe"
-              />
+              <Label htmlFor="demo-name">Full Name</Label>
+              <Input id="demo-name" placeholder="Enter your name" value="John Doe" />
             </div>
-            
+
             <div className="flex space-x-2">
-              <Button className="flex-1">
-                Submit
-              </Button>
-              <Button variant="outline">
-                Cancel
-              </Button>
+              <Button className="flex-1">Submit</Button>
+              <Button variant="outline">Cancel</Button>
             </div>
           </div>
 
@@ -245,17 +275,17 @@ const WelcomeTemplate = () => (
               <Badge variant="default">Default</Badge>
               <Text variant="small">Badges</Text>
             </div>
-            
+
             <div className="text-center space-y-2">
               <Skeleton width="80px" height="20px" />
               <Text variant="small">Skeletons</Text>
             </div>
-            
+
             <div className="text-center space-y-2">
               <Text weight="semibold">Typography</Text>
               <Text variant="small">Text Variants</Text>
             </div>
-            
+
             <div className="text-center space-y-2">
               <Button size="icon">
                 <CheckIcon />
@@ -282,7 +312,9 @@ const WelcomeTemplate = () => (
             <div className="space-y-4">
               <div className="flex items-center justify-between">
                 <Label>Installation</Label>
-                <Badge variant="outline" size="sm">npm</Badge>
+                <Badge variant="outline" size="sm">
+                  npm
+                </Badge>
               </div>
               <div className="bg-background rounded p-3 font-mono text-sm">
                 <Text variant="code">npm install @evoke-ui/react</Text>
@@ -313,7 +345,9 @@ const WelcomeTemplate = () => (
             <Text variant="small" className="text-muted-foreground">
               Storybook v{process.env.STORYBOOK_VERSION || '9.1.3'}
             </Text>
-            <Badge variant="outline" size="sm">Design System</Badge>
+            <Badge variant="outline" size="sm">
+              Design System
+            </Badge>
           </div>
         </div>
       </div>
@@ -326,7 +360,8 @@ export const Welcome: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Welcome to Evoke UI - A comprehensive overview of the design system, features, and components.',
+        story:
+          'Welcome to Evoke UI - A comprehensive overview of the design system, features, and components.',
       },
     },
   },

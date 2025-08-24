@@ -58,7 +58,7 @@ const preview: Preview = {
     options: {
       storySort: {
         method: '',
-        order: ['Design System', ['Color', 'Typography', 'Animation'], 'Atoms'],
+        order: ['Welcome', 'Design System', ['Color', 'Typography', 'Animation'], 'Atoms'],
         locales: '',
       },
     },
