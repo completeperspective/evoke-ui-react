@@ -70,7 +70,7 @@ Evoke UI is a production-ready, themable React component library built on shadcn
 ## Key Features
 - **Runtime Theming**: CSS variables enable theme switching without rebuilds
 - **OKLCH Color Space**: Perceptually uniform color manipulation for better accessibility
-- **Atomic Design**: Systematic component hierarchy (atoms → molecules → organisms)  
+- **Atomic Design**: Systematic component hierarchy (atoms → molecules → organisms)
 - **CVA-First Architecture**: 56.4% SCSS reduction across components
 - **Optimized Bundle**: < 50KB gzipped with tree-shaking support
 - **Modern Stack**: Built with Tailwind CSS v4, Sass, and TypeScript
@@ -125,8 +125,9 @@ const WelcomeTemplate = () => (
             Component Library
           </Heading>
           <Text variant="lead" className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Production-ready React component library with OKLCH color space, CVA-first architecture, 
-            and &lt;50KB gzipped bundle. Built for Next.js, Remix, and Vite with accessibility-first design.
+            Production-ready React component library with OKLCH color space, CVA-first architecture,
+            and &lt;50KB gzipped bundle. Built for Next.js, Remix, and Vite with accessibility-first
+            design.
           </Text>
         </div>
 
@@ -175,8 +176,8 @@ const WelcomeTemplate = () => (
               Accessibility First
             </Heading>
             <Text variant="muted">
-              Built with ARIA support, keyboard navigation, screen reader compatibility, and
-              reduced motion support for inclusive user experiences.
+              Built with ARIA support, keyboard navigation, screen reader compatibility, and reduced
+              motion support for inclusive user experiences.
             </Text>
           </div>
 
@@ -194,8 +195,8 @@ const WelcomeTemplate = () => (
               CVA-First Architecture
             </Heading>
             <Text variant="muted">
-              Class Variance Authority approach with atomic design principles (atoms → molecules → organisms).
-              Achieved 56.4% SCSS reduction across all components.
+              Class Variance Authority approach with atomic design principles (atoms → molecules →
+              organisms). Achieved 56.4% SCSS reduction across all components.
             </Text>
           </div>
 
@@ -222,8 +223,8 @@ const WelcomeTemplate = () => (
               Modern Tech Stack
             </Heading>
             <Text variant="muted">
-              Built with Tailwind CSS v4, Sass, and TypeScript. Compatible with Next.js, Remix,
-              and Vite for maximum flexibility in your projects.
+              Built with Tailwind CSS v4, Sass, and TypeScript. Compatible with Next.js, Remix, and
+              Vite for maximum flexibility in your projects.
             </Text>
           </div>
 
@@ -254,30 +255,36 @@ const WelcomeTemplate = () => (
           </Text>
         </div>
 
-        <div className="bg-card border border-border rounded-xl p-8 space-y-8">
+        <div className="bg-card border border-border rounded-xl p-6 md:p-8 space-y-8">
           {/* Form Example */}
-          <div className="max-w-md mx-auto space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="demo-email" required>
-                Email Address
-              </Label>
-              <Input
-                id="demo-email"
-                type="email"
-                placeholder="Enter your email"
-                value="user@example.com"
-                state="success"
-              />
+          <div className="mx-auto space-y-6">
+            {/* Form Fields Group */}
+            <div className="space-y-5">
+              <div className="space-y-2">
+                <Label htmlFor="demo-email" required>
+                  Email Address
+                </Label>
+                <Input
+                  id="demo-email"
+                  type="email"
+                  placeholder="Enter your email address"
+                  value="user@example.com"
+                  state="success"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="demo-name">Full Name</Label>
+                <Input id="demo-name" placeholder="Enter your full name" value="John Doe" />
+              </div>
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="demo-name">Full Name</Label>
-              <Input id="demo-name" placeholder="Enter your name" value="John Doe" />
-            </div>
-
-            <div className="flex space-x-2">
-              <Button className="flex-1">Submit</Button>
-              <Button variant="outline">Cancel</Button>
+            {/* Button Actions */}
+            <div className="flex flex-col-reverse sm:flex-row gap-3 sm:justify-end">
+              <Button variant="outline" className="sm:w-auto">
+                Cancel
+              </Button>
+              <Button className="sm:w-auto sm:min-w-[120px]">Submit Form</Button>
             </div>
           </div>
 

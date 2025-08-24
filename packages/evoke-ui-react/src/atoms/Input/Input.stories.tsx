@@ -5,28 +5,64 @@ import { useState } from 'react';
 
 // Mock icons for demonstration
 const SearchIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+  <svg
+    width="16"
+    height="16"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
     <circle cx="11" cy="11" r="8" />
     <path d="m21 21-4.35-4.35" />
   </svg>
 );
 
 const UserIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+  <svg
+    width="16"
+    height="16"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
     <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
     <circle cx="12" cy="7" r="4" />
   </svg>
 );
 
 const EyeIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+  <svg
+    width="16"
+    height="16"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
     <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-3-7-10-7Z" />
     <circle cx="12" cy="12" r="3" />
   </svg>
 );
 
 const EyeOffIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+  <svg
+    width="16"
+    height="16"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
     <path d="M9.88 9.88a3 3 0 1 0 4.24 4.24" />
     <path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68" />
     <path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61" />
@@ -35,13 +71,31 @@ const EyeOffIcon = () => (
 );
 
 const CheckIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+  <svg
+    width="16"
+    height="16"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
     <path d="M20 6 9 17l-5-5" />
   </svg>
 );
 
 const XIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+  <svg
+    width="16"
+    height="16"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
     <path d="M18 6 6 18" />
     <path d="m6 6 12 12" />
   </svg>
@@ -54,7 +108,8 @@ const meta = {
     layout: 'centered',
     docs: {
       description: {
-        component: 'Input component for collecting user input with validation states, icons, and helper text support.',
+        component:
+          'Input component for collecting user input with validation states, icons, and helper text support.',
       },
     },
   },
@@ -193,7 +248,7 @@ export const Disabled: Story = {
 export const WithHelperText: Story = {
   args: {
     placeholder: 'Enter your email',
-    helperText: 'We\'ll never share your email with anyone else.',
+    helperText: "We'll never share your email with anyone else.",
   },
 };
 
@@ -336,7 +391,7 @@ const AllVariantsTemplate = () => (
         <Input size="lg" placeholder="Large input" />
       </div>
     </div>
-    
+
     <div className="space-y-4">
       <h4 className="text-sm font-semibold">States</h4>
       <div className="space-y-3">
@@ -347,7 +402,7 @@ const AllVariantsTemplate = () => (
         <Input disabled value="Disabled state" />
       </div>
     </div>
-    
+
     <div className="space-y-4">
       <h4 className="text-sm font-semibold">With Icons</h4>
       <div className="space-y-3">

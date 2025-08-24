@@ -157,7 +157,7 @@ export const StaticSkeleton: Story = {
 
 // Card layout examples
 const UserCardSkeletonTemplate = () => (
-  <div className="max-w-sm rounded-lg border border-border p-6 space-y-4">
+  <div className="max-w-2xl rounded-lg border border-border p-6 space-y-4">
     <div className="flex items-center space-x-4">
       <Skeleton shape="avatar" width="60px" height="60px" />
       <div className="space-y-2 flex-1">
@@ -191,7 +191,7 @@ export const UserCardSkeleton: Story = {
 };
 
 const ArticleCardSkeletonTemplate = () => (
-  <div className="max-w-md rounded-lg border border-border overflow-hidden">
+  <div className="max-w-2xl rounded-lg border border-border overflow-hidden">
     <Skeleton shape="card" width="100%" height="200px" />
     <div className="p-6 space-y-4">
       <div className="space-y-2">
@@ -323,7 +323,7 @@ const LoadingSimulationTemplate = () => {
   };
 
   return (
-    <div className="space-y-4 max-w-md">
+    <div className="space-y-4">
       <div className="flex items-center justify-between">
         <h3 className="text-lg font-semibold">Loading Simulation</h3>
         <button
