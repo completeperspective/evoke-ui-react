@@ -8,57 +8,60 @@ import { searchBarClasses } from '../../styles/classNames';
  * SearchBar container variants
  * Controls overall layout and spacing of the search bar
  */
-const searchBarVariants = cva('relative flex items-center w-full transition-all duration-200 [&_*:focus]:outline-none [&_*:focus-visible]:outline-none', {
-  variants: {
-    variant: {
-      default: 'bg-background border border-input rounded-md shadow-sm',
-      compact: 'bg-muted/50 border border-muted rounded-md',
-      prominent: 'bg-background border-2 border-primary/20 rounded-lg shadow-md',
+const searchBarVariants = cva(
+  'relative flex items-center w-full transition-all duration-200 [&_*:focus]:outline-none [&_*:focus-visible]:outline-none',
+  {
+    variants: {
+      variant: {
+        default: 'bg-background border border-input rounded-md shadow-sm',
+        compact: 'bg-muted/50 border border-muted rounded-md',
+        prominent: 'bg-background border-2 border-primary/20 rounded-lg shadow-md',
+      },
+      size: {
+        sm: 'h-8',
+        md: 'h-9',
+        lg: 'h-10',
+      },
+      state: {
+        default:
+          'hover:border-primary/30 focus-within:border-ring focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2',
+        loading: 'opacity-75 cursor-wait',
+        disabled: 'opacity-50 cursor-not-allowed bg-muted/50',
+        error:
+          'border-destructive focus-within:border-destructive focus-within:ring-2 focus-within:ring-destructive focus-within:ring-offset-2',
+        success:
+          'border-success focus-within:border-success focus-within:ring-2 focus-within:ring-success focus-within:ring-offset-2',
+      },
+      hasSuggestions: {
+        true: 'rounded-b-none',
+        false: '',
+      },
     },
-    size: {
-      sm: 'h-8',
-      md: 'h-9',
-      lg: 'h-10',
-    },
-    state: {
-      default:
-        'hover:border-primary/30 focus-within:border-ring focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2',
-      loading: 'opacity-75 cursor-wait',
-      disabled: 'opacity-50 cursor-not-allowed bg-muted/50',
-      error:
-        'border-destructive focus-within:border-destructive focus-within:ring-2 focus-within:ring-destructive focus-within:ring-offset-2',
-      success:
-        'border-success focus-within:border-success focus-within:ring-2 focus-within:ring-success focus-within:ring-offset-2',
-    },
-    hasSuggestions: {
-      true: 'rounded-b-none',
-      false: '',
-    },
-  },
-  compoundVariants: [
-    {
-      variant: 'prominent',
+    compoundVariants: [
+      {
+        variant: 'prominent',
+        state: 'default',
+        className:
+          'hover:border-primary/40 focus-within:border-primary focus-within:ring-primary/20 focus-within:ring-2',
+      },
+      {
+        variant: 'compact',
+        size: 'sm',
+        className: 'rounded-sm',
+      },
+      {
+        hasSuggestions: true,
+        className: 'z-10',
+      },
+    ],
+    defaultVariants: {
+      variant: 'default',
+      size: 'md',
       state: 'default',
-      className:
-        'hover:border-primary/40 focus-within:border-primary focus-within:ring-primary/20 focus-within:ring-2',
+      hasSuggestions: false,
     },
-    {
-      variant: 'compact',
-      size: 'sm',
-      className: 'rounded-sm',
-    },
-    {
-      hasSuggestions: true,
-      className: 'z-10',
-    },
-  ],
-  defaultVariants: {
-    variant: 'default',
-    size: 'md',
-    state: 'default',
-    hasSuggestions: false,
   },
-});
+);
 
 /**
  * Search input wrapper variants
@@ -675,7 +678,7 @@ const SearchBar = React.forwardRef<HTMLInputElement, SearchBarProps>(
           {shouldShowClear && (
             <button
               type="button"
-              className={cn(clearButtonVariants({ size }))}
+              className={cn(clearButtonVariants({ size }), 'mr-xs')}
               onClick={handleClear}
               aria-label="Clear search"
             >
