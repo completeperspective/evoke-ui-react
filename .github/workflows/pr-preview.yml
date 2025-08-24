@@ -62,7 +62,7 @@ jobs:
 
       - name: Run tests
         working-directory: packages/evoke-ui-react
-        run: pnpm test --run
+        run: pnpm run test -- --run
 
       - name: Build Storybook with PR branding
         working-directory: packages/evoke-ui-react
