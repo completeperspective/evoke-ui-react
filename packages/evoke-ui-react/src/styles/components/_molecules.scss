@@ -136,3 +136,143 @@
 .animate-fade-in {
   animation: fade-in 0.15s ease-out;
 }
+
+/* ================================
+ * CARD COMPONENT
+ * ================================ */
+
+.evoke-card {
+  // Enhanced focus management for interactive cards
+  &[role="button"] {
+    // Ensure smooth transitions for interactive states
+    transition-property: transform, box-shadow, border-color;
+    transition-duration: 200ms;
+    transition-timing-function: ease-out;
+    
+    @include enhanced-focus-ring;
+    
+    // Keyboard navigation styles
+    &:focus-visible {
+      outline: 2px solid oklch(var(--ui-color-primary));
+      outline-offset: 2px;
+    }
+    
+    // Active state for better feedback
+    &:active {
+      transform: scale(0.98);
+    }
+  }
+  
+  // Reduced motion preferences
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      transition: none !important;
+      animation: none !important;
+      transform: none !important;
+    }
+    
+    &[role="button"]:hover {
+      transform: none !important;
+    }
+    
+    &[role="button"]:active {
+      transform: none !important;
+    }
+  }
+  
+  // High contrast mode enhancements
+  @media (prefers-contrast: high) {
+    // Enhance border visibility
+    border-width: 2px !important;
+    
+    // Ensure sufficient contrast for interactive states
+    &[role="button"]:hover {
+      border-color: oklch(var(--ui-color-primary)) !important;
+      box-shadow: 0 0 0 1px oklch(var(--ui-color-primary)) !important;
+    }
+    
+    &[role="button"]:focus-visible {
+      outline-width: 3px !important;
+    }
+  }
+  
+  // Print styles
+  @media print {
+    // Ensure cards are visible in print
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    
+    // Remove shadows and interactive effects in print
+    box-shadow: none !important;
+    transform: none !important;
+    
+    // Ensure borders are visible
+    border: 1px solid #000 !important;
+  }
+}
+
+.evoke-card-header {
+  // Text balance for better readability on larger screens
+  h3 {
+    text-wrap: balance;
+    
+    // Fallback for browsers that don't support text-wrap
+    @supports not (text-wrap: balance) {
+      max-width: 60ch;
+    }
+  }
+  
+  // Ensure proper spacing in print
+  @media print {
+    // Avoid page breaks within header
+    break-inside: avoid;
+    
+    // Ensure titles are prominent
+    h3 {
+      font-weight: bold !important;
+      color: #000 !important;
+    }
+  }
+}
+
+.evoke-card-content {
+  // Better text layout and readability
+  line-height: 1.6;
+  
+  // Optimal reading width for content
+  p {
+    max-width: 65ch;
+  }
+  
+  // Print optimizations
+  @media print {
+    // Ensure content is readable in print
+    color: #000 !important;
+    
+    // Avoid orphans and widows
+    orphans: 3;
+    widows: 3;
+    
+    // Avoid page breaks in small content blocks
+    break-inside: avoid;
+  }
+}
+
+.evoke-card-footer {
+  // Ensure footer content wraps gracefully on small screens
+  flex-wrap: wrap;
+  
+  // Better spacing for wrapped content
+  gap: var(--ui-spacing-sm);
+  
+  // Print styles for footer
+  @media print {
+    // Avoid page breaks within footer
+    break-inside: avoid;
+    
+    // Hide decorative elements that don't make sense in print
+    [aria-hidden="true"] {
+      display: none !important;
+    }
+  }
+}

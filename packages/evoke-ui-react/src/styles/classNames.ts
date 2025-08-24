@@ -66,3 +66,11 @@ export const formFieldClasses = {
   formField: 'evoke-form-field',
   description: 'evoke-form-field-description',
 } as const;
+
+// Card molecular component class names
+export const cardClasses = {
+  card: 'evoke-card',
+  header: 'evoke-card-header',
+  content: 'evoke-card-content',
+  footer: 'evoke-card-footer',
+} as const;
