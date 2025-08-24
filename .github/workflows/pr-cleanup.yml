@@ -1,4 +1,4 @@
-name: Cleanup PR Preview
+name: Cleanup Live PR Preview
 
 on:
   pull_request:
@@ -7,14 +7,54 @@ on:
 permissions:
   contents: write
   pull-requests: write
+  pages: write
+  actions: read
 
 jobs:
-  cleanup-preview:
+  cleanup-live-preview:
     runs-on: ubuntu-latest
     
     steps:
-      - name: Clean up artifacts
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+          fetch-depth: 0
+          # Use bot token for gh-pages operations
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Clean up live preview directory
+        run: |
+          # Configure git for cleanup operations
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          
+          PR_DIR="pr-${{ github.event.number }}"
+          PREVIEW_URL="https://${{ github.repository_owner }}.github.io/$(echo '${{ github.repository }}' | cut -d'/' -f2)/${PR_DIR}/"
+          
+          echo "🗺 Cleaning up live preview for PR #${{ github.event.number }}"
+          echo "Preview URL: ${PREVIEW_URL}"
+          
+          if [ -d "${PR_DIR}" ]; then
+            echo "🗑️ Removing preview directory: ${PR_DIR}"
+            rm -rf "${PR_DIR}"
+            
+            # Commit the removal
+            git add -A
+            git commit -m "Remove PR #${{ github.event.number }} preview: ${{ github.event.pull_request.title }}"
+            git push origin gh-pages
+            
+            echo "✅ Successfully removed live preview directory"
+          else
+            echo "ℹ️ No preview directory found for PR #${{ github.event.number }}"
+          fi
+          
+          # Also clean up any artifacts (fallback from old system)
+          echo "🗺 Cleaning up any remaining artifacts..."
+        
+      - name: Clean up artifacts (fallback)
         uses: actions/github-script@v7
+        continue-on-error: true
         with:
           script: |
             try {
@@ -58,17 +98,20 @@ jobs:
             const wasMerged = ${{ github.event.pull_request.merged }};
             const action = wasMerged ? 'merged' : 'closed';
             const emoji = wasMerged ? '🎉' : '🗑️';
+            const repoName = context.repo.repo;
+            const previewUrl = `https://${{ github.repository_owner }}.github.io/${repoName}/pr-${prNumber}/`;
             
-            const commentBody = `${emoji} **PR Preview Cleanup Complete**
+            const commentBody = `${emoji} **Live Preview Cleanup Complete**
             
-            The Storybook preview artifacts for this PR have been automatically cleaned up since the PR was ${action}.
+            The live Storybook preview for this PR has been automatically cleaned up since the PR was ${action}.
             
             ### 📋 Cleanup Details
-            - **Artifacts**: \`pr-preview-${{ github.event.number }}\` (removed)
+            - **Preview URL**: ~~${previewUrl}~~ (removed)
+            - **Directory**: \`pr-${prNumber}\` (removed from gh-pages branch)
             - **Action**: Automatic cleanup on PR ${action}
-            - **Status**: Build artifacts no longer available for download
+            - **Status**: Live preview is no longer accessible
             
-            ${wasMerged ? '🚀 **Changes are now live in the main documentation!**' : '💡 **No further action needed** - preview artifacts have been cleaned up.'}`;
+            ${wasMerged ? '🚀 **Changes are now live in the main documentation!** Visit the [main Storybook site](https://'+context.repo.owner+'.github.io/'+repoName+'/) to see your changes.' : '💡 **No further action needed** - live preview has been cleaned up and removed.'}`;
 
             await github.rest.issues.createComment({
               owner: context.repo.owner,
@@ -81,6 +124,9 @@ jobs:
         run: |
           ACTION_TYPE="${{ github.event.action }}"
           MERGED="${{ github.event.pull_request.merged }}"
+          REPO_NAME=$(echo "${{ github.repository }}" | cut -d'/' -f2)
+          PREVIEW_URL="https://${{ github.repository_owner }}.github.io/${REPO_NAME}/pr-${{ github.event.number }}/"
+          MAIN_URL="https://${{ github.repository_owner }}.github.io/${REPO_NAME}/"
           
           if [ "$MERGED" = "true" ]; then
             STATUS_EMOJI="🎉"
@@ -90,14 +136,20 @@ jobs:
             STATUS_TEXT="closed"
           fi
           
-          echo "## ${STATUS_EMOJI} PR Preview Cleanup Complete" >> $GITHUB_STEP_SUMMARY
+          echo "## ${STATUS_EMOJI} Live Preview Cleanup Complete" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "Successfully cleaned up preview for PR that was **${STATUS_TEXT}**." >> $GITHUB_STEP_SUMMARY
+          echo "Successfully cleaned up live preview for PR that was **${STATUS_TEXT}**." >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "### 📋 Cleanup Summary" >> $GITHUB_STEP_SUMMARY
           echo "- **PR #**: ${{ github.event.number }}" >> $GITHUB_STEP_SUMMARY
           echo "- **Title**: ${{ github.event.pull_request.title }}" >> $GITHUB_STEP_SUMMARY
           echo "- **Branch**: \`${{ github.event.pull_request.head.ref }}\`" >> $GITHUB_STEP_SUMMARY
           echo "- **Author**: @${{ github.event.pull_request.user.login }}" >> $GITHUB_STEP_SUMMARY
-          echo "- **Artifacts**: \`pr-preview-${{ github.event.number }}\` (cleaned up)" >> $GITHUB_STEP_SUMMARY
-          echo "- **Status**: Preview artifacts no longer available for download" >> $GITHUB_STEP_SUMMARY
+          echo "- **Preview URL**: ~~${PREVIEW_URL}~~ (removed)" >> $GITHUB_STEP_SUMMARY
+          echo "- **Directory**: \`pr-${{ github.event.number }}\` (removed from gh-pages)" >> $GITHUB_STEP_SUMMARY
+          echo "- **Status**: Live preview no longer accessible" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          if [ "$MERGED" = "true" ]; then
+            echo "### 🚀 What's Next" >> $GITHUB_STEP_SUMMARY
+            echo "Your changes are now live in the [main documentation](${MAIN_URL})!" >> $GITHUB_STEP_SUMMARY
+          fi
