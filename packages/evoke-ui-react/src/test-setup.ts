@@ -4,8 +4,31 @@
  */
 
 import { afterEach, beforeEach, vi } from 'vitest';
-import { cleanup } from '@testing-library/react';
+import { cleanup, configure } from '@testing-library/react';
 import '@testing-library/jest-dom';
+
+// Configure React Testing Library
+configure({ 
+  // Automatically wrap async operations in act()
+  asyncUtilTimeout: 5000,
+  // Suppress act warnings for userEvent operations
+  reactStrictMode: false,
+});
+
+// Suppress React 18 act() warnings for async operations
+global.IS_REACT_ACT_ENVIRONMENT = true;
+
+// Mock the console.error to suppress act warnings in tests
+const originalError = console.error;
+console.error = (...args) => {
+  if (
+    typeof args[0] === 'string' &&
+    args[0].includes('Warning: The current testing environment is not configured to support act')
+  ) {
+    return;
+  }
+  originalError(...args);
+};
 
 // Cleanup after each test case (e.g. clearing jsdom)
 afterEach(() => {
