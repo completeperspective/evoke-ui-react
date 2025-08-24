@@ -116,7 +116,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Download PR preview artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: pr-preview-${{ github.event.number }}
           path: ./pr-preview-${{ github.event.number }}
