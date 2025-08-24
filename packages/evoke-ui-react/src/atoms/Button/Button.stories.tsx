@@ -5,26 +5,62 @@ import { useState } from 'react';
 
 // Mock icons for demonstration
 const ChevronRightIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+  <svg
+    width="16"
+    height="16"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
     <path d="m9 18 6-6-6-6" />
   </svg>
 );
 
 const PlusIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+  <svg
+    width="16"
+    height="16"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
     <path d="M5 12h14" />
     <path d="M12 5v14" />
   </svg>
 );
 
 const HeartIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+  <svg
+    width="16"
+    height="16"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
     <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.29 1.51 4.04 3 5.5l7 7Z" />
   </svg>
 );
 
 const DownloadIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+  <svg
+    width="16"
+    height="16"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
     <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
     <polyline points="7,10 12,15 17,10" />
     <line x1="12" y1="15" x2="12" y2="3" />
@@ -38,7 +74,8 @@ const meta = {
     layout: 'centered',
     docs: {
       description: {
-        component: 'Primary UI component for user interaction with multiple variants, sizes, states, and icon support.',
+        component:
+          'Primary UI component for user interaction with multiple variants, sizes, states, and icon support.',
       },
     },
   },
@@ -150,9 +187,27 @@ export const Icon: Story = {
 
 // States
 export const Loading: Story = {
-  args: {
-    loading: true,
-    children: 'Loading...',
+  render: () => (
+    <div className="flex flex-col gap-4 items-center">
+      <div className="flex gap-2 items-center">
+        <Button size="sm" loading>
+          Small Loading
+        </Button>
+        <Button size="md" loading>
+          Medium Loading
+        </Button>
+        <Button size="lg" loading>
+          Large Loading
+        </Button>
+      </div>
+    </div>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story: 'Loading state with spinner shown alongside button text in all sizes and variants.',
+      },
+    },
   },
 };
 
@@ -220,9 +275,7 @@ const InteractiveTemplate = () => {
       <Button loading={loading} onClick={handleClick}>
         Click me ({count})
       </Button>
-      <p className="text-sm text-muted-foreground">
-        Clicked {count} times
-      </p>
+      <p className="text-sm text-muted-foreground">Clicked {count} times</p>
     </div>
   );
 };
@@ -243,7 +296,7 @@ const AllVariantsTemplate = () => (
   <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
     <div className="space-y-2">
       <h4 className="text-sm font-semibold">Variants</h4>
-      <div className="space-y-2">
+      <div className="space-y-component-xs space-x-component-xs">
         <Button>Default</Button>
         <Button variant="secondary">Secondary</Button>
         <Button variant="destructive">Destructive</Button>
@@ -252,10 +305,10 @@ const AllVariantsTemplate = () => (
         <Button variant="link">Link</Button>
       </div>
     </div>
-    
-    <div className="space-y-2">
+
+    <div className="flex flex-col">
       <h4 className="text-sm font-semibold">Sizes</h4>
-      <div className="space-y-2">
+      <div className="space-y-component-xs space-x-component-xs">
         <Button size="sm">Small</Button>
         <Button size="md">Medium</Button>
         <Button size="lg">Large</Button>
@@ -264,10 +317,10 @@ const AllVariantsTemplate = () => (
         </Button>
       </div>
     </div>
-    
-    <div className="space-y-2">
+
+    <div className="flex flex-col">
       <h4 className="text-sm font-semibold">States</h4>
-      <div className="space-y-2">
+      <div className="space-y-component-xs space-x-component-xs">
         <Button>Normal</Button>
         <Button loading>Loading</Button>
         <Button disabled>Disabled</Button>
