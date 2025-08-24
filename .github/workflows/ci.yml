@@ -2,9 +2,9 @@ name: Continuous Integration
 
 on:
   push:
-    branches: [ main, develop ]
+    branches: [main, develop]
   pull_request:
-    branches: [ main, develop ]
+    branches: [main, develop]
   workflow_dispatch:
 
 concurrency:
@@ -20,7 +20,7 @@ jobs:
   test:
     name: 🧪 Test Suite
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -73,13 +73,13 @@ jobs:
         run: |
           pnpm build
           echo "Build completed successfully"
-          
+
           # Verify build outputs
           if [ ! -d "dist" ]; then
             echo "❌ Build failed - dist directory not found"
             exit 1
           fi
-          
+
           echo "✅ Build artifacts verified"
 
       - name: Run unit tests
@@ -112,7 +112,7 @@ jobs:
     name: 📖 Storybook Build
     runs-on: ubuntu-latest
     needs: test
-    
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -154,22 +154,22 @@ jobs:
         run: |
           pnpm build-storybook
           echo "Storybook build completed"
-          
+
           # Verify Storybook build
           if [ ! -d "../../storybook-static" ]; then
             echo "❌ Storybook build failed - storybook-static directory not found"
             exit 1
           fi
-          
+
           if [ ! -f "../../storybook-static/index.html" ]; then
             echo "❌ Storybook build failed - index.html not found"
             exit 1
           fi
-          
+
           echo "✅ Storybook build verified"
 
       - name: Upload Storybook build artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: storybook-build-${{ github.sha }}
           path: ./storybook-static
@@ -180,7 +180,7 @@ jobs:
     name: 📦 Bundle Analysis
     runs-on: ubuntu-latest
     needs: test
-    
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -204,13 +204,13 @@ jobs:
         working-directory: packages/evoke-ui-react
         run: |
           pnpm build
-          
+
           # Basic bundle size analysis
           echo "## 📦 Bundle Size Analysis" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "### Build Output" >> $GITHUB_STEP_SUMMARY
           echo '```' >> $GITHUB_STEP_SUMMARY
-          
+
           if [ -d "dist" ]; then
             du -sh dist/* | sort -hr >> $GITHUB_STEP_SUMMARY
             echo "" >> $GITHUB_STEP_SUMMARY
@@ -218,7 +218,7 @@ jobs:
           else
             echo "No dist directory found" >> $GITHUB_STEP_SUMMARY
           fi
-          
+
           echo '```' >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "### Performance Targets" >> $GITHUB_STEP_SUMMARY
@@ -232,24 +232,24 @@ jobs:
     runs-on: ubuntu-latest
     needs: [test, storybook-build, bundle-analysis]
     if: always()
-    
+
     steps:
       - name: Check quality gates
         run: |
           echo "## 🎯 Quality Gates Summary" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          
+
           # Check job statuses
           TEST_STATUS="${{ needs.test.result }}"
           STORYBOOK_STATUS="${{ needs.storybook-build.result }}"
           BUNDLE_STATUS="${{ needs.bundle-analysis.result }}"
-          
+
           echo "### Job Results" >> $GITHUB_STEP_SUMMARY
           echo "- **Unit Tests**: $([[ $TEST_STATUS == 'success' ]] && echo '✅ Passed' || echo '❌ Failed')" >> $GITHUB_STEP_SUMMARY
           echo "- **Storybook Build**: $([[ $STORYBOOK_STATUS == 'success' ]] && echo '✅ Passed' || echo '❌ Failed')" >> $GITHUB_STEP_SUMMARY
           echo "- **Bundle Analysis**: $([[ $BUNDLE_STATUS == 'success' ]] && echo '✅ Passed' || echo '❌ Failed')" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          
+
           # Overall status
           if [[ $TEST_STATUS == 'success' && $STORYBOOK_STATUS == 'success' && $BUNDLE_STATUS == 'success' ]]; then
             echo "### 🎉 All Quality Gates Passed!" >> $GITHUB_STEP_SUMMARY

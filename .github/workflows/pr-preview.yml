@@ -6,7 +6,7 @@ on:
 
 # Allow multiple PR preview deployments to run simultaneously
 concurrency:
-  group: "pr-preview-${{ github.event.number }}"
+  group: 'pr-preview-${{ github.event.number }}'
   cancel-in-progress: true
 
 permissions:
@@ -73,7 +73,7 @@ jobs:
           export STORYBOOK_PR_TITLE="${{ github.event.pull_request.title }}"
           export STORYBOOK_PR_BRANCH="${{ github.event.pull_request.head.ref }}"
           export STORYBOOK_PR_AUTHOR="${{ github.event.pull_request.user.login }}"
-          
+
           # Build Storybook with PR-specific output directory
           pnpm build-storybook --output-dir ../../pr-preview-${{ github.event.number }}
         env:
@@ -95,7 +95,7 @@ jobs:
           EOF
 
       - name: Upload PR preview artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: pr-preview-${{ github.event.number }}
           path: ./pr-preview-${{ github.event.number }}
@@ -129,7 +129,7 @@ jobs:
           publish_dir: ./pr-preview-${{ github.event.number }}
           destination_dir: pr-${{ github.event.number }}
           keep_files: true
-          commit_message: "Deploy PR #${{ github.event.number }} preview"
+          commit_message: 'Deploy PR #${{ github.event.number }} preview'
 
       - name: Get preview URL
         id: get-preview-url
@@ -146,31 +146,31 @@ jobs:
             const previewUrl = '${{ steps.get-preview-url.outputs.preview_url }}';
             const commitSha = '${{ github.event.pull_request.head.sha }}';
             const shortSha = commitSha.substring(0, 7);
-            
+
             // Create comment body with preview information
             const commentBody = `## 🎨 Storybook Preview Ready!
-            
+
             Your component changes are now available for review:
-            
+
             ### 📖 [**View Live Preview**](${previewUrl})
-            
+
             ---
-            
+
             ### 📊 Preview Details
             - **Branch**: \`${{ github.event.pull_request.head.ref }}\`
             - **Commit**: \`${shortSha}\`
             - **Built**: ${new Date().toISOString().split('T')[0]} at ${new Date().toTimeString().split(' ')[0]} UTC
             - **Auto-cleanup**: Preview will be removed when PR is closed/merged
-            
+
             ### 🧪 What to Review
             - [ ] Component functionality and variants
             - [ ] Design token consistency
             - [ ] Accessibility features
             - [ ] Documentation completeness
             - [ ] Visual regression testing
-            
+
             ---
-            
+
             > 💡 **Tip**: This preview updates automatically when you push new commits to the PR.`;
 
             // Find existing preview comment
@@ -180,7 +180,7 @@ jobs:
               issue_number: prNumber,
             });
 
-            const existingComment = comments.data.find(comment => 
+            const existingComment = comments.data.find(comment =>
               comment.body.includes('🎨 Storybook Preview Ready!')
             );
 
