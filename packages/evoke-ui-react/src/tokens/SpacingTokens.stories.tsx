@@ -5,7 +5,7 @@ import { Text } from '../atoms/Text/Text';
 import { Badge } from '../atoms/Badge/Badge';
 
 const meta = {
-  title: 'Design System/Spacing',
+  title: 'Design System/Tokens/Spacing',
   parameters: {
     layout: 'padded',
     docs: {

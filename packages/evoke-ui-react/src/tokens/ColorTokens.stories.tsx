@@ -5,7 +5,7 @@ import { Text } from '../atoms/Text/Text';
 import { Badge } from '../atoms/Badge/Badge';
 
 const meta = {
-  title: 'Design System/Color',
+  title: 'Design System/Tokens/Color',
   parameters: {
     layout: 'padded',
     docs: {

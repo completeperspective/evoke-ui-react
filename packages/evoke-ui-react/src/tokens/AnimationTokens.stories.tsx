@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Heading, Badge, Button, Text } from '../atoms';
 
 const meta = {
-  title: 'Design System/Animation',
+  title: 'Design System/Tokens/Animation',
   parameters: {
     layout: 'padded',
     docs: {
