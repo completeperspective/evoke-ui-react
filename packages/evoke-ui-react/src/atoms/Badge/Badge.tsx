@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '../../utils/cn';
-import styles from './Badge.module.scss';
+import { badgeClasses } from '../../styles/classNames';
 
 /**
  * Badge variants using class-variance-authority
@@ -231,7 +231,7 @@ const Badge = React.forwardRef<HTMLDivElement | HTMLButtonElement, BadgeProps>(
               size,
               interactive: true,
             }),
-            styles.badge, // Only for minimal SCSS overrides
+            badgeClasses.badge, // Enhanced accessibility and animation support
             className,
           )}
           onClick={onClick ? (e) => onClick(e as any) : undefined}
@@ -252,7 +252,7 @@ const Badge = React.forwardRef<HTMLDivElement | HTMLButtonElement, BadgeProps>(
             size,
             interactive: false,
           }),
-          styles.badge, // Only for minimal SCSS overrides
+          badgeClasses.badge, // Enhanced accessibility and animation support
           className,
         )}
         {...props}

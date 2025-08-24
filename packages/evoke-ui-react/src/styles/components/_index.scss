@@ -2,11 +2,9 @@
  * Components Index
  * Import all component-specific styles
  * 
- * This file will be populated as components are created
+ * This file contains consolidated styles from CSS modules
+ * converted to regular SCSS for proper bundling
  */
 
-// Component styles will be added here as they're developed
-// Example:
-// @use 'button';
-// @use 'input';
-// @use 'card';
+// Atomic component styles (consolidated from CSS modules)
+@use 'atoms';

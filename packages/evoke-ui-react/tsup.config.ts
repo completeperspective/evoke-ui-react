@@ -3,7 +3,9 @@ import { defineConfig } from 'tsup';
 export default defineConfig({
   entry: ['src/index.ts'],
   format: ['cjs', 'esm'],
-  dts: false, // Temporarily disabled due to TypeScript project configuration issues
+  dts: {
+    tsconfig: './tsconfig.build.json'
+  }, // Use explicit build config for declarations
   splitting: false,
   sourcemap: true,
   clean: true,
@@ -11,8 +13,7 @@ export default defineConfig({
     'react', 
     'react-dom', 
     'react/jsx-runtime',
-    // Externalize CSS modules - they'll be handled by the consuming app
-    /\.module\.(css|scss|sass)$/,
+    // Externalize all CSS - handled by separate build step
     /\.(css|scss|sass)$/
   ],
   minify: true,
@@ -21,16 +22,6 @@ export default defineConfig({
   outDir: 'dist',
   esbuildOptions(options) {
     options.jsx = 'automatic';
-    // Mark CSS imports as external
-    options.external = [
-      ...(options.external || []),
-      '*.css',
-      '*.scss',
-      '*.sass',
-      '*.module.css',
-      '*.module.scss', 
-      '*.module.sass'
-    ];
   },
   onSuccess: 'npm run build:styles',
 });

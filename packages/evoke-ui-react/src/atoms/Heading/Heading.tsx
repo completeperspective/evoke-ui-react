@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '../../utils/cn';
-import styles from './Heading.module.scss';
+import { headingClasses } from '../../styles/classNames';
 
 /**
  * Heading variants using class-variance-authority
@@ -251,10 +251,10 @@ const Heading = React.forwardRef<HTMLHeadingElement, HeadingProps>(
             transform,
             status,
           }),
-          styles.heading,
+          headingClasses.heading,
           {
-            [styles.focusable]: focusable,
-            [styles.balance]: balance,
+            [headingClasses.focusable]: focusable,
+            [headingClasses.balance]: balance,
           },
           className
         ),

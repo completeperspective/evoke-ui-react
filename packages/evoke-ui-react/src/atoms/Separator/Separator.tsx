@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '../../utils/cn';
-import styles from './Separator.module.scss';
+import { separatorClasses } from '../../styles/classNames';
 
 /**
  * Separator variants using class-variance-authority
@@ -377,7 +377,7 @@ const Separator = React.forwardRef<HTMLDivElement, SeparatorProps>(
               orientation, 
               labelVariant: labelVariant || 'centered' 
             }),
-            styles.separator, // Minimal SCSS overrides
+            separatorClasses.separator, // Enhanced accessibility and animation support
             className
           )}
           role={decorative ? 'presentation' : 'separator'}
@@ -435,7 +435,7 @@ const Separator = React.forwardRef<HTMLDivElement, SeparatorProps>(
             pattern, 
             animation 
           }),
-          styles.separator, // Minimal SCSS overrides
+          separatorClasses.separator, // Enhanced accessibility and animation support
           className
         )}
         role={decorative ? 'presentation' : 'separator'}

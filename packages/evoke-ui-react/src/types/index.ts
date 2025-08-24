@@ -3,8 +3,8 @@
  * Centralized export of all type definitions
  */
 
-// Global type definitions (CSS modules, etc.)
-import './global.d';
+// Global type definitions are not exported as they are ambient
+// They remain available for development but don't interfere with DTS bundling
 
 // Color-related types
 export type {

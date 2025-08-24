@@ -9,6 +9,7 @@
     "**/*.test.tsx",
     "**/__tests__/**/*",
     "**/*.stories.ts",
-    "**/*.stories.tsx"
+    "**/*.stories.tsx",
+    "src/types/global.d.ts"
   ]
 }

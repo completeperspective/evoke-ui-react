@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '../../utils/cn';
-import styles from './Label.module.scss';
+import { labelClasses } from '../../styles/classNames';
 
 /**
  * Label variants using class-variance-authority
@@ -305,7 +305,7 @@ const Label = React.forwardRef<HTMLLabelElement, LabelProps>(
         ref={ref}
         className={cn(
           labelVariants({ variant, size, weight, state, position, styleVariant }),
-          styles.label,
+          labelClasses.label,
           className
         )}
         {...props}
@@ -315,18 +315,18 @@ const Label = React.forwardRef<HTMLLabelElement, LabelProps>(
             alignment: contentAlignment, 
             gap: contentGap 
           }),
-          styles.content
+          labelClasses.content
         )}>
           {children}
           {indicatorInfo && (
             <span 
               className={cn(
                 indicatorVariants({ type: indicatorType as any, size }),
-                styles.indicator,
+                labelClasses.indicator,
                 {
-                  [styles.required]: indicatorType === 'required',
-                  [styles.optional]: indicatorType === 'optional',
-                  [styles.info]: indicatorType === 'info',
+                  [labelClasses.required]: indicatorType === 'required',
+                  [labelClasses.optional]: indicatorType === 'optional',
+                  [labelClasses.info]: indicatorType === 'info',
                 }
               )} 
               aria-label={indicatorInfo.ariaLabel}
@@ -342,7 +342,7 @@ const Label = React.forwardRef<HTMLLabelElement, LabelProps>(
                 spacing: suffixSpacing, 
                 alignment: suffixAlignment 
               }),
-              styles.suffix
+              labelClasses.suffix
             )} 
             aria-hidden="true"
           >

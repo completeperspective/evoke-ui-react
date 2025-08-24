@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '../../utils/cn';
-import styles from './Text.module.scss';
+import { textClasses } from '../../styles/classNames';
 
 /**
  * Text variants using class-variance-authority
@@ -262,12 +262,12 @@ const Text = React.forwardRef<HTMLElement, TextProps>(
             interactive,
             responsive,
           }),
-          styles.text,
+          textClasses.text,
           {
-            [styles.monospace]: monospace,
-            [styles.prose]: prose,
-            [styles.smallCaps]: smallCaps,
-            [styles.tabularNums]: tabularNums,
+            [textClasses.monospace]: monospace,
+            [textClasses.prose]: prose,
+            [textClasses.smallCaps]: smallCaps,
+            [textClasses.tabularNums]: tabularNums,
           },
           className
         ),

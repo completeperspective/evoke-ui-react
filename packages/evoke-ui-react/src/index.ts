@@ -14,6 +14,9 @@ export { cn } from './utils/cn';
 // Color utilities
 export * from './utils/colors';
 
+// CSS Class Names (for advanced usage)
+export * from './styles/classNames';
+
 // Types
 export * from './types';
 

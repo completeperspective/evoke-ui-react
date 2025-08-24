@@ -1,0 +1,776 @@
+/**
+ * Atomic Component Styles - Consolidated from CSS Modules
+ * 
+ * Contains essential styles that CVA cannot handle:
+ * - Accessibility features (focus rings, reduced motion, high contrast)
+ * - Advanced pseudo-elements (::before, ::after, ::selection)
+ * - Media queries and responsive behavior
+ * - Complex CSS features requiring SCSS
+ */
+@use '../abstracts' as *;
+
+/* ================================
+ * BUTTON COMPONENT
+ * ================================ */
+
+.evoke-button {
+  // Ensure text doesn't get selected during interaction
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  
+  // Enhanced accessibility for focus states
+  @include enhanced-focus-ring;
+  
+  // Reduced motion preferences
+  @media (prefers-reduced-motion: reduce) {
+    transition: none !important;
+    animation: none !important;
+    
+    &:hover {
+      transform: none !important;
+    }
+    
+    * {
+      animation: none !important;
+    }
+  }
+  
+  // High contrast mode enhancements
+  @media (prefers-contrast: high) {
+    border-width: 2px !important;
+    font-weight: 600 !important;
+    
+    &:focus-visible {
+      outline: 3px solid !important;
+      outline-offset: 3px !important;
+    }
+    
+    &:disabled {
+      opacity: 0.6 !important;
+      text-decoration: line-through;
+    }
+  }
+  
+  // Print styles for accessibility
+  @media print {
+    background: transparent !important;
+    color: black !important;
+    border: 1px solid black !important;
+    box-shadow: none !important;
+    transform: none !important;
+    
+    &::before,
+    &::after {
+      display: none !important;
+    }
+  }
+  
+  // Touch device optimizations
+  @media (hover: none) and (pointer: coarse) {
+    // Increase touch target size on mobile
+    min-height: 44px;
+    min-width: 44px;
+    
+    // Remove hover effects on touch devices
+    &:hover {
+      transform: none !important;
+    }
+  }
+}
+
+// Loading spinner enhancement for better browser support
+@supports not (animation: spin 1s linear infinite) {
+  .evoke-button [class*="animate-spin"] {
+    // Fallback for browsers without animation support
+    opacity: 0.7;
+    
+    &::after {
+      content: '...';
+      animation: ellipsis 1.5s steps(4, end) infinite;
+    }
+  }
+  
+  @keyframes ellipsis {
+    0% { content: '.'; }
+    25% { content: '..'; }
+    50% { content: '...'; }
+    75% { content: '..'; }
+    100% { content: '.'; }
+  }
+}
+
+/* ================================
+ * INPUT COMPONENT
+ * ================================ */
+
+.evoke-input-container {
+  // Base container setup
+  @include component-base;
+}
+
+.evoke-input {
+  // Ensure text doesn't get selected during file input interaction
+  user-select: auto;
+  -webkit-tap-highlight-color: transparent;
+  
+  // Enhanced accessibility for focus states
+  @include enhanced-focus-ring;
+  
+  // Enhanced gradient overlay for visual appeal (CVA cannot handle ::before)
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, transparent 0%, oklch(var(--ui-color-primary) / 0.02) 50%, transparent 100%);
+    border-radius: inherit;
+    opacity: 0;
+    transition: opacity var(--ui-duration-fast) var(--ui-easing-out);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  // Hover state gradient activation
+  &:hover:not(:disabled):not(:focus)::before {
+    opacity: 1;
+  }
+
+  // Focus state gradient activation
+  &:focus::before,
+  &:focus-visible::before {
+    opacity: 1;
+  }
+
+  // Enhanced error state gradient (CVA cannot handle complex ::before logic)
+  &[aria-invalid='true']::before {
+    background: linear-gradient(135deg, transparent 0%, oklch(var(--ui-color-destructive) / 0.05) 50%, transparent 100%);
+    opacity: 1;
+  }
+
+  // File input button enhancements (CVA cannot handle ::file-selector-button)
+  &[type='file']::file-selector-button {
+    transition: all var(--ui-duration-fast) var(--ui-easing-out);
+    
+    &:hover {
+      transform: translateY(-1px);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+  }
+  
+  // Reduced motion overrides for file input buttons
+  @include reduced-motion {
+    &[type='file']::file-selector-button {
+      &:hover, &:active {
+        transform: none;
+      }
+    }
+  }
+
+  // Enhanced placeholder animation (CVA cannot handle complex placeholder states)
+  &:focus::placeholder {
+    transform: translateY(-1px);
+  }
+
+  // Disabled state gradient removal
+  &:disabled::before {
+    opacity: 0;
+  }
+  
+  // Reduced motion overrides for placeholder animations
+  @include reduced-motion {
+    &:focus::placeholder {
+      transform: none !important;
+    }
+  }
+  
+  // Reduced motion preferences
+  @media (prefers-reduced-motion: reduce) {
+    transition: none !important;
+    
+    &::before {
+      transition: none !important;
+    }
+  }
+  
+  // High contrast mode enhancements
+  @media (prefers-contrast: high) {
+    border-width: 2px !important;
+    
+    &:focus,
+    &:focus-visible {
+      outline: 3px solid !important;
+      outline-offset: 2px !important;
+    }
+
+    &::before {
+      display: none !important;
+    }
+  }
+  
+  // Print styles for accessibility
+  @media print {
+    background: white !important;
+    color: black !important;
+    border: 1px solid black !important;
+    box-shadow: none !important;
+    
+    &::before {
+      display: none !important;
+    }
+  }
+  
+  // Dark theme specific gradient adjustments
+  @include dark {
+    &::before {
+      background: linear-gradient(135deg, transparent 0%, rgba(255, 255, 255, 0.02) 50%, transparent 100%);
+    }
+
+    &[aria-invalid='true']::before {
+      background: linear-gradient(135deg, transparent 0%, oklch(var(--ui-color-destructive) / 0.1) 50%, transparent 100%);
+    }
+  }
+  
+  // Touch device optimizations
+  @media (hover: none) and (pointer: coarse) {
+    // Ensure minimum touch target size
+    min-height: 44px;
+    
+    // Remove hover effects on touch devices
+    &:hover::before {
+      opacity: 0;
+    }
+  }
+}
+
+// Enhanced entrance animation for feedback text (CVA cannot handle complex keyframes)
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(0.25rem);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+/* ================================
+ * TEXT COMPONENT
+ * ================================ */
+
+.evoke-text {
+  @include component-base;
+  
+  // Enhanced focus for when text elements are focusable or interactive
+  &:focus {
+    outline: 2px solid oklch(var(--ui-color-ring));
+    outline-offset: 2px;
+    border-radius: var(--ui-radius-sm);
+  }
+  
+  // Enhanced text selection styling
+  &::selection {
+    background-color: oklch(var(--ui-color-primary) / 0.2);
+    color: oklch(var(--ui-color-primary-foreground));
+  }
+  
+  &::-moz-selection {
+    background-color: oklch(var(--ui-color-primary) / 0.2);
+    color: oklch(var(--ui-color-primary-foreground));
+  }
+  
+  // Link styling within text - enhanced accessibility
+  a {
+    color: oklch(var(--ui-color-primary));
+    text-decoration: underline;
+    text-decoration-color: oklch(var(--ui-color-primary) / 0.6);
+    text-underline-offset: 0.125em;
+    transition: all var(--ui-duration-fast) var(--ui-easing-out);
+    border-radius: var(--ui-radius-xs);
+    
+    &:hover {
+      text-decoration-color: oklch(var(--ui-color-primary));
+      text-decoration-thickness: 2px;
+    }
+    
+    &:focus {
+      outline: 2px solid oklch(var(--ui-color-ring));
+      outline-offset: 2px;
+      text-decoration-thickness: 2px;
+    }
+  }
+  
+  // Enhanced elements within text - accessibility focus
+  code, kbd {
+    &:focus {
+      outline: 2px solid oklch(var(--ui-color-ring));
+      outline-offset: 1px;
+    }
+  }
+  
+  // Abbreviation accessibility
+  abbr {
+    cursor: help;
+    
+    &:focus {
+      outline: 2px solid oklch(var(--ui-color-ring));
+      outline-offset: 1px;
+      border-radius: var(--ui-radius-xs);
+    }
+  }
+}
+
+// Utility classes for enhanced functionality
+.evoke-text-monospace {
+  font-family: var(--ui-font-family-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+.evoke-text-prose {
+  max-width: 65ch;
+  
+  p + p {
+    margin-top: 1.25em;
+  }
+  
+  blockquote {
+    border-left: 4px solid oklch(var(--ui-color-primary) / 0.3);
+    padding-left: 1rem;
+    margin: 1.5em 0;
+  }
+}
+
+.evoke-text-small-caps {
+  font-variant: small-caps;
+  font-feature-settings: 'smcp';
+}
+
+.evoke-text-tabular-nums {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum';
+}
+
+// Responsive typography adjustments
+@include sm {
+  .evoke-text-prose {
+    max-width: 70ch;
+  }
+}
+
+@include lg {
+  .evoke-text-prose {
+    max-width: 75ch;
+    
+    p + p {
+      margin-top: 1.5em;
+    }
+  }
+}
+
+// Dark theme adjustments for better readability
+@include dark {
+  .evoke-text {
+    text-shadow: 0 0 1px oklch(var(--ui-color-background) / 0.5);
+  }
+}
+
+// High contrast mode support
+@include high-contrast {
+  .evoke-text {
+    a, abbr {
+      text-decoration-thickness: 2px !important;
+      font-weight: 600;
+    }
+    
+    a {
+      text-decoration-color: currentColor !important;
+    }
+  }
+}
+
+// Reduced motion preferences
+@include reduced-motion {
+  .evoke-text {
+    transition: none !important;
+    
+    a {
+      transition: none !important;
+    }
+  }
+}
+
+// Print styles optimized
+@media print {
+  .evoke-text {
+    color: black !important;
+    background: transparent !important;
+    text-shadow: none !important;
+    
+    a {
+      color: black !important;
+      text-decoration: underline !important;
+    }
+  }
+  
+  .evoke-text-prose {
+    max-width: none;
+    
+    blockquote {
+      border-left-color: #333 !important;
+    }
+  }
+}
+
+/* ================================
+ * HEADING COMPONENT
+ * ================================ */
+
+.evoke-heading {
+  @include component-base;
+  
+  // Enhanced focus states for interactive headings
+  &:focus {
+    outline: 2px solid oklch(var(--ui-color-ring));
+    outline-offset: 2px;
+    border-radius: var(--ui-radius-sm);
+  }
+  
+  // Enhanced text selection
+  &::selection {
+    background-color: oklch(var(--ui-color-primary) / 0.2);
+    color: oklch(var(--ui-color-primary-foreground));
+  }
+  
+  &::-moz-selection {
+    background-color: oklch(var(--ui-color-primary) / 0.2);
+    color: oklch(var(--ui-color-primary-foreground));
+  }
+}
+
+.evoke-heading-focusable {
+  cursor: pointer;
+  transition: color var(--ui-duration-fast) var(--ui-easing-out);
+  
+  &:hover {
+    color: oklch(var(--ui-color-primary) / 0.9);
+  }
+  
+  &:active {
+    color: oklch(var(--ui-color-primary) / 0.8);
+  }
+}
+
+.evoke-heading-balance {
+  text-wrap: balance;
+  max-width: 50ch;
+}
+
+// Print styles for headings
+@media print {
+  .evoke-heading {
+    color: black !important;
+    background: transparent !important;
+    
+    &.evoke-heading-focusable {
+      color: black !important;
+    }
+  }
+}
+
+// Reduced motion for interactive headings
+@include reduced-motion {
+  .evoke-heading-focusable {
+    transition: none !important;
+  }
+}
+
+/* ================================
+ * LABEL COMPONENT
+ * ================================ */
+
+.evoke-label {
+  @include component-base;
+  
+  // Enhanced focus for accessibility
+  &:focus {
+    outline: 2px solid oklch(var(--ui-color-ring));
+    outline-offset: 1px;
+    border-radius: var(--ui-radius-sm);
+  }
+  
+  // Enhanced cursor for clickable labels
+  cursor: pointer;
+}
+
+.evoke-label-content {
+  // Enhanced alignment for content
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--ui-spacing-xs);
+}
+
+.evoke-label-indicator {
+  // Smooth transitions for indicators
+  transition: color var(--ui-duration-fast) var(--ui-easing-out);
+}
+
+.evoke-label-required {
+  color: oklch(var(--ui-color-destructive));
+  font-weight: 600;
+}
+
+.evoke-label-optional {
+  color: oklch(var(--ui-color-muted-foreground));
+  font-weight: 400;
+  opacity: 0.8;
+}
+
+.evoke-label-info {
+  color: oklch(var(--ui-color-info));
+  cursor: help;
+  
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+.evoke-label-suffix {
+  // Enhanced spacing for suffix content
+  display: inline-flex;
+  align-items: center;
+  margin-left: var(--ui-spacing-sm);
+}
+
+// High contrast support for labels
+@include high-contrast {
+  .evoke-label-required {
+    font-weight: 700 !important;
+  }
+  
+  .evoke-label-optional {
+    font-weight: 500 !important;
+  }
+}
+
+// Print styles for labels
+@media print {
+  .evoke-label {
+    color: black !important;
+    
+    .evoke-label-required {
+      color: black !important;
+      font-weight: 700 !important;
+    }
+    
+    .evoke-label-optional {
+      color: #666 !important;
+    }
+  }
+}
+
+/* ================================
+ * BADGE COMPONENT
+ * ================================ */
+
+.evoke-badge {
+  // Enhanced accessibility for screen readers
+  @include enhanced-focus-ring;
+  
+  // Reduced motion preferences
+  @media (prefers-reduced-motion: reduce) {
+    transition: none !important;
+    
+    &:hover {
+      transform: none !important;
+    }
+  }
+  
+  // High contrast mode enhancements
+  @media (prefers-contrast: high) {
+    border-width: 2px !important;
+    
+    &:focus-visible {
+      outline: 3px solid !important;
+      outline-offset: 3px !important;
+    }
+  }
+  
+  // Print styles for accessibility
+  @media print {
+    background: transparent !important;
+    color: black !important;
+    border: 1px solid black !important;
+    box-shadow: none !important;
+    transform: none !important;
+    
+    // Hide remove buttons in print
+    button {
+      display: none !important;
+    }
+  }
+}
+
+// Enhanced entrance animation (only if not reduced motion)
+@media (prefers-reduced-motion: no-preference) {
+  .evoke-badge {
+    &.animate-entrance {
+      animation: badgeEntrance 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    &.animate-exit {
+      animation: badgeExit 0.2s cubic-bezier(0.4, 0, 1, 0.6) forwards;
+    }
+  }
+  
+  @keyframes badgeEntrance {
+    from {
+      opacity: 0;
+      transform: scale(0.9) translateY(0.25rem);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+  }
+  
+  @keyframes badgeExit {
+    from {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+    to {
+      opacity: 0;
+      transform: scale(0.9) translateY(-0.25rem);
+    }
+  }
+}
+
+/* ================================
+ * SKELETON COMPONENT
+ * ================================ */
+
+.evoke-skeleton {
+  // Enhanced base styles for skeleton
+  position: relative;
+  overflow: hidden;
+  
+  // Ensure minimum accessibility contrast
+  @include high-contrast {
+    border: 2px solid currentColor !important;
+    opacity: 0.8;
+  }
+  
+  // Print styles - hide skeletons in print
+  @media print {
+    display: none !important;
+  }
+}
+
+.evoke-skeleton-static {
+  // Static variant with no animation
+  animation: none !important;
+}
+
+.evoke-skeleton-shimmer {
+  // Shimmer effect using CSS gradients
+  background: linear-gradient(
+    90deg,
+    oklch(var(--ui-color-muted)) 0%,
+    oklch(var(--ui-color-muted-foreground) / 0.1) 50%,
+    oklch(var(--ui-color-muted)) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 2s ease-in-out infinite;
+}
+
+.evoke-skeleton-text-lines {
+  // Multi-line text skeleton container
+  display: flex;
+  flex-direction: column;
+  gap: var(--ui-spacing-xs);
+}
+
+// Shimmer animation
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes shimmer {
+    0% {
+      background-position: -200% 0;
+    }
+    100% {
+      background-position: 200% 0;
+    }
+  }
+}
+
+// Respect reduced motion for shimmer
+@include reduced-motion {
+  .evoke-skeleton-shimmer {
+    animation: none !important;
+    background: oklch(var(--ui-color-muted));
+  }
+}
+
+/* ================================
+ * SEPARATOR COMPONENT
+ * ================================ */
+
+.evoke-separator {
+  // Enhanced base styles
+  position: relative;
+  
+  // Ensure accessibility in high contrast mode
+  @include high-contrast {
+    background-color: currentColor !important;
+    opacity: 1 !important;
+  }
+  
+  // Print styles for separators
+  @media print {
+    background: #ccc !important;
+    opacity: 1 !important;
+  }
+}
+
+// Animation keyframes for separators
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes separatorExpand {
+    from {
+      transform: scaleX(0);
+    }
+    to {
+      transform: scaleX(1);
+    }
+  }
+  
+  @keyframes separatorExpandVertical {
+    from {
+      transform: scaleY(0);
+    }
+    to {
+      transform: scaleY(1);
+    }
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+}
+
+// Respect reduced motion preferences
+@include reduced-motion {
+  .evoke-separator {
+    animation: none !important;
+  }
+}

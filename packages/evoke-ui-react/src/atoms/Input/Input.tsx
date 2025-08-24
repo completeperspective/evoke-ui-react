@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '../../utils/cn';
-import styles from './Input.module.scss';
+import { inputClasses } from '../../styles/classNames';
 
 /**
  * Container variants for input wrapper
@@ -342,7 +342,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             hasStartIcon: Boolean(startIcon),
             hasEndIcon: Boolean(endIcon),
           }),
-          styles.input, // Minimal SCSS overrides for accessibility
+          inputClasses.input, // Enhanced accessibility and gradient effects
           className
         )}
         ref={ref}
@@ -362,7 +362,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
     const iconSpacing = size;
 
     return (
-      <div className={cn(containerVariants({ hasIcons }), styles.container)}>
+      <div className={cn(containerVariants({ hasIcons }), inputClasses.container)}>
         {hasIcons ? (
           <div className={cn(inputWrapperVariants({ hasIcons }))}>
             {startIcon && (

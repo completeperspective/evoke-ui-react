@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '../../utils/cn';
-import styles from './Skeleton.module.scss';
+import { skeletonClasses } from '../../styles/classNames';
 
 /**
  * Main skeleton variants using CVA-first architecture
@@ -372,7 +372,7 @@ const Skeleton = React.forwardRef<HTMLDivElement, SkeletonProps>(
           ref={ref}
           className={cn(
             multilineVariants({ lines: actualLines, size }),
-            styles.textLines,
+            skeletonClasses.textLines,
             className
           )}
           {...props}
@@ -392,10 +392,10 @@ const Skeleton = React.forwardRef<HTMLDivElement, SkeletonProps>(
                   isLast: index === linesCount - 1,
                   lineIndex: Math.min(index, 4) as 0 | 1 | 2 | 3 | 4,
                 }),
-                styles.skeleton,
+                skeletonClasses.skeleton,
                 {
-                  [styles.static]: actualAnimation === 'static',
-                  [styles.shimmer]: actualAnimation === 'shimmer',
+                  [skeletonClasses.static]: actualAnimation === 'static',
+                  [skeletonClasses.shimmer]: actualAnimation === 'shimmer',
                 }
               )}
               style={skeletonStyle}
@@ -419,10 +419,10 @@ const Skeleton = React.forwardRef<HTMLDivElement, SkeletonProps>(
             lines: actualLines,
             aspectRatio,
           }),
-          styles.skeleton,
+          skeletonClasses.skeleton,
           {
-            [styles.static]: actualAnimation === 'static',
-            [styles.shimmer]: actualAnimation === 'shimmer',
+            [skeletonClasses.static]: actualAnimation === 'static',
+            [skeletonClasses.shimmer]: actualAnimation === 'shimmer',
           },
           className
         )}
