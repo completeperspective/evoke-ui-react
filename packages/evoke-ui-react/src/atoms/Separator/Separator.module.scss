@@ -1,210 +1,30 @@
 /**
- * Separator Component Styles - Enhanced Visual Design
- * Elegant, sophisticated visual dividers with refined aesthetics
+ * Separator Component Styles - CVA-First Architecture
+ * Minimal SCSS for accessibility, animations, and browser-specific optimizations
  */
 @use '../../styles/abstracts' as *;
 
 .separator {
   @include component-base;
   
-  // Enhanced transitions for variant changes
-  transition: all var(--ui-duration-fast) var(--ui-easing-out);
-  flex-shrink: 0;
-  position: relative;
+  // Enhanced accessibility for focus states when interactive
+  @include enhanced-focus-ring;
   
-  // Enhanced default styling with subtle gradient
-  background: linear-gradient(
-    135deg,
-    oklch(var(--ui-color-border) / 0.8) 0%,
-    oklch(var(--ui-color-border) / 0.4) 50%,
-    oklch(var(--ui-color-border) / 0.8) 100%
-  );
-  
-  // Subtle shadow for depth
-  box-shadow: 0 0 1px oklch(var(--ui-color-border) / 0.3);
-}
-
-// Labeled separator container
-.labeledSeparator {
-  @include component-base;
-  
-  display: flex;
-  align-items: center;
-  position: relative;
-  
-  // Horizontal labeled separator
-  &.horizontal {
-    flex-direction: row;
-    width: 100%;
-    
-    .separator {
-      flex: 1;
-    }
-    
-    .label {
-      padding: 0 var(--ui-spacing-md);
-      white-space: nowrap;
-    }
-  }
-  
-  // Vertical labeled separator
-  &.vertical {
-    flex-direction: column;
-    height: 100%;
-    
-    .separator {
-      flex: 1;
-    }
-    
-    .label {
-      padding: var(--ui-spacing-md) 0;
-      writing-mode: vertical-rl;
-      text-orientation: mixed;
-    }
-  }
-}
-
-// Label styling
-.label {
-  @include component-base;
-  
-  font-size: var(--ui-font-size-sm);
-  font-weight: var(--ui-font-weight-medium);
-  color: oklch(var(--ui-color-muted-foreground));
-  background-color: oklch(var(--ui-color-background));
-  
-  // Better text rendering
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  
-  // Ensure text doesn't break
+  // Ensure proper text selection behavior
   user-select: none;
+  -webkit-tap-highlight-color: transparent;
   
-  // Smooth transitions
-  transition: color var(--ui-duration-fast) var(--ui-easing-out);
-}
-
-// Dark theme adjustments
-@include dark {
-  .label {
-    background-color: oklch(var(--ui-color-background));
-    color: oklch(var(--ui-color-muted-foreground));
+  // Better rendering for very thin separators
+  &[class*="h-px"],
+  &[class*="w-px"] {
+    // Ensure crisp rendering for subpixel separators
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
   }
 }
 
-// High contrast mode support
-@include high-contrast {
-  .separator {
-    // Ensure separators are visible in high contrast
-    background-color: currentColor;
-    opacity: 0.5;
-  }
-  
-  .label {
-    border: 1px solid currentColor;
-    padding: 0.125rem 0.5rem;
-  }
-}
-
-// Print styles
-@media print {
-  .separator {
-    background-color: #ccc !important;
-  }
-  
-  .label {
-    background-color: white !important;
-    color: black !important;
-  }
-}
-
-// Responsive adjustments
-@include sm {
-  .labeledSeparator {
-    &.horizontal {
-      .label {
-        padding: 0 var(--ui-spacing-sm);
-        font-size: var(--ui-font-size-xs);
-      }
-    }
-    
-    &.vertical {
-      .label {
-        padding: var(--ui-spacing-sm) 0;
-        font-size: var(--ui-font-size-xs);
-      }
-    }
-  }
-}
-
-// Custom separator patterns
-.separator {
-  // Dotted pattern variant
-  &.dotted {
-    background: repeating-linear-gradient(
-      to right,
-      oklch(var(--ui-color-border)) 0px,
-      oklch(var(--ui-color-border)) 2px,
-      transparent 2px,
-      transparent 4px
-    );
-    
-    &[class*="w-"] {
-      background: repeating-linear-gradient(
-        to bottom,
-        oklch(var(--ui-color-border)) 0px,
-        oklch(var(--ui-color-border)) 2px,
-        transparent 2px,
-        transparent 4px
-      );
-    }
-  }
-  
-  // Dashed pattern variant
-  &.dashed {
-    background: repeating-linear-gradient(
-      to right,
-      oklch(var(--ui-color-border)) 0px,
-      oklch(var(--ui-color-border)) 4px,
-      transparent 4px,
-      transparent 8px
-    );
-    
-    &[class*="w-"] {
-      background: repeating-linear-gradient(
-        to bottom,
-        oklch(var(--ui-color-border)) 0px,
-        oklch(var(--ui-color-border)) 4px,
-        transparent 4px,
-        transparent 8px
-      );
-    }
-  }
-}
-
-// Gradient separator variants
-.separator {
-  &.gradient {
-    background: linear-gradient(
-      to right,
-      transparent 0%,
-      oklch(var(--ui-color-border)) 50%,
-      transparent 100%
-    );
-    
-    &[class*="w-"] {
-      background: linear-gradient(
-        to bottom,
-        transparent 0%,
-        oklch(var(--ui-color-border)) 50%,
-        transparent 100%
-      );
-    }
-  }
-}
-
-// Animation for dynamic separators
+// Animation keyframes for CVA animation variants
 @keyframes separatorExpand {
   from {
     transform: scaleX(0);
@@ -223,30 +43,58 @@
   }
 }
 
-// Optional animation classes
-.separator {
-  &.animate-expand {
-    transform-origin: center;
-    animation: separatorExpand var(--ui-duration-normal) var(--ui-easing-out);
-    
-    &[class*="w-"] {
-      animation: separatorExpandVertical var(--ui-duration-normal) var(--ui-easing-out);
-    }
-    
-    @include reduced-motion {
-      animation: none;
-    }
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }
 
-// Better rendering for very thin separators
-.separator {
-  // Subpixel rendering
-  &[class*="h-px"],
-  &[class*="w-px"] {
-    // Ensure crisp rendering
-    image-rendering: pixelated;
-    image-rendering: -moz-crisp-edges;
-    image-rendering: crisp-edges;
+// High contrast mode support
+@media (prefers-contrast: high) {
+  .separator {
+    // Ensure separators are visible in high contrast mode
+    background-color: currentColor !important;
+    background-image: none !important;
+    opacity: 0.8;
+    border: 1px solid currentColor;
+  }
+}
+
+// Reduced motion preferences
+@media (prefers-reduced-motion: reduce) {
+  .separator {
+    transition: none !important;
+    animation: none !important;
+    transform: none !important;
+  }
+}
+
+// Print styles optimization
+@media print {
+  .separator {
+    background-color: #666 !important;
+    background-image: none !important;
+    box-shadow: none !important;
+    opacity: 0.8 !important;
+  }
+}
+
+// Touch device optimizations
+@media (hover: none) and (pointer: coarse) {
+  .separator {
+    // Ensure adequate touch targets for interactive separators
+    min-width: 24px;
+    min-height: 24px;
+  }
+}
+
+// Responsive adjustments for small screens
+@include sm {
+  .separator {
+    // Slightly reduce visual weight on small screens
+    opacity: 0.8;
   }
 }

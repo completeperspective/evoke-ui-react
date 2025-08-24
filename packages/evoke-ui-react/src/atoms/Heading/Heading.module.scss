@@ -1,29 +1,11 @@
 /**
  * Heading Component Styles
- * Responsive heading styles with enhanced typography
+ * Minimal SCSS overrides for accessibility, responsive behavior, and media queries
  */
 @use '../../styles/abstracts' as *;
 
 .heading {
   @include component-base;
-  
-  // Better text rendering for headings
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  
-  // Prevent layout shift from font loading
-  font-display: swap;
-  
-  // Better line height for headings
-  line-height: 1.2;
-  
-  // Improved letter spacing for larger text
-  letter-spacing: -0.025em;
-  
-  // Better word breaking for long headings
-  word-wrap: break-word;
-  overflow-wrap: break-word;
   
   // Remove default margins that can cause layout issues
   margin: 0;
@@ -39,27 +21,17 @@
     color: oklch(var(--ui-color-primary-foreground));
   }
   
-  // Focus styles for focusable headings
-  &.focusable {
-    @include focus-ring;
-    border-radius: var(--ui-radius-sm);
-    
-    &:focus {
-      outline: 2px solid oklch(var(--ui-color-ring));
-      outline-offset: 2px;
-    }
-  }
-  
-  // Link styling within headings
+  // Link styling within headings - enhanced accessibility
   a {
     color: inherit;
     text-decoration: none;
     transition: all var(--ui-duration-fast) var(--ui-easing-out);
+    border-radius: var(--ui-radius-xs);
     
     &:hover {
       color: oklch(var(--ui-color-primary));
       text-decoration: underline;
-      text-decoration-color: oklch(var(--ui-color-primary) / 0.5);
+      text-decoration-color: oklch(var(--ui-color-primary) / 0.6);
       text-underline-offset: 0.125em;
     }
     
@@ -70,62 +42,38 @@
     }
   }
   
-  // Balanced text wrapping for better typography
-  text-wrap: balance;
-  
   // Prevent orphans and widows in headings
   orphans: 2;
   widows: 2;
 }
 
-// Responsive font size adjustments
-@include sm {
-  .heading {
-    // Slightly tighter letter spacing on larger screens
-    letter-spacing: -0.03em;
+// Utility classes for enhanced functionality
+.focusable {
+  @include enhanced-focus-ring;
+  
+  // Ensure focusable headings are interactive
+  cursor: pointer;
+  
+  // Enhanced focus states
+  &:focus {
+    outline: 2px solid oklch(var(--ui-color-ring));
+    outline-offset: 2px;
   }
 }
 
-@include md {
-  .heading {
-    // Even tighter letter spacing for better readability
-    letter-spacing: -0.035em;
+.balance {
+  text-wrap: balance;
+  
+  // Ensure balanced text works well with responsive design
+  @supports not (text-wrap: balance) {
+    hyphens: auto;
+    word-break: break-word;
   }
 }
 
-@include lg {
-  .heading {
-    // Optimal letter spacing for desktop
-    letter-spacing: -0.04em;
-    
-    // Better line height for larger screens
-    line-height: 1.1;
-  }
-}
-
-// Level-specific enhancements
+// Level-specific enhancements that CVA cannot handle
 .heading {
-  // H1 specific styles
-  &:is(h1) {
-    font-weight: 800;
-    letter-spacing: -0.05em;
-    
-    @include lg {
-      line-height: 1.05;
-    }
-  }
-  
-  // H2 specific styles  
-  &:is(h2) {
-    border-bottom: 1px solid oklch(var(--ui-color-border));
-    padding-bottom: 0.5rem;
-    
-    &:not(:first-child) {
-      margin-top: 2rem;
-    }
-  }
-  
-  // H3-H6 progressive spacing
+  // Progressive spacing for natural document flow
   &:is(h3) {
     &:not(:first-child) {
       margin-top: 1.5rem;
@@ -145,33 +93,26 @@
   }
 }
 
-// Dark theme adjustments
+// Dark theme adjustments for better readability
 @include dark {
   .heading {
-    // Better contrast in dark mode
-    text-shadow: 0 0 1px oklch(var(--ui-color-background));
-    
-    &:is(h2) {
-      border-color: oklch(var(--ui-color-border));
-    }
+    // Subtle text shadow for better contrast in dark mode
+    text-shadow: 0 0 1px oklch(var(--ui-color-background) / 0.5);
   }
 }
 
 // High contrast mode support
 @include high-contrast {
   .heading {
-    &:is(h2) {
-      border-bottom: 2px solid currentColor;
-    }
-    
     a {
-      text-decoration: underline;
-      text-decoration-thickness: 2px;
+      text-decoration: underline !important;
+      text-decoration-thickness: 2px !important;
+      font-weight: 600;
     }
     
     &.focusable:focus {
-      outline: 3px solid;
-      outline-offset: 3px;
+      outline: 3px solid !important;
+      outline-offset: 3px !important;
     }
   }
 }
@@ -179,21 +120,18 @@
 // Print styles
 @media print {
   .heading {
-    color: black;
-    text-shadow: none;
+    color: black !important;
+    background: transparent !important;
+    text-shadow: none !important;
     page-break-after: avoid;
     
     &:is(h1, h2, h3) {
       page-break-inside: avoid;
     }
     
-    &:is(h2) {
-      border-color: #ccc;
-    }
-    
     a {
-      color: black;
-      text-decoration: underline;
+      color: black !important;
+      text-decoration: underline !important;
     }
   }
 }
@@ -201,34 +139,20 @@
 // Reduced motion preferences
 @include reduced-motion {
   .heading {
+    transition: none !important;
+    
     a {
-      transition: none;
+      transition: none !important;
     }
   }
 }
 
-// Safari-specific font rendering improvements
-@supports (-webkit-appearance: none) {
+// Container query support for advanced fluid typography
+@container (min-width: 320px) and (max-width: 768px) {
   .heading {
-    // Better font rendering on Safari
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
-}
-
-// Container query support for fluid typography
-@container (min-width: 768px) {
-  .heading {
+    // Ensure headings remain readable on small screens
     &:is(h1) {
-      font-size: clamp(2.25rem, 4vw, 3rem);
-    }
-    
-    &:is(h2) {
-      font-size: clamp(1.875rem, 3vw, 2.25rem);
-    }
-    
-    &:is(h3) {
-      font-size: clamp(1.5rem, 2.5vw, 1.875rem);
+      line-height: 1.1;
     }
   }
 }

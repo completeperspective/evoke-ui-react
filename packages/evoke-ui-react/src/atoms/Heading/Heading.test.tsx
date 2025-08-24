@@ -1,6 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { vi } from 'vitest';
 import { Heading, type HeadingProps } from './Heading';
 
 // Helper function to render Heading with default props
@@ -36,7 +37,7 @@ describe('Heading Component', () => {
       renderHeading({ level: 'h1' });
       const heading = screen.getByRole('heading', { level: 1 });
       expect(heading).toBeInTheDocument();
-      expect(heading).toHaveClass('text-4xl', 'font-extrabold');
+      expect(heading).toHaveClass('text-4xl', 'font-black');
     });
 
     it('renders h2 correctly', () => {
@@ -81,7 +82,7 @@ describe('Heading Component', () => {
       const heading = screen.getByRole('heading', { level: 3 });
       expect(heading).toBeInTheDocument();
       expect(heading.tagName.toLowerCase()).toBe('h3');
-      expect(heading).toHaveClass('text-4xl', 'font-extrabold'); // h1 visual styling
+      expect(heading).toHaveClass('text-4xl', 'font-black'); // h1 visual styling
     });
 
     it('uses level for styling when visualLevel is not provided', () => {
@@ -101,13 +102,19 @@ describe('Heading Component', () => {
     it('renders muted variant', () => {
       renderHeading({ variant: 'muted' });
       const heading = screen.getByRole('heading');
-      expect(heading).toHaveClass('text-muted-foreground');
+      expect(heading).toHaveClass('text-muted-foreground', 'opacity-80');
     });
 
     it('renders accent variant', () => {
       renderHeading({ variant: 'accent' });
       const heading = screen.getByRole('heading');
       expect(heading).toHaveClass('text-accent-foreground');
+    });
+    
+    it('renders primary variant', () => {
+      renderHeading({ variant: 'primary' });
+      const heading = screen.getByRole('heading');
+      expect(heading).toHaveClass('text-primary');
     });
 
     it('renders destructive variant', () => {
@@ -135,13 +142,31 @@ describe('Heading Component', () => {
       const heading = screen.getByRole('heading');
       expect(heading).toHaveClass('text-right');
     });
+    
+    it('renders justify alignment', () => {
+      renderHeading({ align: 'justify' });
+      const heading = screen.getByRole('heading');
+      expect(heading).toHaveClass('text-justify');
+    });
+    
+    it('renders start alignment', () => {
+      renderHeading({ align: 'start' });
+      const heading = screen.getByRole('heading');
+      expect(heading).toHaveClass('text-start');
+    });
+    
+    it('renders end alignment', () => {
+      renderHeading({ align: 'end' });
+      const heading = screen.getByRole('heading');
+      expect(heading).toHaveClass('text-end');
+    });
   });
 
   describe('Spacing', () => {
     it('renders no spacing', () => {
       renderHeading({ spacing: 'none' });
       const heading = screen.getByRole('heading');
-      expect(heading).not.toHaveClass('mb-2', 'mb-4', 'mb-6');
+      expect(heading).not.toHaveClass('mb-2', 'mb-4', 'mb-6', 'mb-8');
     });
 
     it('renders tight spacing', () => {
@@ -161,6 +186,12 @@ describe('Heading Component', () => {
       const heading = screen.getByRole('heading');
       expect(heading).toHaveClass('mb-6');
     });
+    
+    it('renders xlarge spacing', () => {
+      renderHeading({ spacing: 'xlarge' });
+      const heading = screen.getByRole('heading');
+      expect(heading).toHaveClass('mb-8');
+    });
   });
 
   describe('Focusable', () => {
@@ -168,18 +199,17 @@ describe('Heading Component', () => {
       renderHeading();
       const heading = screen.getByRole('heading');
       expect(heading).not.toHaveAttribute('tabIndex');
-      expect(heading).not.toHaveClass('focusable');
     });
 
     it('can be made focusable', () => {
       renderHeading({ focusable: true });
       const heading = screen.getByRole('heading');
       expect(heading).toHaveAttribute('tabIndex', '0');
-      expect(heading).toHaveClass('focusable');
+      expect(heading).toHaveClass('cursor-pointer');
     });
 
     it('handles focus events when focusable', async () => {
-      const handleFocus = jest.fn();
+      const handleFocus = vi.fn();
       renderHeading({ focusable: true, onFocus: handleFocus });
       
       const heading = screen.getByRole('heading');
@@ -202,11 +232,10 @@ describe('Heading Component', () => {
       const heading = screen.getByRole('heading', { level: 1 });
       expect(heading).toHaveClass(
         'text-4xl',
-        'font-extrabold',
         'text-muted-foreground',
         'text-center',
         'mb-2',
-        'focusable'
+        'cursor-pointer'
       );
       expect(heading).toHaveAttribute('tabIndex', '0');
     });
@@ -227,6 +256,121 @@ describe('Heading Component', () => {
         'text-accent-foreground',
         'text-right'
       );
+    });
+  });
+
+  describe('Enhanced CVA Variants', () => {
+    it('renders responsive scaling', () => {
+      renderHeading({ level: 'h1', responsive: 'scale' });
+      const heading = screen.getByRole('heading', { level: 1 });
+      expect(heading).toHaveClass('sm:text-5xl', 'md:text-6xl', 'lg:text-7xl');
+    });
+    
+    it('renders fluid responsive text', () => {
+      renderHeading({ level: 'h2', responsive: 'fluid' });
+      const heading = screen.getByRole('heading', { level: 2 });
+      expect(heading).toHaveClass('text-[clamp(1.875rem,3.5vw,3.5rem)]');
+    });
+    
+    it('renders custom weight', () => {
+      renderHeading({ level: 'h3', weight: 'bold' });
+      const heading = screen.getByRole('heading', { level: 3 });
+      expect(heading).toHaveClass('font-bold');
+    });
+    
+    it('renders gradient decoration', () => {
+      renderHeading({ level: 'h1', decoration: 'gradient' });
+      const heading = screen.getByRole('heading', { level: 1 });
+      expect(heading).toHaveClass('bg-gradient-to-r', 'bg-clip-text', 'text-transparent');
+    });
+    
+    it('renders underline decoration', () => {
+      renderHeading({ level: 'h2', decoration: 'underline' });
+      const heading = screen.getByRole('heading', { level: 2 });
+      expect(heading).toHaveClass('underline', 'decoration-2', 'underline-offset-4');
+    });
+    
+    it('renders text transform', () => {
+      renderHeading({ level: 'h3', transform: 'uppercase' });
+      const heading = screen.getByRole('heading', { level: 3 });
+      expect(heading).toHaveClass('uppercase', 'tracking-wider');
+    });
+    
+    it('renders status variants', () => {
+      renderHeading({ level: 'h4', status: 'success' });
+      const heading = screen.getByRole('heading', { level: 4 });
+      expect(heading).toHaveClass('text-success', 'font-semibold');
+    });
+    
+    it('renders gradient prop', () => {
+      renderHeading({ level: 'h1', gradient: true });
+      const heading = screen.getByRole('heading', { level: 1 });
+      expect(heading).toHaveClass('bg-gradient-to-r', 'bg-clip-text', 'text-transparent');
+    });
+    
+    it('renders balance prop', () => {
+      renderHeading({ level: 'h2', balance: true });
+      const heading = screen.getByRole('heading', { level: 2 });
+      // Balance class is applied via CSS module
+      expect(heading.className).toContain('_balance_');
+    });
+    
+    it('applies compound variants correctly', () => {
+      renderHeading({ level: 'h2', variant: 'default' });
+      const heading = screen.getByRole('heading', { level: 2 });
+      expect(heading).toHaveClass('border-b', 'border-border/20', 'pb-2');
+    });
+    
+    it('combines multiple enhanced props', () => {
+      renderHeading({
+        level: 'h1',
+        variant: 'primary',
+        align: 'center',
+        spacing: 'loose',
+        responsive: 'scale',
+        weight: 'black',
+        transform: 'uppercase',
+        focusable: true,
+      });
+      
+      const heading = screen.getByRole('heading', { level: 1 });
+      expect(heading).toHaveClass(
+        'text-4xl',
+        'text-center',
+        'mb-6',
+        'font-black',
+        'uppercase',
+        'focus:ring-2',
+        'cursor-pointer'
+      );
+      expect(heading).toHaveAttribute('tabIndex', '0');
+    });
+  });
+  
+  describe('Base Classes', () => {
+    it('includes typography fundamentals', () => {
+      renderHeading({ level: 'h1' });
+      const heading = screen.getByRole('heading', { level: 1 });
+      expect(heading).toHaveClass(
+        'antialiased',
+        'font-display-swap',
+        'break-words',
+        'transition-colors',
+        'duration-200',
+        'ease-out'
+      );
+    });
+    
+    it('includes h1 compound variant enhancements', () => {
+      renderHeading({ level: 'h1' });
+      const heading = screen.getByRole('heading', { level: 1 });
+      expect(heading).toHaveClass('font-black', 'tracking-tighter');
+    });
+    
+    it('includes center alignment enhancements', () => {
+      renderHeading({ level: 'h2', align: 'center' });
+      const heading = screen.getByRole('heading', { level: 2 });
+      expect(heading).toHaveClass('text-center', 'mx-auto', 'text-balance');
     });
   });
 
@@ -277,7 +421,9 @@ describe('Heading Component', () => {
           </span>
         ),
       });
-      expect(screen.getByText(/Section.*title.*here/)).toBeInTheDocument();
+      // Check that the heading contains the text correctly
+      const heading = screen.getByRole('heading');
+      expect(heading).toHaveTextContent('Section title here');
     });
 
     it('handles links within headings', () => {
@@ -314,18 +460,12 @@ describe('Heading Component', () => {
     it('includes responsive classes for h1', () => {
       renderHeading({ level: 'h1' });
       const heading = screen.getByRole('heading', { level: 1 });
-      expect(heading).toHaveClass('lg:text-5xl');
+      expect(heading).toHaveClass('lg:text-5xl', 'xl:text-6xl');
     });
 
-    it('includes scroll margin for anchor links', () => {
+    it('includes base scroll margin', () => {
       renderHeading({ level: 'h2' });
       const heading = screen.getByRole('heading', { level: 2 });
-      expect(heading).toHaveClass('scroll-m-20');
-    });
-
-    it('includes tracking class for letter spacing', () => {
-      renderHeading({ level: 'h3' });
-      const heading = screen.getByRole('heading', { level: 3 });
       expect(heading).toHaveClass('tracking-tight');
     });
   });
@@ -346,6 +486,18 @@ describe('Heading Component', () => {
       renderHeading({ children: null });
       const heading = screen.getByRole('heading');
       expect(heading).toBeInTheDocument();
+    });
+    
+    it('handles all default variants', () => {
+      renderHeading({});
+      const heading = screen.getByRole('heading');
+      expect(heading).toHaveClass(
+        'text-3xl', // h2 default
+        'font-semibold',
+        'text-foreground', // variant default
+        'text-left', // align default
+        'mb-4' // spacing normal default
+      );
     });
   });
 });

@@ -1,31 +1,20 @@
 /**
  * Text Component Styles
- * Custom typography styles and utilities
+ * Minimal overrides for accessibility, responsive behavior, and media queries
  */
 @use '../../styles/abstracts' as *;
 
 .text {
   @include component-base;
   
-  // Better text rendering
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  // Enhanced focus for when text elements are focusable or interactive
+  &:focus {
+    outline: 2px solid oklch(var(--ui-color-ring));
+    outline-offset: 2px;
+    border-radius: var(--ui-radius-sm);
+  }
   
-  // Prevent layout shift from font loading
-  font-display: swap;
-  
-  // Enhanced line height for better readability
-  line-height: 1.6;
-  
-  // Improved word breaking for long text
-  word-wrap: break-word;
-  overflow-wrap: break-word;
-  
-  // Better hyphenation support
-  hyphens: auto;
-  
-  // Selection styling
+  // Enhanced text selection styling
   &::selection {
     background-color: oklch(var(--ui-color-primary) / 0.2);
     color: oklch(var(--ui-color-primary-foreground));
@@ -36,28 +25,14 @@
     color: oklch(var(--ui-color-primary-foreground));
   }
   
-  // Disable text selection when explicitly set
-  &.unselectable {
-    user-select: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-  }
-  
-  // Enhanced focus for when text elements are focusable
-  &:focus {
-    outline: 2px solid oklch(var(--ui-color-ring));
-    outline-offset: 2px;
-    border-radius: var(--ui-radius-sm);
-  }
-  
-  // Link styling within text
+  // Link styling within text - enhanced accessibility
   a {
     color: oklch(var(--ui-color-primary));
     text-decoration: underline;
-    text-decoration-color: oklch(var(--ui-color-primary) / 0.5);
+    text-decoration-color: oklch(var(--ui-color-primary) / 0.6);
     text-underline-offset: 0.125em;
     transition: all var(--ui-duration-fast) var(--ui-easing-out);
+    border-radius: var(--ui-radius-xs);
     
     &:hover {
       text-decoration-color: oklch(var(--ui-color-primary));
@@ -67,145 +42,94 @@
     &:focus {
       outline: 2px solid oklch(var(--ui-color-ring));
       outline-offset: 2px;
-      border-radius: var(--ui-radius-sm);
+      text-decoration-thickness: 2px;
     }
   }
   
-  // Code elements within text
-  code {
-    font-family: var(--ui-font-family-mono);
-    font-size: 0.875em;
-    background-color: oklch(var(--ui-color-muted));
-    color: oklch(var(--ui-color-muted-foreground));
-    padding: 0.125rem 0.25rem;
-    border-radius: var(--ui-radius-sm);
-    border: 1px solid oklch(var(--ui-color-border));
+  // Enhanced elements within text - accessibility focus
+  code, kbd {
+    &:focus {
+      outline: 2px solid oklch(var(--ui-color-ring));
+      outline-offset: 1px;
+    }
   }
   
-  // Keyboard shortcut styling
-  kbd {
-    font-family: var(--ui-font-family-mono);
-    font-size: 0.75em;
-    background-color: oklch(var(--ui-color-muted));
-    color: oklch(var(--ui-color-muted-foreground));
-    padding: 0.125rem 0.375rem;
-    border-radius: var(--ui-radius-sm);
-    border: 1px solid oklch(var(--ui-color-border));
-    box-shadow: 0 1px 2px oklch(var(--ui-color-border));
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
-  
-  // Mark/highlight styling
-  mark {
-    background-color: oklch(var(--ui-color-warning) / 0.2);
-    color: oklch(var(--ui-color-foreground));
-    padding: 0.125rem 0.25rem;
-    border-radius: var(--ui-radius-sm);
-  }
-  
-  // Abbreviation styling
+  // Abbreviation accessibility
   abbr {
-    text-decoration: underline dotted;
-    text-decoration-color: oklch(var(--ui-color-muted-foreground));
     cursor: help;
+    
+    &:focus {
+      outline: 2px solid oklch(var(--ui-color-ring));
+      outline-offset: 1px;
+      border-radius: var(--ui-radius-xs);
+    }
+  }
+}
+
+// Utility classes for enhanced functionality
+.monospace {
+  font-family: var(--ui-font-family-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+.prose {
+  max-width: 65ch;
+  
+  p + p {
+    margin-top: 1.25em;
   }
   
-  // Quote styling
-  q {
-    quotes: '"' '"' "'" "'";
-    
-    &::before {
-      content: open-quote;
-    }
-    
-    &::after {
-      content: close-quote;
-    }
+  blockquote {
+    border-left: 4px solid oklch(var(--ui-color-primary) / 0.3);
+    padding-left: 1rem;
+    margin: 1.5em 0;
   }
-  
-  // Small caps styling
-  .small-caps {
-    font-variant: small-caps;
-    font-feature-settings: 'smcp';
-  }
-  
-  // Tabular numbers for consistent spacing
-  .tabular-nums {
-    font-variant-numeric: tabular-nums;
-    font-feature-settings: 'tnum';
-  }
-  
-  // Enhanced readability for long-form content
-  &.prose {
-    max-width: 65ch;
-    line-height: 1.7;
-    
-    p + p {
-      margin-top: 1.25em;
-    }
-    
-    strong {
-      font-weight: var(--ui-font-weight-semibold);
-      color: oklch(var(--ui-color-foreground));
-    }
-    
-    em {
-      font-style: italic;
-      color: oklch(var(--ui-color-foreground));
-    }
-  }
+}
+
+.smallCaps {
+  font-variant: small-caps;
+  font-feature-settings: 'smcp';
+}
+
+.tabularNums {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum';
 }
 
 // Responsive typography adjustments
 @include sm {
-  .text {
-    // Slightly larger line height on larger screens
-    line-height: 1.65;
+  .prose {
+    max-width: 70ch;
   }
 }
 
 @include lg {
-  .text {
-    // Even better spacing on desktop
-    line-height: 1.7;
+  .prose {
+    max-width: 75ch;
+    
+    p + p {
+      margin-top: 1.5em;
+    }
   }
 }
 
-// Dark theme adjustments
+// Dark theme adjustments for better readability
 @include dark {
   .text {
-    // Better contrast in dark mode
-    text-shadow: 0 0 1px oklch(var(--ui-color-background));
-    
-    code {
-      background-color: oklch(var(--ui-color-muted));
-      border-color: oklch(var(--ui-color-border));
-    }
-    
-    kbd {
-      background-color: oklch(var(--ui-color-muted));
-      border-color: oklch(var(--ui-color-border));
-      box-shadow: 0 1px 2px oklch(var(--ui-color-background));
-    }
+    text-shadow: 0 0 1px oklch(var(--ui-color-background) / 0.5);
   }
 }
 
 // High contrast mode support
 @include high-contrast {
   .text {
+    a, abbr {
+      text-decoration-thickness: 2px !important;
+      font-weight: 600;
+    }
+    
     a {
-      text-decoration-thickness: 2px;
-      text-decoration-color: currentColor;
-    }
-    
-    code,
-    kbd {
-      border: 2px solid currentColor;
-    }
-    
-    mark {
-      outline: 2px solid currentColor;
+      text-decoration-color: currentColor !important;
     }
   }
 }
@@ -213,28 +137,32 @@
 // Reduced motion preferences
 @include reduced-motion {
   .text {
+    transition: none !important;
+    
     a {
-      transition: none;
+      transition: none !important;
     }
   }
 }
 
-// Print styles
+// Print styles optimized
 @media print {
   .text {
-    color: black;
-    background: transparent;
-    text-shadow: none;
+    color: black !important;
+    background: transparent !important;
+    text-shadow: none !important;
     
     a {
-      color: black;
-      text-decoration: underline;
+      color: black !important;
+      text-decoration: underline !important;
     }
+  }
+  
+  .prose {
+    max-width: none;
     
-    code,
-    kbd {
-      background: #f5f5f5;
-      border: 1px solid #ccc;
+    blockquote {
+      border-left-color: #333 !important;
     }
   }
 }

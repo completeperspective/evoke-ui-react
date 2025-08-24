@@ -9,7 +9,8 @@ const meta = {
     layout: 'padded',
     docs: {
       description: {
-        component: 'Loading placeholder component with shimmer animation, multiple variants, and multi-line support. Includes reduced motion and accessibility support.',
+        component:
+          'Loading placeholder component with shimmer animation, multiple variants, and multi-line support. Includes reduced motion and accessibility support.',
       },
     },
   },
@@ -56,7 +57,7 @@ export const Default: Story = {
 
 export const Card: Story = {
   args: {
-    variant: 'card',
+    shape: 'card',
     width: '300px',
     height: '200px',
   },
@@ -64,14 +65,14 @@ export const Card: Story = {
 
 export const Text: Story = {
   args: {
-    variant: 'text',
+    shape: 'text',
     width: '250px',
   },
 };
 
 export const Circle: Story = {
   args: {
-    variant: 'circle',
+    shape: 'circle',
     width: '48px',
     height: '48px',
   },
@@ -79,7 +80,7 @@ export const Circle: Story = {
 
 export const Button: Story = {
   args: {
-    variant: 'button',
+    shape: 'button',
     width: '120px',
     height: '40px',
   },
@@ -87,13 +88,13 @@ export const Button: Story = {
 
 export const Avatar: Story = {
   args: {
-    variant: 'avatar',
+    shape: 'avatar',
     width: '64px',
     height: '64px',
   },
 };
 
-// Size variants
+// Size shapes
 export const Small: Story = {
   args: {
     size: 'sm',
@@ -125,7 +126,7 @@ export const ExtraLarge: Story = {
 // Multi-line text skeletons
 export const TextLines: Story = {
   args: {
-    variant: 'text',
+    shape: 'text',
     lines: 3,
     width: '100%',
   },
@@ -133,7 +134,7 @@ export const TextLines: Story = {
 
 export const ParagraphSkeleton: Story = {
   args: {
-    variant: 'text',
+    shape: 'text',
     lines: 5,
     width: '100%',
   },
@@ -158,22 +159,22 @@ export const StaticSkeleton: Story = {
 const UserCardSkeletonTemplate = () => (
   <div className="max-w-sm rounded-lg border border-border p-6 space-y-4">
     <div className="flex items-center space-x-4">
-      <Skeleton variant="avatar" width="60px" height="60px" />
+      <Skeleton shape="avatar" width="60px" height="60px" />
       <div className="space-y-2 flex-1">
-        <Skeleton variant="text" width="120px" height="20px" />
-        <Skeleton variant="text" width="80px" height="16px" />
+        <Skeleton shape="text" width="120px" height="20px" />
+        <Skeleton shape="text" width="80px" height="16px" />
       </div>
     </div>
-    
+
     <div className="space-y-2">
-      <Skeleton variant="text" width="100%" height="16px" />
-      <Skeleton variant="text" width="80%" height="16px" />
-      <Skeleton variant="text" width="60%" height="16px" />
+      <Skeleton shape="text" width="100%" height="16px" />
+      <Skeleton shape="text" width="80%" height="16px" />
+      <Skeleton shape="text" width="60%" height="16px" />
     </div>
-    
+
     <div className="flex space-x-2">
-      <Skeleton variant="button" width="80px" height="36px" />
-      <Skeleton variant="button" width="100px" height="36px" />
+      <Skeleton shape="button" width="80px" height="36px" />
+      <Skeleton shape="button" width="100px" height="36px" />
     </div>
   </div>
 );
@@ -191,23 +192,23 @@ export const UserCardSkeleton: Story = {
 
 const ArticleCardSkeletonTemplate = () => (
   <div className="max-w-md rounded-lg border border-border overflow-hidden">
-    <Skeleton variant="card" width="100%" height="200px" />
+    <Skeleton shape="card" width="100%" height="200px" />
     <div className="p-6 space-y-4">
       <div className="space-y-2">
-        <Skeleton variant="text" width="100%" height="24px" />
-        <Skeleton variant="text" width="80%" height="20px" />
+        <Skeleton shape="text" width="100%" height="24px" />
+        <Skeleton shape="text" width="80%" height="20px" />
       </div>
-      
+
       <div className="space-y-2">
-        <Skeleton variant="text" lines={3} width="100%" />
+        <Skeleton shape="text" lines={3} width="100%" />
       </div>
-      
+
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-2">
-          <Skeleton variant="circle" width="32px" height="32px" />
-          <Skeleton variant="text" width="80px" height="16px" />
+          <Skeleton shape="circle" width="32px" height="32px" />
+          <Skeleton shape="text" width="80px" height="16px" />
         </div>
-        <Skeleton variant="text" width="60px" height="16px" />
+        <Skeleton shape="text" width="60px" height="16px" />
       </div>
     </div>
   </div>
@@ -227,54 +228,54 @@ export const ArticleCardSkeleton: Story = {
 const DashboardSkeletonTemplate = () => (
   <div className="space-y-6 max-w-4xl">
     <div className="flex items-center justify-between">
-      <Skeleton variant="text" width="200px" height="32px" />
-      <Skeleton variant="button" width="100px" height="40px" />
+      <Skeleton shape="text" width="200px" height="32px" />
+      <Skeleton shape="button" width="100px" height="40px" />
     </div>
-    
+
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
       <div className="rounded-lg border border-border p-6 space-y-4">
         <div className="flex items-center justify-between">
-          <Skeleton variant="text" width="80px" height="16px" />
-          <Skeleton variant="circle" width="24px" height="24px" />
+          <Skeleton shape="text" width="80px" height="16px" />
+          <Skeleton shape="circle" width="24px" height="24px" />
         </div>
-        <Skeleton variant="text" width="60px" height="32px" />
-        <Skeleton variant="text" width="120px" height="14px" />
+        <Skeleton shape="text" width="60px" height="32px" />
+        <Skeleton shape="text" width="120px" height="14px" />
       </div>
-      
+
       <div className="rounded-lg border border-border p-6 space-y-4">
         <div className="flex items-center justify-between">
-          <Skeleton variant="text" width="100px" height="16px" />
-          <Skeleton variant="circle" width="24px" height="24px" />
+          <Skeleton shape="text" width="100px" height="16px" />
+          <Skeleton shape="circle" width="24px" height="24px" />
         </div>
-        <Skeleton variant="text" width="80px" height="32px" />
-        <Skeleton variant="text" width="140px" height="14px" />
+        <Skeleton shape="text" width="80px" height="32px" />
+        <Skeleton shape="text" width="140px" height="14px" />
       </div>
-      
+
       <div className="rounded-lg border border-border p-6 space-y-4">
         <div className="flex items-center justify-between">
-          <Skeleton variant="text" width="70px" height="16px" />
-          <Skeleton variant="circle" width="24px" height="24px" />
+          <Skeleton shape="text" width="70px" height="16px" />
+          <Skeleton shape="circle" width="24px" height="24px" />
         </div>
-        <Skeleton variant="text" width="50px" height="32px" />
-        <Skeleton variant="text" width="110px" height="14px" />
+        <Skeleton shape="text" width="50px" height="32px" />
+        <Skeleton shape="text" width="110px" height="14px" />
       </div>
     </div>
-    
+
     <div className="rounded-lg border border-border p-6 space-y-4">
       <div className="flex items-center justify-between">
-        <Skeleton variant="text" width="150px" height="24px" />
-        <Skeleton variant="button" width="120px" height="36px" />
+        <Skeleton shape="text" width="150px" height="24px" />
+        <Skeleton shape="button" width="120px" height="36px" />
       </div>
-      
+
       <div className="space-y-3">
         {Array.from({ length: 5 }, (_, i) => (
           <div key={i} className="flex items-center space-x-4 p-4 border border-border rounded">
-            <Skeleton variant="circle" width="40px" height="40px" />
+            <Skeleton shape="circle" width="40px" height="40px" />
             <div className="flex-1 space-y-2">
-              <Skeleton variant="text" width={`${Math.random() * 40 + 60}%`} height="16px" />
-              <Skeleton variant="text" width={`${Math.random() * 30 + 40}%`} height="14px" />
+              <Skeleton shape="text" width={`${Math.random() * 40 + 60}%`} height="16px" />
+              <Skeleton shape="text" width={`${Math.random() * 30 + 40}%`} height="14px" />
             </div>
-            <Skeleton variant="button" width="80px" height="32px" />
+            <Skeleton shape="button" width="80px" height="32px" />
           </div>
         ))}
       </div>
@@ -287,7 +288,8 @@ export const DashboardSkeleton: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Complex dashboard skeleton showing stats cards, data table, and various content areas.',
+        story:
+          'Complex dashboard skeleton showing stats cards, data table, and various content areas.',
       },
     },
   },
@@ -301,7 +303,9 @@ const LoadingSimulationTemplate = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false);
-      setContent('Content has finished loading! This demonstrates the transition from skeleton to actual content.');
+      setContent(
+        'Content has finished loading! This demonstrates the transition from skeleton to actual content.',
+      );
     }, 3000);
 
     return () => clearTimeout(timer);
@@ -312,7 +316,9 @@ const LoadingSimulationTemplate = () => {
     setContent('');
     setTimeout(() => {
       setLoading(false);
-      setContent('Content has finished loading! This demonstrates the transition from skeleton to actual content.');
+      setContent(
+        'Content has finished loading! This demonstrates the transition from skeleton to actual content.',
+      );
     }, 3000);
   };
 
@@ -327,7 +333,7 @@ const LoadingSimulationTemplate = () => {
           Reload
         </button>
       </div>
-      
+
       <div className="rounded-lg border border-border p-6">
         {loading ? (
           <div className="space-y-4">
@@ -353,7 +359,7 @@ const LoadingSimulationTemplate = () => {
           </div>
         )}
       </div>
-      
+
       {loading && (
         <p className="text-sm text-muted-foreground text-center">
           Loading will complete in 3 seconds...
@@ -368,7 +374,8 @@ export const LoadingSimulation: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Interactive example showing the transition from skeleton loading state to actual content.',
+        story:
+          'Interactive example showing the transition from skeleton loading state to actual content.',
       },
     },
   },
@@ -384,34 +391,34 @@ const AllVariantsTemplate = () => (
           <p className="text-sm font-medium">Default</p>
           <Skeleton width="150px" />
         </div>
-        
+
         <div className="space-y-2">
           <p className="text-sm font-medium">Text</p>
           <Skeleton variant="text" width="200px" />
         </div>
-        
+
         <div className="space-y-2">
           <p className="text-sm font-medium">Circle</p>
           <Skeleton variant="circle" width="48px" height="48px" />
         </div>
-        
+
         <div className="space-y-2">
           <p className="text-sm font-medium">Button</p>
           <Skeleton variant="button" width="100px" height="36px" />
         </div>
-        
+
         <div className="space-y-2">
           <p className="text-sm font-medium">Avatar</p>
           <Skeleton variant="avatar" width="56px" height="56px" />
         </div>
-        
+
         <div className="space-y-2">
           <p className="text-sm font-medium">Card</p>
           <Skeleton variant="card" width="120px" height="80px" />
         </div>
       </div>
     </div>
-    
+
     <div className="space-y-4">
       <h3 className="text-lg font-semibold">Sizes</h3>
       <div className="space-y-3">
@@ -433,7 +440,7 @@ const AllVariantsTemplate = () => (
         </div>
       </div>
     </div>
-    
+
     <div className="space-y-4">
       <h3 className="text-lg font-semibold">Multi-line Text</h3>
       <div className="max-w-md space-y-4">
@@ -441,14 +448,14 @@ const AllVariantsTemplate = () => (
           <p className="text-sm font-medium mb-2">3 Lines</p>
           <Skeleton variant="text" lines={3} width="100%" />
         </div>
-        
+
         <div>
           <p className="text-sm font-medium mb-2">5 Lines</p>
           <Skeleton variant="text" lines={5} width="100%" />
         </div>
       </div>
     </div>
-    
+
     <div className="space-y-4">
       <h3 className="text-lg font-semibold">Animation States</h3>
       <div className="grid grid-cols-2 gap-6 max-w-md">
@@ -456,7 +463,7 @@ const AllVariantsTemplate = () => (
           <p className="text-sm font-medium">Animated (Default)</p>
           <Skeleton width="150px" />
         </div>
-        
+
         <div className="space-y-2">
           <p className="text-sm font-medium">Static</p>
           <Skeleton static width="150px" />
@@ -471,7 +478,8 @@ export const AllVariants: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Comprehensive showcase of all skeleton variants, sizes, multi-line text, and animation states.',
+        story:
+          'Comprehensive showcase of all skeleton variants, sizes, multi-line text, and animation states.',
       },
     },
   },

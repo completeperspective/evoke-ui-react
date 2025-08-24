@@ -1,6 +1,7 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { vi } from 'vitest';
 import { Input, type InputProps } from './Input';
 
 // Helper function to render Input with default props
@@ -76,13 +77,13 @@ describe('Input Component', () => {
     it('renders success state correctly', () => {
       renderInput({ state: 'success' });
       const input = screen.getByRole('textbox');
-      expect(input).toHaveClass('border-green-500', 'focus-visible:ring-green-500');
+      expect(input).toHaveClass('border-success', 'bg-success/5', 'focus-visible:ring-success');
     });
 
     it('renders warning state correctly', () => {
       renderInput({ state: 'warning' });
       const input = screen.getByRole('textbox');
-      expect(input).toHaveClass('border-yellow-500', 'focus-visible:ring-yellow-500');
+      expect(input).toHaveClass('border-warning', 'bg-warning/5', 'focus-visible:ring-warning');
     });
   });
 
@@ -181,7 +182,7 @@ describe('Input Component', () => {
 
   describe('Interactions', () => {
     it('handles onChange events', async () => {
-      const handleChange = jest.fn();
+      const handleChange = vi.fn();
       renderInput({ onChange: handleChange });
       
       const input = screen.getByRole('textbox');
@@ -192,7 +193,7 @@ describe('Input Component', () => {
     });
 
     it('handles onFocus events', async () => {
-      const handleFocus = jest.fn();
+      const handleFocus = vi.fn();
       renderInput({ onFocus: handleFocus });
       
       const input = screen.getByRole('textbox');
@@ -202,7 +203,7 @@ describe('Input Component', () => {
     });
 
     it('handles onBlur events', async () => {
-      const handleBlur = jest.fn();
+      const handleBlur = vi.fn();
       renderInput({ onBlur: handleBlur });
       
       const input = screen.getByRole('textbox');

@@ -1,227 +1,46 @@
 /**
- * Skeleton Component Styles - Enhanced Visual Design
- * Beautiful, sophisticated loading placeholder animations with depth
+ * Skeleton Component Styles - CVA-First Architecture
+ * Minimal SCSS for accessibility, animations, and browser-specific features
  */
 @use '../../styles/abstracts' as *;
 
 .skeleton {
-  @include component-base;
-  @include shimmer;
+  // Enhanced accessibility for screen readers and focus management
+  @include enhanced-focus-ring;
   
-  position: relative;
-  overflow: hidden;
-  border-radius: var(--ui-radius-md);
+  // Prevent text selection during loading states
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
   
-  // Enhanced background with subtle depth
-  background: linear-gradient(
-    135deg,
-    oklch(var(--ui-color-muted) / 0.8) 0%,
-    oklch(var(--ui-color-muted) / 0.6) 25%,
-    oklch(var(--ui-color-muted) / 0.7) 50%,
-    oklch(var(--ui-color-muted) / 0.5) 75%,
-    oklch(var(--ui-color-muted) / 0.8) 100%
-  );
-  
-  // Subtle border for definition
-  border: 1px solid oklch(var(--ui-color-border) / 0.3);
-  
-  // Enhanced shimmer animation override
-  &::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    background: linear-gradient(
-      110deg,
-      transparent 0%,
-      transparent 40%,
-      oklch(var(--ui-color-background) / 0.8) 50%,
-      transparent 60%,
-      transparent 100%
-    );
-    transform: translateX(-100%);
-    animation: enhancedShimmer var(--ui-duration-slower) ease-in-out infinite;
-    z-index: 1;
-  }
-  
-  // Static state (no animation)
-  &.static {
+  // Shimmer animation (when CVA animation="shimmer")
+  &.shimmer {
     &::after {
-      display: none;
-    }
-  }
-  
-  // Ensure accessibility
-  &[role="status"] {
-    // Screen reader will announce "Loading..."
-  }
-}
-
-// Enhanced multi-line text skeleton container
-.textLines {
-  display: flex;
-  flex-direction: column;
-  gap: var(--ui-spacing-xs);
-  width: 100%;
-  
-  .skeleton {
-    &:nth-child(odd) {
-      animation-delay: 0.1s;
-    }
-    
-    &:nth-child(even) {
-      animation-delay: 0.2s;
-    }
-    
-    &.lastLine {
-      // Last line is typically shorter with natural variation
-      max-width: clamp(40%, 60%, 75%);
-      animation-delay: 0.3s;
-    }
-  }
-}
-
-// Enhanced variant-specific styles
-.skeleton {
-  // Circle variant with perfect ratio
-  &.variant-circle {
-    aspect-ratio: 1;
-    border-radius: 50%;
-    min-width: 2.5rem;
-    min-height: 2.5rem;
-  }
-  
-  // Avatar variant with profile-like sizing
-  &.variant-avatar {
-    aspect-ratio: 1;
-    border-radius: 50%;
-    min-width: 2.5rem;
-    min-height: 2.5rem;
-    border: 2px solid oklch(var(--ui-color-border) / 0.2);
-  }
-  
-  // Card variant with enhanced depth
-  &.variant-card {
-    min-height: 8rem;
-    border-radius: var(--ui-radius-lg);
-    background: linear-gradient(
-      135deg,
-      oklch(var(--ui-color-card)) 0%,
-      oklch(var(--ui-color-muted) / 0.5) 50%,
-      oklch(var(--ui-color-card)) 100%
-    );
-    @include elevation(1);
-  }
-  
-  // Button variant with proper proportions
-  &.variant-button {
-    min-width: 5rem;
-    min-height: 2.5rem;
-    border-radius: var(--ui-radius-md);
-  }
-  
-  // Text variant with line-like appearance
-  &.variant-text {
-    border-radius: var(--ui-radius-sm);
-    min-height: 1rem;
-  }
-}
-
-// Enhanced animation keyframes
-@keyframes enhancedShimmer {
-  0% {
-    transform: translateX(-100%) skewX(-15deg);
-  }
-  50% {
-    transform: translateX(-50%) skewX(-15deg);
-  }
-  100% {
-    transform: translateX(100%) skewX(-15deg);
-  }
-}
-
-@keyframes enhancedPulse {
-  0%, 100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.7;
-    transform: scale(1.01);
-  }
-}
-
-@keyframes breathe {
-  0%, 100% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.02);
-  }
-}
-
-// Enhanced dark theme adjustments
-@include dark {
-  .skeleton {
-    background: linear-gradient(
-      135deg,
-      oklch(var(--ui-color-muted) / 0.4) 0%,
-      oklch(var(--ui-color-muted) / 0.2) 25%,
-      oklch(var(--ui-color-muted) / 0.3) 50%,
-      oklch(var(--ui-color-muted) / 0.1) 75%,
-      oklch(var(--ui-color-muted) / 0.4) 100%
-    );
-    border-color: oklch(var(--ui-color-border) / 0.1);
-    
-    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
       background: linear-gradient(
         110deg,
         transparent 0%,
         transparent 40%,
-        oklch(var(--ui-color-foreground) / 0.05) 50%,
+        oklch(var(--ui-color-background) / 0.6) 50%,
         transparent 60%,
         transparent 100%
       );
-    }
-    
-    &.variant-card {
-      background: linear-gradient(
-        135deg,
-        oklch(var(--ui-color-card) / 0.8) 0%,
-        oklch(var(--ui-color-muted) / 0.3) 50%,
-        oklch(var(--ui-color-card) / 0.8) 100%
-      );
+      transform: translateX(-100%) translateZ(0);
+      animation: skeletonShimmer 2s ease-in-out infinite;
+      z-index: 1;
+      // GPU acceleration for smooth performance
+      will-change: transform;
+      backface-visibility: hidden;
     }
   }
-}
-
-// Enhanced reduced motion preferences
-@include reduced-motion {
-  .skeleton {
-    &::after {
-      animation: enhancedPulse var(--ui-duration-slow) ease-in-out infinite;
-    }
-    
-    .textLines .skeleton {
-      animation-delay: 0s;
-    }
-  }
-}
-
-// Enhanced high contrast mode support
-@include high-contrast {
-  .skeleton {
-    background: repeating-linear-gradient(
-      45deg,
-      currentColor 0%,
-      currentColor 2px,
-      transparent 2px,
-      transparent 6px
-    );
-    opacity: 0.4;
-    border: 1px solid currentColor;
+  
+  // Static state removes all animations
+  &.static {
+    animation: none !important;
     
     &::after {
       display: none;
@@ -229,11 +48,53 @@
   }
 }
 
-// Print styles for accessibility
+// Multi-line text skeleton container (minimal styling)
+.textLines {
+  // Container query support for responsive line spacing
+  container-type: inline-size;
+}
+
+
+// Optimized shimmer animation keyframes
+@keyframes skeletonShimmer {
+  0% {
+    transform: translateX(-100%) skewX(-15deg) translateZ(0);
+  }
+  100% {
+    transform: translateX(100%) skewX(-15deg) translateZ(0);
+  }
+}
+
+
+// Accessibility: Reduced motion preferences
+@media (prefers-reduced-motion: reduce) {
+  .skeleton {
+    animation: none !important;
+    
+    &::after {
+      animation: none !important;
+    }
+  }
+}
+
+// Accessibility: High contrast mode support
+@media (prefers-contrast: high) {
+  .skeleton {
+    border-width: 2px !important;
+    opacity: 0.8;
+    
+    &::after {
+      display: none;
+    }
+  }
+}
+
+// Print styles - simplified for print media
 @media print {
   .skeleton {
     background: #e5e5e5 !important;
     border: 1px solid #ccc !important;
+    animation: none !important;
     
     &::after {
       display: none !important;
@@ -241,76 +102,18 @@
   }
 }
 
-// Enhanced size-specific adjustments
-.skeleton {
-  // Size variants with proper proportions
-  &.size-xs {
-    min-width: 1.5rem;
-    min-height: 0.75rem;
-  }
-  
-  &.size-sm {
-    min-width: 2rem;
-    min-height: 1rem;
-  }
-  
-  &.size-md {
-    min-width: 3rem;
-    min-height: 1.25rem;
-  }
-  
-  &.size-lg {
-    min-width: 4rem;
-    min-height: 1.5rem;
-  }
-  
-  &.size-xl {
-    min-width: 6rem;
-    min-height: 2rem;
-  }
-}
 
-// Enhanced responsive adjustments
-@include sm {
-  .textLines {
-    gap: var(--ui-spacing-xs);
-  }
-}
 
-@include md {
-  .textLines {
-    gap: var(--ui-spacing-sm);
-  }
-}
 
-// Performance optimizations
-.skeleton {
-  // GPU acceleration for smooth animations
-  will-change: transform;
-  backface-visibility: hidden;
-  
-  &::after {
-    will-change: transform;
-    backface-visibility: hidden;
-    transform: translateX(-100%) translateZ(0);
-  }
-}
-
-// Container query support for adaptive sizing
+// Container queries for responsive line spacing
 @container (max-width: 300px) {
   .textLines {
-    gap: var(--ui-spacing-xxs);
-    
-    .skeleton {
-      &.lastLine {
-        max-width: 70%;
-      }
-    }
+    gap: 0.25rem;
   }
 }
 
 @container (min-width: 500px) {
   .textLines {
-    gap: var(--ui-spacing-sm);
+    gap: 0.5rem;
   }
 }

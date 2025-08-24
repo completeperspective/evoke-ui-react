@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { Label, type LabelProps } from './Label';
+import { Label, labelVariants, indicatorVariants, contentVariants, suffixVariants, type LabelProps } from './Label';
 
 // Helper function to render Label with default props
 const renderLabel = (props: Partial<LabelProps> = {}) => {
@@ -20,18 +20,19 @@ describe('Label Component', () => {
 
     it('renders as label element', () => {
       renderLabel();
-      expect(screen.getByText('Test Label').tagName.toLowerCase()).toBe('label');
+      const labelElement = screen.getByText('Test Label').closest('label');
+      expect(labelElement?.tagName.toLowerCase()).toBe('label');
     });
 
     it('applies custom className', () => {
       renderLabel({ className: 'custom-class' });
-      const label = screen.getByText('Test Label');
+      const label = screen.getByText('Test Label').closest('label');
       expect(label).toHaveClass('custom-class');
     });
 
     it('supports htmlFor attribute', () => {
       renderLabel({ htmlFor: 'email-input' });
-      const label = screen.getByText('Test Label');
+      const label = screen.getByText('Test Label').closest('label');
       expect(label).toHaveAttribute('for', 'email-input');
     });
   });
@@ -39,51 +40,57 @@ describe('Label Component', () => {
   describe('Variants', () => {
     it('renders default variant', () => {
       renderLabel({ variant: 'default' });
-      const label = screen.getByText('Test Label');
+      const label = screen.getByText('Test Label').closest('label');
       expect(label).toHaveClass('text-foreground');
     });
 
     it('renders muted variant', () => {
       renderLabel({ variant: 'muted' });
-      const label = screen.getByText('Test Label');
+      const label = screen.getByText('Test Label').closest('label');
       expect(label).toHaveClass('text-muted-foreground');
     });
 
     it('renders error variant', () => {
       renderLabel({ variant: 'error' });
-      const label = screen.getByText('Test Label');
+      const label = screen.getByText('Test Label').closest('label');
       expect(label).toHaveClass('text-destructive');
     });
 
     it('renders success variant', () => {
       renderLabel({ variant: 'success' });
-      const label = screen.getByText('Test Label');
-      expect(label).toHaveClass('text-green-600');
+      const label = screen.getByText('Test Label').closest('label');
+      expect(label).toHaveClass('text-success');
     });
 
     it('renders warning variant', () => {
       renderLabel({ variant: 'warning' });
-      const label = screen.getByText('Test Label');
-      expect(label).toHaveClass('text-yellow-600');
+      const label = screen.getByText('Test Label').closest('label');
+      expect(label).toHaveClass('text-warning');
+    });
+    
+    it('renders info variant', () => {
+      renderLabel({ variant: 'info' });
+      const label = screen.getByText('Test Label').closest('label');
+      expect(label).toHaveClass('text-info');
     });
   });
 
   describe('Sizes', () => {
     it('renders small size', () => {
       renderLabel({ size: 'sm' });
-      const label = screen.getByText('Test Label');
+      const label = screen.getByText('Test Label').closest('label');
       expect(label).toHaveClass('text-xs');
     });
 
     it('renders medium size (default)', () => {
       renderLabel({ size: 'md' });
-      const label = screen.getByText('Test Label');
+      const label = screen.getByText('Test Label').closest('label');
       expect(label).toHaveClass('text-sm');
     });
 
     it('renders large size', () => {
       renderLabel({ size: 'lg' });
-      const label = screen.getByText('Test Label');
+      const label = screen.getByText('Test Label').closest('label');
       expect(label).toHaveClass('text-base');
     });
   });
@@ -91,20 +98,26 @@ describe('Label Component', () => {
   describe('Font Weight', () => {
     it('renders normal weight', () => {
       renderLabel({ weight: 'normal' });
-      const label = screen.getByText('Test Label');
+      const label = screen.getByText('Test Label').closest('label');
       expect(label).toHaveClass('font-normal');
     });
 
     it('renders medium weight (default)', () => {
       renderLabel({ weight: 'medium' });
-      const label = screen.getByText('Test Label');
+      const label = screen.getByText('Test Label').closest('label');
       expect(label).toHaveClass('font-medium');
     });
 
     it('renders semibold weight', () => {
       renderLabel({ weight: 'semibold' });
-      const label = screen.getByText('Test Label');
+      const label = screen.getByText('Test Label').closest('label');
       expect(label).toHaveClass('font-semibold');
+    });
+    
+    it('renders bold weight', () => {
+      renderLabel({ weight: 'bold' });
+      const label = screen.getByText('Test Label').closest('label');
+      expect(label).toHaveClass('font-bold');
     });
   });
 
@@ -124,7 +137,20 @@ describe('Label Component', () => {
     it('applies required styling to indicator', () => {
       renderLabel({ required: true });
       const indicator = screen.getByLabelText('required');
-      expect(indicator).toHaveClass('required');
+      expect(indicator).toHaveClass('text-destructive', 'ml-1');
+    });
+    
+    it('shows info indicator when indicator prop is info', () => {
+      renderLabel({ indicator: 'info' });
+      const indicator = screen.getByLabelText('information');
+      expect(indicator).toBeInTheDocument();
+      expect(indicator).toHaveTextContent('ⓘ');
+    });
+    
+    it('overrides required with explicit indicator prop', () => {
+      renderLabel({ required: true, indicator: 'info' });
+      expect(screen.queryByLabelText('required')).not.toBeInTheDocument();
+      expect(screen.getByLabelText('information')).toBeInTheDocument();
     });
   });
 
@@ -150,7 +176,7 @@ describe('Label Component', () => {
     it('applies optional styling to indicator', () => {
       renderLabel({ optional: true });
       const indicator = screen.getByLabelText('optional');
-      expect(indicator).toHaveClass('optional');
+      expect(indicator).toHaveClass('text-muted-foreground', 'ml-2');
     });
   });
 
@@ -181,6 +207,72 @@ describe('Label Component', () => {
     });
   });
 
+  describe('New CVA Variants', () => {
+    describe('State Variants', () => {
+      it('renders disabled state', () => {
+        renderLabel({ state: 'disabled' });
+        const label = screen.getByText('Test Label').closest('label');
+        expect(label).toHaveClass('opacity-70', 'cursor-not-allowed');
+      });
+      
+      it('renders focused state', () => {
+        renderLabel({ state: 'focused' });
+        const label = screen.getByText('Test Label').closest('label');
+        expect(label).toHaveClass('text-primary', 'ring-2');
+      });
+      
+      it('renders error state', () => {
+        renderLabel({ state: 'error' });
+        const label = screen.getByText('Test Label').closest('label');
+        expect(label).toHaveClass('text-destructive');
+      });
+    });
+    
+    describe('Position Variants', () => {
+      it('renders inline position', () => {
+        renderLabel({ position: 'inline' });
+        const label = screen.getByText('Test Label').closest('label');
+        expect(label).toHaveClass('justify-start');
+      });
+      
+      it('renders floating position', () => {
+        renderLabel({ position: 'floating' });
+        const label = screen.getByText('Test Label').closest('label');
+        expect(label).toHaveClass('absolute', '-top-2', 'left-2');
+      });
+    });
+    
+    describe('Style Variants', () => {
+      it('renders subtle style', () => {
+        renderLabel({ styleVariant: 'subtle' });
+        const label = screen.getByText('Test Label').closest('label');
+        expect(label).toHaveClass('opacity-80');
+      });
+      
+      it('renders underlined style', () => {
+        renderLabel({ styleVariant: 'underlined' });
+        const label = screen.getByText('Test Label').closest('label');
+        expect(label).toHaveClass('underline');
+      });
+    });
+    
+    describe('Content and Suffix Customization', () => {
+      it('applies custom content alignment', () => {
+        renderLabel({ contentAlignment: 'center' });
+        const labelElement = screen.getByText('Test Label').closest('label');
+        const contentElement = labelElement?.querySelector('span');
+        expect(contentElement).toHaveClass('items-center');
+      });
+      
+      it('applies custom suffix spacing', () => {
+        const suffix = <span data-testid="suffix">?</span>;
+        renderLabel({ suffix, suffixSpacing: 'lg' });
+        const suffixElement = screen.getByTestId('suffix').parentElement;
+        expect(suffixElement).toHaveClass('ml-4');
+      });
+    });
+  });
+  
   describe('Combined Props', () => {
     it('handles multiple props correctly', () => {
       const suffix = <span data-testid="help">?</span>;
@@ -189,12 +281,14 @@ describe('Label Component', () => {
         variant: 'error',
         size: 'lg',
         weight: 'semibold',
+        state: 'error',
+        styleVariant: 'bold',
         required: true,
         suffix,
         className: 'custom-class',
       });
       
-      const label = screen.getByText('Test Label');
+      const label = screen.getByText('Test Label').closest('label');
       expect(label).toHaveClass(
         'text-destructive',
         'text-base',
@@ -211,6 +305,7 @@ describe('Label Component', () => {
       renderLabel({
         required: true,
         suffix,
+        suffixSpacing: 'sm',
         children: 'Password',
       });
       
@@ -225,12 +320,27 @@ describe('Label Component', () => {
       renderLabel({
         optional: true,
         suffix,
+        contentGap: 'lg',
         children: 'Bio',
       });
       
       expect(screen.getByText('Bio')).toBeInTheDocument();
       expect(screen.getByLabelText('optional')).toBeInTheDocument();
       expect(screen.getByTestId('info')).toBeInTheDocument();
+    });
+    
+    it('handles complex combination with floating position', () => {
+      renderLabel({
+        position: 'floating',
+        size: 'sm',
+        variant: 'info',
+        indicator: 'info',
+        styleVariant: 'subtle',
+      });
+      
+      const label = screen.getByText('Test Label').closest('label');
+      expect(label).toHaveClass('absolute', 'text-info', 'opacity-80');
+      expect(screen.getByLabelText('information')).toBeInTheDocument();
     });
   });
 
@@ -243,14 +353,14 @@ describe('Label Component', () => {
 
     it('supports id attribute', () => {
       renderLabel({ id: 'email-label' });
-      const label = screen.getByText('Test Label');
+      const label = screen.getByText('Test Label').closest('label');
       expect(label).toHaveAttribute('id', 'email-label');
     });
 
     it('maintains label semantics', () => {
       renderLabel({ htmlFor: 'input-id' });
-      const label = screen.getByText('Test Label');
-      expect(label.tagName.toLowerCase()).toBe('label');
+      const label = screen.getByText('Test Label').closest('label');
+      expect(label?.tagName.toLowerCase()).toBe('label');
       expect(label).toHaveAttribute('for', 'input-id');
     });
 
@@ -273,7 +383,7 @@ describe('Label Component', () => {
       render(<Label ref={ref}>Test</Label>);
       
       expect(ref.current).toBeInstanceOf(HTMLLabelElement);
-      expect(ref.current).toBe(screen.getByText('Test'));
+      expect(ref.current).toBe(screen.getByText('Test').closest('label'));
     });
   });
 
@@ -298,15 +408,17 @@ describe('Label Component', () => {
           </span>
         ),
       });
-      expect(screen.getByText(/User.*information/)).toBeInTheDocument();
+      expect(screen.getByText('User')).toBeInTheDocument();
+      expect(screen.getByText('information')).toBeInTheDocument();
     });
   });
 
   describe('Edge Cases', () => {
     it('handles empty children', () => {
-      renderLabel({ children: '' });
-      const label = screen.getByText('');
+      const { container } = renderLabel({ children: '' });
+      const label = container.querySelector('label');
       expect(label).toBeInTheDocument();
+      expect(label?.textContent).toBe('');
     });
 
     it('handles null suffix', () => {
@@ -319,5 +431,111 @@ describe('Label Component', () => {
       expect(screen.queryByLabelText('required')).not.toBeInTheDocument();
       expect(screen.queryByLabelText('optional')).not.toBeInTheDocument();
     });
+    
+    it('handles indicator none explicitly', () => {
+      renderLabel({ indicator: 'none', required: true, optional: true });
+      expect(screen.queryByLabelText('required')).not.toBeInTheDocument();
+      expect(screen.queryByLabelText('optional')).not.toBeInTheDocument();
+    });
+    
+    it('handles undefined content alignment gracefully', () => {
+      renderLabel({ contentAlignment: undefined });
+      const labelElement = screen.getByText('Test Label').closest('label');
+      const contentElement = labelElement?.querySelector('span');
+      expect(contentElement).toHaveClass('items-baseline'); // default
+    });
+    
+    it('handles multiple state compound variants', () => {
+      renderLabel({ state: 'disabled', variant: 'error' });
+      const label = screen.getByText('Test Label').closest('label');
+      expect(label).toHaveClass('opacity-70', 'cursor-not-allowed');
+    });
+  });
+
+  describe('CVA Integration', () => {
+    it('applies base CVA classes', () => {
+      renderLabel();
+      const label = screen.getByText('Test Label').closest('label');
+      expect(label).toHaveClass(
+        'inline-flex',
+        'items-center', 
+        'cursor-pointer',
+        'user-select-none',
+        'transition-colors',
+        'duration-200',
+        'font-medium'
+      );
+    });
+    
+    it('applies compound variants correctly', () => {
+      renderLabel({ state: 'disabled', variant: 'error' });
+      const label = screen.getByText('Test Label').closest('label');
+      expect(label).toHaveClass('hover:text-current');
+    });
+    
+    it('handles size-responsive floating position', () => {
+      renderLabel({ position: 'floating', size: 'lg' });
+      const label = screen.getByText('Test Label').closest('label');
+      expect(label).toHaveClass('text-sm', 'px-2', '-top-3');
+    });
+    
+    it('applies style compound variants', () => {
+      renderLabel({ styleVariant: 'bold', weight: 'normal' });
+      const label = screen.getByText('Test Label').closest('label');
+      expect(label).toHaveClass('font-semibold');
+    });
+  });
+  
+  describe('Accessibility Enhancements', () => {
+    it('maintains proper ARIA attributes for indicators', () => {
+      renderLabel({ indicator: 'info' });
+      const indicator = screen.getByLabelText('information');
+      expect(indicator).toHaveAttribute('aria-label', 'information');
+    });
+    
+    it('hides suffix content from screen readers', () => {
+      const suffix = <span data-testid="decorative">🎉</span>;
+      renderLabel({ suffix });
+      const suffixContainer = screen.getByTestId('decorative').parentElement;
+      expect(suffixContainer).toHaveAttribute('aria-hidden', 'true');
+    });
+    
+    it('supports all original accessibility features', () => {
+      renderLabel({ 
+        id: 'test-label',
+        htmlFor: 'test-input',
+        'aria-label': 'Custom accessible label'
+      });
+      
+      const label = screen.getByLabelText('Custom accessible label');
+      expect(label).toHaveAttribute('id', 'test-label');
+      expect(label).toHaveAttribute('for', 'test-input');
+    });
+  });
+});
+
+// Additional test for exported variants
+describe('Exported CVA Variants', () => {
+  it('exports all CVA variant functions', () => {
+    expect(typeof labelVariants).toBe('function');
+    expect(typeof indicatorVariants).toBe('function');
+    expect(typeof contentVariants).toBe('function');
+    expect(typeof suffixVariants).toBe('function');
+  });
+  
+  it('labelVariants generates correct classes', () => {
+    const defaultClasses = labelVariants();
+    expect(defaultClasses).toContain('text-foreground');
+    expect(defaultClasses).toContain('text-sm');
+    expect(defaultClasses).toContain('font-medium');
+    
+    const customClasses = labelVariants({ 
+      variant: 'error', 
+      size: 'lg', 
+      state: 'disabled' 
+    });
+    expect(customClasses).toContain('text-destructive');
+    expect(customClasses).toContain('text-base');
+    expect(customClasses).toContain('opacity-70');
   });
 });
