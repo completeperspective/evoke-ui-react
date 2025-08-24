@@ -42,6 +42,9 @@
     "test": "vitest",
     "test:ui": "vitest --ui",
     "test:coverage": "vitest --coverage",
+    "test:package": "node scripts/test-package.mjs",
+    "test:package:verbose": "node scripts/test-package.mjs --verbose",
+    "test:package:keep": "node scripts/test-package.mjs --skip-cleanup",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },

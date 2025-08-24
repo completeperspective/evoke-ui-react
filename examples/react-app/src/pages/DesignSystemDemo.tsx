@@ -1,8 +1,6 @@
 import { useState } from 'react';
 import { Button, Input, Text, Badge, Heading, Label, Skeleton, Separator } from '@evoke-ui/react';
 
-import '@evoke-ui/react/styles.css';
-
 function DesignSystemDemo() {
   const [inputValue, setInputValue] = useState('');
   const [loading, setLoading] = useState(false);
@@ -14,7 +12,7 @@ function DesignSystemDemo() {
 
   return (
     <div className="space-y-8">
-      <div className="rounded-lg border p-6">
+      <div className="rounded-lg border border-border p-6">
         <div className="flex items-center gap-4 mb-6">
           <Heading level="h1">Design System Demo</Heading>
           <Badge variant="secondary">22KB styles.css</Badge>
@@ -155,7 +153,7 @@ function DesignSystemDemo() {
           <Heading level="h2" className="mb-4">
             Interactive Test
           </Heading>
-          <div className="bg-gray-50 p-4 rounded-lg">
+          <div className="bg-card p-4 rounded-lg">
             <Text className="mb-4">
               Current input value: <Badge variant="outline">{inputValue || '(empty)'}</Badge>
             </Text>

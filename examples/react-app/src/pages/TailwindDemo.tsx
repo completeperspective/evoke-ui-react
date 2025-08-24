@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { Button, Input, Text, Badge, Heading, Label, Skeleton, Separator } from '@evoke-ui/react';
 
 // Tailwind CSS is now provided through index.css with @theme configuration
-import '@evoke-ui/react/tailwind.css';
 
 function TailwindDemo() {
   const [inputValue, setInputValue] = useState('');
@@ -15,7 +14,7 @@ function TailwindDemo() {
 
   return (
     <div className="space-y-8">
-      <div className="bg-gradient-to-br from-blue-50 to-indigo-100 rounded-2xl border border-blue-200 p-8 shadow-lg">
+      <div className="bg-card rounded-2xl p-8 shadow-lg">
         <div className="flex items-center gap-4 mb-6">
           <Heading
             level="h1"
@@ -31,7 +30,7 @@ function TailwindDemo() {
           </Badge>
         </div>
 
-        <Text className="text-gray-700 mb-8 leading-relaxed">
+        <Text className="text-gray-700 !mb-8 leading-relaxed">
           This page uses{' '}
           <code className="bg-gray-200/70 px-3 py-1 rounded-md text-sm font-mono border">
             @evoke-ui/react/tailwind.css
@@ -43,8 +42,8 @@ function TailwindDemo() {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
           {/* Enhanced Button Section */}
-          <section className="bg-white/60 backdrop-blur-sm rounded-xl p-6 border border-white/50 shadow-sm">
-            <Heading level="h2" className="mb-6 text-gray-800">
+          <section className="bg-card text-card-foreground backdrop-blur-sm rounded-xl p-6 border border-border shadow-sm">
+            <Heading level="h2" className="!mb-4">
               Enhanced Buttons
             </Heading>
             <div className="space-y-6">
@@ -93,10 +92,7 @@ function TailwindDemo() {
                 </Button>
               </div>
               <div className="flex flex-wrap gap-3 items-center">
-                <Button
-                  size="sm"
-                  className="rounded-full shadow-md hover:shadow-lg transition-shadow"
-                >
+                <Button size="sm" className="rounded shadow-md hover:shadow-lg transition-shadow">
                   Small Rounded
                 </Button>
                 <Button
@@ -116,8 +112,8 @@ function TailwindDemo() {
           </section>
 
           {/* Enhanced Input Section */}
-          <section className="bg-white/60 backdrop-blur-sm rounded-xl p-6 border border-white/50 shadow-sm">
-            <Heading level="h2" className="mb-6 text-gray-800">
+          <section className="bg-card text-card-foreground backdrop-blur-sm rounded-xl p-6 border border-border shadow-sm">
+            <Heading level="h2" className="mb-6">
               Enhanced Forms
             </Heading>
             <div className="space-y-6">
@@ -168,8 +164,8 @@ function TailwindDemo() {
           </section>
 
           {/* Enhanced Badge Section */}
-          <section className="bg-white/60 backdrop-blur-sm rounded-xl p-6 border border-white/50 shadow-sm">
-            <Heading level="h2" className="mb-6 text-gray-800">
+          <section className="bg-card text-card-foreground backdrop-blur-sm rounded-xl p-6 border border-border shadow-sm">
+            <Heading level="h2" className="mb-6">
               Enhanced Badges
             </Heading>
             <div className="space-y-6">
@@ -200,7 +196,7 @@ function TailwindDemo() {
                 </Badge>
               </div>
               <div className="flex flex-wrap gap-3 items-center">
-                <Badge size="sm" className="rounded-full bg-green-500 text-white shadow-md">
+                <Badge size="sm" className="rounded bg-green-500 text-white shadow-md">
                   Small Pill
                 </Badge>
                 <Badge
@@ -227,8 +223,8 @@ function TailwindDemo() {
           </section>
 
           {/* Enhanced Typography Section */}
-          <section className="bg-white/60 backdrop-blur-sm rounded-xl p-6 border border-white/50 shadow-sm">
-            <Heading level="h2" className="mb-6 text-gray-800">
+          <section className="bg-card text-card-foreground backdrop-blur-sm rounded-xl p-6 border border-border shadow-sm">
+            <Heading level="h2" className="mb-6">
               Enhanced Typography
             </Heading>
             <div className="space-y-4">
@@ -251,7 +247,7 @@ function TailwindDemo() {
               </Text>
               <Text
                 variant="body"
-                className="text-gray-600 bg-gray-50 p-3 rounded-lg border-l-4 border-blue-500"
+                className="text-gray-600  p-3 rounded-lg border-l-4 border-blue-500"
               >
                 Body text with background styling and accent border.
               </Text>
@@ -260,7 +256,7 @@ function TailwindDemo() {
               </Text>
               <Text
                 variant="caption"
-                className="text-gray-400 font-mono bg-gray-100 px-2 py-1 rounded"
+                className="text-gray-400 font-mono bg-black px-2 py-1 rounded"
               >
                 Caption text (monospace) with background.
               </Text>
@@ -271,8 +267,8 @@ function TailwindDemo() {
         <Separator className="my-10 bg-gradient-to-r from-transparent via-gray-400 to-transparent h-px" />
 
         {/* Enhanced Loading States */}
-        <section className="bg-white/60 backdrop-blur-sm rounded-xl p-6 border border-white/50 shadow-sm">
-          <Heading level="h2" className="mb-6 text-gray-800">
+        <section className="bg-card backdrop-blur-sm rounded-xl p-6 border border-border shadow-sm">
+          <Heading level="h2" className="mb-6 ">
             Enhanced Loading States
           </Heading>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -288,39 +284,6 @@ function TailwindDemo() {
             <div className="bg-gradient-to-br from-green-50 to-green-100 p-4 rounded-lg border border-green-200">
               <Label className="mb-3 block font-semibold text-green-800">Avatar Skeleton</Label>
               <Skeleton className="h-14 w-14 bg-gradient-to-r from-green-200 to-green-300 rounded-full shadow-md" />
-            </div>
-          </div>
-        </section>
-
-        <Separator className="my-10 bg-gradient-to-r from-transparent via-gray-400 to-transparent h-px" />
-
-        {/* Enhanced Interactive Test */}
-        <section className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl p-6 border border-gray-200 shadow-inner">
-          <Heading level="h2" className="mb-6 text-gray-800">
-            Enhanced Interactive State
-          </Heading>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="bg-white p-4 rounded-lg shadow-sm border">
-              <Text className="mb-3 text-gray-700">Current input value:</Text>
-              <Badge
-                variant="outline"
-                className="bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-300 text-blue-700 px-3 py-1"
-              >
-                {inputValue || '(empty)'}
-              </Badge>
-            </div>
-            <div className="bg-white p-4 rounded-lg shadow-sm border">
-              <Text className="mb-3 text-gray-700">Loading state:</Text>
-              <Badge
-                variant={loading ? 'destructive' : 'default'}
-                className={
-                  loading
-                    ? 'bg-gradient-to-r from-red-500 to-pink-500 animate-pulse shadow-lg'
-                    : 'bg-gradient-to-r from-green-500 to-emerald-500 shadow-md'
-                }
-              >
-                {loading ? 'Active & Pulsing' : 'Inactive & Stable'}
-              </Badge>
             </div>
           </div>
         </section>
