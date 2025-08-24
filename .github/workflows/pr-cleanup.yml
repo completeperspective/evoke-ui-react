@@ -13,43 +13,6 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-      - name: Checkout gh-pages branch
-        uses: actions/checkout@v4
-        with:
-          ref: gh-pages
-          token: ${{ secrets.GITHUB_TOKEN }}
-          fetch-depth: 0
-
-      - name: Remove PR preview directory
-        run: |
-          PR_DIR="pr-${{ github.event.number }}"
-          
-          if [ -d "$PR_DIR" ]; then
-            echo "🗑️ Removing preview directory: $PR_DIR"
-            rm -rf "$PR_DIR"
-            
-            # Configure git for the action
-            git config --local user.email "action@github.com"
-            git config --local user.name "GitHub Action"
-            
-            # Commit the removal
-            git add -A
-            git commit -m "🧹 Clean up PR #${{ github.event.number }} preview
-
-            - Removed preview directory: $PR_DIR
-            - PR was ${{ github.event.action }}: ${{ github.event.pull_request.title }}
-            - Branch: ${{ github.event.pull_request.head.ref }}
-            - Author: ${{ github.event.pull_request.user.login }}
-            
-            Auto-cleanup performed by GitHub Actions"
-            
-            git push origin gh-pages
-            
-            echo "✅ Successfully removed PR preview directory"
-          else
-            echo "ℹ️ No preview directory found for PR #${{ github.event.number }}"
-          fi
-
       - name: Clean up artifacts
         uses: actions/github-script@v7
         with:
@@ -98,14 +61,14 @@ jobs:
             
             const commentBody = `${emoji} **PR Preview Cleanup Complete**
             
-            The Storybook preview for this PR has been automatically removed since the PR was ${action}.
+            The Storybook preview artifacts for this PR have been automatically cleaned up since the PR was ${action}.
             
             ### 📋 Cleanup Details
-            - **Preview URL**: ~~https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/pr-${{ github.event.number }}/~~ (removed)
-            - **Artifacts**: Temporary build artifacts cleaned up
+            - **Artifacts**: \`pr-preview-${{ github.event.number }}\` (removed)
             - **Action**: Automatic cleanup on PR ${action}
+            - **Status**: Build artifacts no longer available for download
             
-            ${wasMerged ? '🚀 **Changes are now live in the main documentation!**' : '💡 **No further action needed** - preview has been cleaned up.'}`;
+            ${wasMerged ? '🚀 **Changes are now live in the main documentation!**' : '💡 **No further action needed** - preview artifacts have been cleaned up.'}`;
 
             await github.rest.issues.createComment({
               owner: context.repo.owner,
@@ -136,5 +99,5 @@ jobs:
           echo "- **Title**: ${{ github.event.pull_request.title }}" >> $GITHUB_STEP_SUMMARY
           echo "- **Branch**: \`${{ github.event.pull_request.head.ref }}\`" >> $GITHUB_STEP_SUMMARY
           echo "- **Author**: @${{ github.event.pull_request.user.login }}" >> $GITHUB_STEP_SUMMARY
-          echo "- **Preview Directory**: \`pr-${{ github.event.number }}/\` (removed)" >> $GITHUB_STEP_SUMMARY
-          echo "- **Artifacts**: Cleaned up successfully" >> $GITHUB_STEP_SUMMARY
+          echo "- **Artifacts**: \`pr-preview-${{ github.event.number }}\` (cleaned up)" >> $GITHUB_STEP_SUMMARY
+          echo "- **Status**: Preview artifacts no longer available for download" >> $GITHUB_STEP_SUMMARY
