@@ -176,6 +176,11 @@ The automated testing script covers:
 - Check Sass compilation for syntax errors
 - Ensure Tailwind configuration is valid
 
+**Width Utility Issues (Resolved)**
+- **Historical Issue**: Tailwind v4 `max-w-*` classes mapping to spacing tokens instead of sizing tokens
+- **Fix Applied**: Separate spacing/sizing namespaces with explicit utility overrides in `src/styles/tailwind.css`
+- **Result**: All width utilities now work as expected (e.g., `max-w-sm` = 24rem/384px)
+
 **Runtime Errors**
 - Check for missing peer dependencies
 - Verify React version compatibility

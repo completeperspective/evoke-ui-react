@@ -143,6 +143,47 @@
 
 ## Current Tasks
 
+### ✅ 2025-08-25: Critical Tailwind v4 Width Utility Mapping Fix COMPLETED
+
+**Objective**: Fix critical issue where Tailwind v4's CSS-first configuration was incorrectly mapping `max-w-*` classes to custom spacing variables instead of standard width values, causing modals to appear extremely narrow (8px instead of 384px).
+
+**Root Cause Identified**:
+- Tailwind v4 CSS-first configuration was conflating spacing tokens with sizing tokens
+- `max-w-sm` was incorrectly mapping to `--spacing-sm` (0.5rem/8px) instead of standard 24rem (384px)
+- This affected all modal widths throughout the application
+
+**Solution Implemented**:
+1. **Separated Spacing and Sizing Namespaces** in `/src/styles/tailwind.css`:
+   - `--spacing-*` tokens for padding, margin, gap utilities
+   - `--sizing-*` tokens for width, max-width, min-width utilities
+2. **Added Explicit Utility Overrides** (lines 315-325):
+   ```css
+   .max-w-xs { max-width: var(--sizing-xs) !important; }   /* 20rem/320px */
+   .max-w-sm { max-width: var(--sizing-sm) !important; }   /* 24rem/384px */
+   .max-w-md { max-width: var(--sizing-md) !important; }   /* 28rem/448px */
+   ```
+3. **Restored Standard Tailwind Behavior**:
+   - `max-w-sm` now correctly maps to 24rem (384px)
+   - All width utilities use proper sizing tokens
+   - Backward compatibility maintained
+
+**Files Modified**:
+- `/home/adam/code/evoke-ui/packages/evoke-ui-react/src/styles/tailwind.css` - Added separate sizing namespace and utility overrides
+
+**Technical Impact**:
+- ✅ **Modal Width Fixed**: All modals now display at correct widths (384px vs previous 8px)
+- ✅ **Standard Tailwind Restored**: All `max-w-*` classes work as expected
+- ✅ **Backward Compatibility**: No breaking changes to existing code
+- ✅ **Future-Proof**: Clear separation prevents similar conflicts
+
+**Architecture Benefits**:
+- **Clear Token Separation**: Spacing vs sizing tokens explicitly separated
+- **Developer-Friendly**: Standard Tailwind behavior restored for intuitive development
+- **Performance**: Utility overrides with `!important` ensure reliable width application
+- **Documentation**: Comments explain the fix for future maintainers
+
+**Next Phase**: Focus shifts to organism components with confidence that modal widths work correctly.
+
 ### 2025-08-22: Fix Design System Token Stories Issues ✅
 
 **Objective**: Fix color swatches not showing visual colors and broken shadow token stories.

@@ -473,6 +473,31 @@ Components prioritize class-variance-authority (CVA) over SCSS for styling:
 - **Type Safety**: Full TypeScript support for component variants
 - **Performance**: Reduced CSS bundle size and better tree-shaking
 
+### 5. **Tailwind v4 Width Utility Mapping Resolution** ✅ COMPLETED - _2025-08-25_
+
+**Critical Fix**: Resolved major configuration conflict where Tailwind v4's CSS-first configuration was incorrectly mapping `max-w-*` classes to spacing tokens instead of sizing tokens.
+
+**Problem Solved**:
+- **Root Issue**: `max-w-sm` mapped to 0.5rem (8px) instead of 24rem (384px)
+- **Impact**: All modals appeared extremely narrow, breaking UI functionality
+- **Solution**: Implemented separate spacing/sizing namespaces with explicit utility overrides
+
+**Technical Implementation**:
+```css
+/* Separate token namespaces for clarity */
+--spacing-sm: 0.875rem;  /* For padding, margin, gap */
+--sizing-sm: 24rem;      /* For width, max-width, min-width */
+
+/* Explicit utility overrides */
+.max-w-sm { max-width: var(--sizing-sm) !important; } /* 384px */
+```
+
+**Architecture Benefits**:
+- **Clear Separation**: Spacing vs sizing tokens explicitly differentiated
+- **Standard Behavior**: Restored familiar Tailwind utility behavior
+- **Future-Proof**: Prevents similar configuration conflicts
+- **Modal System Ready**: All organism components can now use proper width utilities
+
 **Implementation Pattern** (Badge and Button examples):
 
 ```typescript

@@ -26,6 +26,7 @@ This document outlines the comprehensive build optimizations implemented for the
 - **Asset Optimization**: Terser minification with production optimizations
 - **GitHub Pages Compatibility**: Proper base path handling and asset resolution
 - **Performance Monitoring**: Build-time performance tracking
+- **Tailwind v4 Integration**: CSS-first configuration with width utility mapping fixes
 
 ```typescript
 // Enhanced manual chunking strategy

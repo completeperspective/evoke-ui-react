@@ -458,6 +458,38 @@ export const links: LinksFunction = () => [
 - **Sass compilation** optimized with caching
 - **CVA Architecture**: Better tree-shaking and smaller bundles
 
+## Troubleshooting
+
+### Common Issues
+
+#### Modal Components Appear Too Narrow
+
+**Symptoms**: Modal dialogs appear extremely narrow (8px width) instead of expected width (384px)
+
+**Root Cause**: Tailwind v4 CSS-first configuration mapping `max-w-*` classes to spacing tokens instead of sizing tokens
+
+**Solution**: ✅ **RESOLVED** - This issue has been fixed in the latest version:
+- Updated `/src/styles/tailwind.css` with separate spacing/sizing token namespaces
+- Added explicit utility overrides for all `max-w-*` classes
+- `max-w-sm` now correctly maps to 24rem (384px)
+
+**If you encounter this issue**:
+1. Ensure you're using the latest version of @evoke-ui/react
+2. Import the correct CSS: `import '@evoke-ui/react/styles.css'` or `import '@evoke-ui/react/tailwind.css'`
+3. Check that custom Tailwind configurations don't override our utility fixes
+
+#### Width Utility Classes Not Working as Expected
+
+**Symptoms**: `max-w-sm`, `max-w-md`, etc. don't produce expected widths
+
+**Solution**: Our Tailwind v4 configuration includes explicit utility overrides that restore standard behavior:
+```css
+.max-w-sm { max-width: var(--sizing-sm) !important; }  /* 24rem/384px */
+.max-w-md { max-width: var(--sizing-md) !important; }  /* 28rem/448px */
+```
+
+This ensures consistent width behavior across all components.
+
 ## Testing & Quality Assurance
 
 The library includes comprehensive testing with 100% success rate and automated CI/CD pipeline:
@@ -567,6 +599,16 @@ All atomic components use class-variance-authority for optimal performance:
 - **Type-safe variants** with full IntelliSense support
 - **Better tree-shaking** and smaller bundle sizes
 - **Consistent API** across all components
+
+### Tailwind v4 Configuration Fixes
+
+**Critical Resolution**: Fixed major width utility mapping conflicts in Tailwind v4 CSS-first configuration:
+
+- **Problem Solved**: `max-w-sm` now correctly maps to 24rem (384px) instead of 0.5rem (8px)
+- **Architecture Fix**: Separated spacing tokens from sizing tokens with distinct namespaces
+- **Modal Width Issue**: All modal components now display at proper widths
+- **Standard Behavior**: Restored familiar Tailwind utility class behavior
+- **Future-Proof**: Explicit utility overrides prevent similar configuration conflicts
 
 ### OKLCH Color Benefits
 
