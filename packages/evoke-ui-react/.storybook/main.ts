@@ -30,11 +30,7 @@ const config: StorybookConfig = {
   staticDirs: ['./assets'],
   
   addons: [
-    '@storybook/addon-docs',
     '@storybook/addon-a11y',
-    '@storybook/addon-controls',
-    '@storybook/addon-viewport', 
-    '@storybook/addon-backgrounds',
     // Performance monitoring addon for development builds only
     ...(isProduction ? [] : ['@storybook/addon-measure']),
   ],
@@ -45,6 +41,14 @@ const config: StorybookConfig = {
       ${head}
       <base href="${basePath}">
       <script>
+        // Global polyfills for Node.js environment in browser
+        window.process = window.process || { 
+          env: { NODE_ENV: '${isProd ? 'production' : 'development'}' },
+          browser: true,
+          version: 'v18.0.0',
+          versions: { node: '18.0.0' }
+        };
+        window.global = window.global || window;
         window.__STORYBOOK_BASE_PATH__ = '${basePath}';
       </script>
       <meta name="storybook-deployment" content="github-pages">
@@ -136,9 +140,12 @@ const config: StorybookConfig = {
       
       define: {
         global: 'globalThis',
-        // Node.js polyfills for browser environment
+        // Comprehensive Node.js polyfills for browser environment
         'process.env.NODE_ENV': JSON.stringify(isProd ? 'production' : 'development'),
-        process: JSON.stringify({ env: { NODE_ENV: isProd ? 'production' : 'development' } }),
+        'process.env': JSON.stringify({ NODE_ENV: isProd ? 'production' : 'development' }),
+        'process.browser': 'true',
+        'process.version': JSON.stringify('v18.0.0'),
+        'process.versions': JSON.stringify({ node: '18.0.0' }),
         // Expose PR branding to stories
         __STORYBOOK_PR_BRANDING__: JSON.stringify(prBranding),
         __STORYBOOK_DEPLOYMENT_ENV__: JSON.stringify({
@@ -285,10 +292,16 @@ const config: StorybookConfig = {
             'class-variance-authority',
           ],
           exclude: ['@storybook/addon-measure'],
+          // Force bundling of CVA to resolve export issues
+          esbuildOptions: {
+            define: {
+              global: 'globalThis',
+            },
+          },
         },
         // Ensure proper ESM handling
         ssr: {
-          noExternal: ['class-variance-authority'],
+          noExternal: ['class-variance-authority', 'clsx', 'tailwind-merge'],
         },
       }),
     });
