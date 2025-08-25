@@ -31,9 +31,10 @@ This specification defines the branch protection rules implementation for the Ev
 - **Require status checks to pass before merging**: ✅ **ENABLED**
   - **Require branches to be up to date before merging**: ✅ **ENABLED**
   - **Required status checks**:
-    - `Continuous Integration` (matches current workflow name)
-    - `build-storybook` (from CI workflow)
-    - `test` (from CI workflow)
+    - `🧪 Test Suite` (corrected GitHub Actions job name)
+    - `📖 Storybook Build` (corrected GitHub Actions job name)
+    - `✅ Quality Gates` (corrected GitHub Actions job name)
+    - **Note**: Status check names updated 2025-08-25 to match actual GitHub Actions workflow job names
 
 #### Additional Protections
 - **Require conversation resolution before merging**: ✅ **ENABLED**
