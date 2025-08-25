@@ -43,7 +43,7 @@ const config: StorybookConfig = {
       <script>
         // Global polyfills for Node.js environment in browser
         window.process = window.process || { 
-          env: { NODE_ENV: '${isProd ? 'production' : 'development'}' },
+          env: { NODE_ENV: '${isProduction ? 'production' : 'development'}' },
           browser: true,
           version: 'v18.0.0',
           versions: { node: '18.0.0' }
