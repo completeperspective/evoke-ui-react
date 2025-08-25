@@ -173,10 +173,10 @@ describe('Badge Component', () => {
       expect(buttons[0]).toBeInTheDocument();
     });
 
-    it('renders as button when removable', () => {
+    it('renders as div with remove button when removable', () => {
       renderBadge({ removable: true });
       const buttons = screen.getAllByRole('button');
-      expect(buttons).toHaveLength(2); // Main badge button + remove button
+      expect(buttons).toHaveLength(1); // Only remove button
       expect(screen.getByRole('button', { name: 'Remove badge' })).toBeInTheDocument();
     });
 
@@ -286,14 +286,12 @@ describe('Badge Component', () => {
         onRemove: handleRemove,
       });
       
-      const buttons = screen.getAllByRole('button');
-      const badge = buttons[0]; // Get the main badge button
-      expect(badge).toHaveClass(
+      const badgeContainer = screen.getByText('Test Badge').closest('div');
+      expect(badgeContainer).toHaveClass(
         'bg-destructive',
         'text-destructive-foreground',
         'px-2',
-        'py-0.5',
-        'cursor-pointer'
+        'py-0.5'
       );
       expect(screen.getByTestId('start-icon')).toBeInTheDocument();
       expect(screen.getByRole('button', { name: 'Remove badge' })).toBeInTheDocument();

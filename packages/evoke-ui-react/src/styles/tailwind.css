@@ -110,11 +110,11 @@
   --line-height-9xl: var(--ui-line-height-9xl);
 
   /* ================================
-   * T-SHIRT SIZED SPACING TOKENS
-   * Developer-friendly semantic spacing
+   * SPACING TOKENS FOR PADDING/MARGIN/GAP
+   * Developer-friendly semantic spacing tokens
    * ================================ */
 
-  /* T-shirt sizes for semantic spacing */
+  /* T-shirt sizes for padding, margin, and gap utilities */
   --spacing-xxs: var(--ui-spacing-xxs);
   --spacing-xs: var(--ui-spacing-xs);
   --spacing-sm: var(--ui-spacing-sm);
@@ -124,18 +124,49 @@
   --spacing-xxl: var(--ui-spacing-xxl);
   --spacing-xxxl: var(--ui-spacing-xxxl);
 
-  /* Component-specific semantic tokens */
+  /* Component-specific spacing tokens */
   --spacing-component-xs: var(--ui-spacing-component-xs);
   --spacing-component-sm: var(--ui-spacing-component-sm);
   --spacing-component-md: var(--ui-spacing-component-md);
   --spacing-component-lg: var(--ui-spacing-component-lg);
 
-  /* Layout semantic tokens */
+  /* Layout spacing tokens */
   --spacing-layout-xs: var(--ui-spacing-layout-xs);
   --spacing-layout-sm: var(--ui-spacing-layout-sm);
   --spacing-layout-md: var(--ui-spacing-layout-md);
   --spacing-layout-lg: var(--ui-spacing-layout-lg);
   --spacing-layout-xl: var(--ui-spacing-layout-xl);
+
+  /* ================================
+   * SIZING TOKENS FOR WIDTH/MAX-WIDTH/MIN-WIDTH
+   * Standard Tailwind sizing values for container widths
+   * ================================ */
+
+  /* Standard Tailwind sizing tokens for width utilities */
+  --sizing-xs: 20rem;   /* 320px - Extra small container */
+  --sizing-sm: 24rem;   /* 384px - Small container (standard max-w-sm) */
+  --sizing-md: 28rem;   /* 448px - Medium container (standard max-w-md) */
+  --sizing-lg: 32rem;   /* 512px - Large container (standard max-w-lg) */
+  --sizing-xl: 36rem;   /* 576px - Extra large container (standard max-w-xl) */
+  --sizing-2xl: 42rem;  /* 672px - 2XL container (standard max-w-2xl) */
+  --sizing-3xl: 48rem;  /* 768px - 3XL container (standard max-w-3xl) */
+  --sizing-4xl: 56rem;  /* 896px - 4XL container (standard max-w-4xl) */
+  --sizing-5xl: 64rem;  /* 1024px - 5XL container (standard max-w-5xl) */
+  --sizing-6xl: 72rem;  /* 1152px - 6XL container (standard max-w-6xl) */
+  --sizing-full: 95vw;  /* Full viewport width with margins */
+
+  /* Override Tailwind's default container mappings to use sizing tokens */
+  --size-xs: var(--sizing-xs);
+  --size-sm: var(--sizing-sm);
+  --size-md: var(--sizing-md);
+  --size-lg: var(--sizing-lg);
+  --size-xl: var(--sizing-xl);
+  --size-2xl: var(--sizing-2xl);
+  --size-3xl: var(--sizing-3xl);
+  --size-4xl: var(--sizing-4xl);
+  --size-5xl: var(--sizing-5xl);
+  --size-6xl: var(--sizing-6xl);
+  --size-full: var(--sizing-full);
 
   /* ================================
    * BORDER RADIUS
@@ -274,3 +305,102 @@
 .space-layout-md { margin: var(--spacing-layout-md); }
 .space-layout-lg { margin: var(--spacing-layout-lg); }
 .space-layout-xl { margin: var(--spacing-layout-xl); }
+
+/* ================================
+ * MAX-WIDTH UTILITY OVERRIDES
+ * Fix Tailwind v4 width utility mapping conflict
+ * ================================ */
+
+/* Override max-width utilities to use proper sizing tokens instead of spacing tokens */
+.max-w-xs { max-width: var(--sizing-xs) !important; }
+.max-w-sm { max-width: var(--sizing-sm) !important; }
+.max-w-md { max-width: var(--sizing-md) !important; }
+.max-w-lg { max-width: var(--sizing-lg) !important; }
+.max-w-xl { max-width: var(--sizing-xl) !important; }
+.max-w-2xl { max-width: var(--sizing-2xl) !important; }
+.max-w-3xl { max-width: var(--sizing-3xl) !important; }
+.max-w-4xl { max-width: var(--sizing-4xl) !important; }
+.max-w-5xl { max-width: var(--sizing-5xl) !important; }
+.max-w-6xl { max-width: var(--sizing-6xl) !important; }
+.max-w-full { max-width: var(--sizing-full) !important; }
+
+/* ================================
+ * RESPONSIVE BREAKPOINT OVERRIDES
+ * Fix responsive variants for max-width utilities
+ * Required for Drawer/Sheet component width display
+ * ================================ */
+
+/* Small breakpoint (sm:) max-width overrides */
+@media (min-width: 640px) {
+  .sm\:max-w-xs { max-width: var(--sizing-xs) !important; }
+  .sm\:max-w-sm { max-width: var(--sizing-sm) !important; }
+  .sm\:max-w-md { max-width: var(--sizing-md) !important; }
+  .sm\:max-w-lg { max-width: var(--sizing-lg) !important; }
+  .sm\:max-w-xl { max-width: var(--sizing-xl) !important; }
+  .sm\:max-w-2xl { max-width: var(--sizing-2xl) !important; }
+  .sm\:max-w-3xl { max-width: var(--sizing-3xl) !important; }
+  .sm\:max-w-4xl { max-width: var(--sizing-4xl) !important; }
+  .sm\:max-w-5xl { max-width: var(--sizing-5xl) !important; }
+  .sm\:max-w-6xl { max-width: var(--sizing-6xl) !important; }
+  .sm\:max-w-full { max-width: var(--sizing-full) !important; }
+}
+
+/* Medium breakpoint (md:) max-width overrides */
+@media (min-width: 768px) {
+  .md\:max-w-xs { max-width: var(--sizing-xs) !important; }
+  .md\:max-w-sm { max-width: var(--sizing-sm) !important; }
+  .md\:max-w-md { max-width: var(--sizing-md) !important; }
+  .md\:max-w-lg { max-width: var(--sizing-lg) !important; }
+  .md\:max-w-xl { max-width: var(--sizing-xl) !important; }
+  .md\:max-w-2xl { max-width: var(--sizing-2xl) !important; }
+  .md\:max-w-3xl { max-width: var(--sizing-3xl) !important; }
+  .md\:max-w-4xl { max-width: var(--sizing-4xl) !important; }
+  .md\:max-w-5xl { max-width: var(--sizing-5xl) !important; }
+  .md\:max-w-6xl { max-width: var(--sizing-6xl) !important; }
+  .md\:max-w-full { max-width: var(--sizing-full) !important; }
+}
+
+/* Large breakpoint (lg:) max-width overrides */
+@media (min-width: 1024px) {
+  .lg\:max-w-xs { max-width: var(--sizing-xs) !important; }
+  .lg\:max-w-sm { max-width: var(--sizing-sm) !important; }
+  .lg\:max-w-md { max-width: var(--sizing-md) !important; }
+  .lg\:max-w-lg { max-width: var(--sizing-lg) !important; }
+  .lg\:max-w-xl { max-width: var(--sizing-xl) !important; }
+  .lg\:max-w-2xl { max-width: var(--sizing-2xl) !important; }
+  .lg\:max-w-3xl { max-width: var(--sizing-3xl) !important; }
+  .lg\:max-w-4xl { max-width: var(--sizing-4xl) !important; }
+  .lg\:max-w-5xl { max-width: var(--sizing-5xl) !important; }
+  .lg\:max-w-6xl { max-width: var(--sizing-6xl) !important; }
+  .lg\:max-w-full { max-width: var(--sizing-full) !important; }
+}
+
+/* Extra Large breakpoint (xl:) max-width overrides */
+@media (min-width: 1280px) {
+  .xl\:max-w-xs { max-width: var(--sizing-xs) !important; }
+  .xl\:max-w-sm { max-width: var(--sizing-sm) !important; }
+  .xl\:max-w-md { max-width: var(--sizing-md) !important; }
+  .xl\:max-w-lg { max-width: var(--sizing-lg) !important; }
+  .xl\:max-w-xl { max-width: var(--sizing-xl) !important; }
+  .xl\:max-w-2xl { max-width: var(--sizing-2xl) !important; }
+  .xl\:max-w-3xl { max-width: var(--sizing-3xl) !important; }
+  .xl\:max-w-4xl { max-width: var(--sizing-4xl) !important; }
+  .xl\:max-w-5xl { max-width: var(--sizing-5xl) !important; }
+  .xl\:max-w-6xl { max-width: var(--sizing-6xl) !important; }
+  .xl\:max-w-full { max-width: var(--sizing-full) !important; }
+}
+
+/* 2XL breakpoint (2xl:) max-width overrides */
+@media (min-width: 1536px) {
+  .\32xl\:max-w-xs { max-width: var(--sizing-xs) !important; }
+  .\32xl\:max-w-sm { max-width: var(--sizing-sm) !important; }
+  .\32xl\:max-w-md { max-width: var(--sizing-md) !important; }
+  .\32xl\:max-w-lg { max-width: var(--sizing-lg) !important; }
+  .\32xl\:max-w-xl { max-width: var(--sizing-xl) !important; }
+  .\32xl\:max-w-2xl { max-width: var(--sizing-2xl) !important; }
+  .\32xl\:max-w-3xl { max-width: var(--sizing-3xl) !important; }
+  .\32xl\:max-w-4xl { max-width: var(--sizing-4xl) !important; }
+  .\32xl\:max-w-5xl { max-width: var(--sizing-5xl) !important; }
+  .\32xl\:max-w-6xl { max-width: var(--sizing-6xl) !important; }
+  .\32xl\:max-w-full { max-width: var(--sizing-full) !important; }
+}

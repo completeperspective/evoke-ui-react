@@ -163,7 +163,9 @@ const Badge = React.forwardRef<HTMLDivElement | HTMLButtonElement, BadgeProps>(
     },
     ref,
   ) => {
-    const isClickable = interactive || onClick || removable;
+    // Only make the badge a button element if it has a click handler AND is not removable
+    // This prevents nested button elements when the badge is removable
+    const isClickable = (interactive || onClick) && !removable;
 
     const handleRemove = (e: React.MouseEvent<HTMLButtonElement>) => {
       e.stopPropagation();
@@ -243,6 +245,9 @@ const Badge = React.forwardRef<HTMLDivElement | HTMLButtonElement, BadgeProps>(
       );
     }
 
+    // For removable badges, use div container but handle click events appropriately
+    const hasClickHandler = Boolean(onClick || interactive);
+    
     return (
       <div
         ref={ref as React.Ref<HTMLDivElement>}
@@ -250,11 +255,13 @@ const Badge = React.forwardRef<HTMLDivElement | HTMLButtonElement, BadgeProps>(
           badgeVariants({
             variant,
             size,
-            interactive: false,
+            interactive: hasClickHandler,
           }),
           badgeClasses.badge, // Enhanced accessibility and animation support
           className,
         )}
+        onClick={onClick ? (e) => onClick(e as any) : undefined}
+        style={hasClickHandler ? { cursor: 'pointer' } : undefined}
         {...props}
       >
         {content}
