@@ -122,7 +122,7 @@ const WelcomeTemplate = () => (
           >
             Beautiful, Accessible
             <br />
-            Component Library
+            User Interfaces
           </Heading>
           <Text variant="lead" className="text-xl text-muted-foreground max-w-2xl mx-auto">
             Production-ready React component library with OKLCH color space, CVA-first architecture,
@@ -131,7 +131,7 @@ const WelcomeTemplate = () => (
           </Text>
         </div>
 
-        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+        <div className="flex flex-col sm:flex-row gap-4 justify-start items-center">
           <Button size="lg" endIcon={<ArrowRightIcon />}>
             Get Started
           </Button>

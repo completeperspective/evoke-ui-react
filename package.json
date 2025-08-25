@@ -39,5 +39,14 @@
     "node": ">=22.0.0",
     "pnpm": ">=8.0.0"
   },
-  "packageManager": "pnpm@8.15.1"
+  "packageManager": "pnpm@8.15.1",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/completeperspective/evoke-ui-react.git"
+  },
+  "bugs": {
+    "url": "https://github.com/completeperspective/evoke-ui-react/issues"
+  },
+  "homepage": "https://completeperspective.github.io/evoke-ui-react/"
 }

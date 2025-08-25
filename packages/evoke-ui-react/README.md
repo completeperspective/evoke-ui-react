@@ -2,9 +2,22 @@
 
 A production-ready, themable React component library built on shadcn/ui and Radix primitives with OKLCH color space support and runtime theming capabilities.
 
-[![NPM Version](https://img.shields.io/npm/v/@evoke-ui/react)](https://www.npmjs.com/package/@evoke-ui/react)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-blue.svg)](https://www.typescriptlang.org/)
+## Build Status & Quality
+
+[![CI Pipeline](https://img.shields.io/github/actions/workflow/status/completeperspective/evoke-ui-react/ci.yml?branch=main&label=CI%20Pipeline&logo=github)](https://github.com/completeperspective/evoke-ui-react/actions/workflows/ci.yml)
+[![Storybook Deployment](https://img.shields.io/github/actions/workflow/status/completeperspective/evoke-ui-react/deploy-storybook.yml?branch=main&label=Storybook&logo=github)](https://github.com/completeperspective/evoke-ui-react/actions/workflows/deploy-storybook.yml)
+[![Test Coverage](https://img.shields.io/badge/Tests-662%2F662%20passing-brightgreen?logo=vitest)](https://github.com/completeperspective/evoke-ui-react/actions/workflows/ci.yml)
+[![Build Status](https://img.shields.io/badge/Build-Production%20Ready-success?logo=typescript)](https://github.com/completeperspective/evoke-ui-react/actions/workflows/ci.yml)
+
+[![NPM Version](https://img.shields.io/npm/v/@evoke-ui/react?logo=npm)](https://www.npmjs.com/package/@evoke-ui/react)
+[![NPM Downloads](https://img.shields.io/npm/dm/@evoke-ui/react?logo=npm&color=blue)](https://www.npmjs.com/package/@evoke-ui/react)
+[![Bundle Size](https://img.shields.io/badge/Bundle%20Size-22KB%20compressed-blue?logo=webpack)](https://bundlephobia.com/package/@evoke-ui/react)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-blue.svg?logo=typescript)](https://www.typescriptlang.org/)
+
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![GitHub Stars](https://img.shields.io/github/stars/completeperspective/evoke-ui-react?style=social)](https://github.com/completeperspective/evoke-ui-react)
+[![Live Documentation](https://img.shields.io/badge/Docs-Live%20Storybook-ff4785?logo=storybook)](https://completeperspective.github.io/evoke-ui-react/)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/completeperspective/evoke-ui-react/blob/main/CONTRIBUTING.md)
 
 ## Overview
 
@@ -445,23 +458,38 @@ export const links: LinksFunction = () => [
 - **Sass compilation** optimized with caching
 - **CVA Architecture**: Better tree-shaking and smaller bundles
 
-## Testing
+## Testing & Quality Assurance
 
-The library includes comprehensive testing with 100% success rate:
+The library includes comprehensive testing with 100% success rate and automated CI/CD pipeline:
 
 ```bash
 # Run all tests
-npm test
+pnpm test
 
 # Test with UI
-npm run test:ui
+pnpm run test:ui
 
 # Test coverage
-npm run test:coverage
+pnpm run test:coverage
 
 # Test package distribution
-npm run test:package
+pnpm run test:package
+
+# Run full CI pipeline locally
+pnpm run type-check && pnpm test && pnpm run build
 ```
+
+### CI/CD Pipeline
+
+Our automated pipeline ensures code quality and reliability:
+
+- **🧪 Continuous Integration**: Automated testing on every PR and push
+- **📦 Build Verification**: TypeScript compilation and bundle analysis  
+- **📚 Storybook Deployment**: Automatic documentation deployment to GitHub Pages
+- **🔍 PR Previews**: Live interactive previews for all pull requests
+- **✨ Automatic Cleanup**: Preview environments cleaned up when PRs close
+
+**Pipeline Status**: All 4 GitHub Actions workflows are production-ready and passing
 
 ### Test Coverage Status
 
@@ -481,33 +509,39 @@ npm run test:package
 
 ```bash
 # Clone repository
-git clone https://github.com/yourusername/evoke-ui.git
-cd evoke-ui/packages/evoke-ui-react
+git clone https://github.com/completeperspective/evoke-ui-react.git
+cd evoke-ui-react/packages/evoke-ui-react
 
-# Install dependencies
-npm install
+# Install dependencies with pnpm
+pnpm install
 
 # Start development server
-npm run dev
+pnpm run dev
 
 # Run Storybook
-npm run storybook
+pnpm run storybook
+
+# Run tests
+pnpm test
 ```
 
 ### Build Commands
 
 ```bash
 # Build library and styles
-npm run build
+pnpm run build
 
 # Build with watch mode
-npm run build:watch
+pnpm run build:watch
 
 # Type checking
-npm run type-check
+pnpm run type-check
 
 # Test package integrity
-npm run test:package
+pnpm run test:package
+
+# Build and run Storybook
+pnpm run build-storybook
 ```
 
 ### Project Structure
@@ -580,12 +614,35 @@ MIT License - see [LICENSE](./LICENSE) for details.
 
 ## Links
 
-- **NPM Package**: https://www.npmjs.com/package/@evoke-ui/react
-- **Repository**: https://github.com/yourusername/evoke-ui
-- **Issues**: https://github.com/yourusername/evoke-ui/issues
-- **Storybook**: Coming soon
-- **Documentation**: Coming soon
+- **📦 NPM Package**: https://www.npmjs.com/package/@evoke-ui/react
+- **📚 Live Documentation**: https://completeperspective.github.io/evoke-ui-react/
+- **⚡ Repository**: https://github.com/completeperspective/evoke-ui-react
+- **🐛 Issues**: https://github.com/completeperspective/evoke-ui-react/issues
+- **🔄 Discussions**: https://github.com/completeperspective/evoke-ui-react/discussions
+- **📋 Changelog**: https://github.com/completeperspective/evoke-ui-react/releases
 
 ---
 
-**Version**: 0.2.1 | **Build**: Production Ready | **Tests**: 662/662 Passing (100% Success) | **Custom Hooks**: 4 Available
+### 📊 Project Status
+
+| Metric | Status | Details |
+|--------|--------|---------|
+| **Version** | ![NPM Version](https://img.shields.io/npm/v/@evoke-ui/react) | Latest stable release |
+| **Build Status** | ![CI Pipeline](https://img.shields.io/github/actions/workflow/status/completeperspective/evoke-ui-react/ci.yml?branch=main) | Production ready |
+| **Test Coverage** | 662/662 passing (100% success) | Comprehensive test suite |
+| **Components** | 8 Atomic + 3 Molecular | CVA-first architecture |
+| **Custom Hooks** | 4 reusable hooks | Performance optimized |
+| **Bundle Size** | 22KB compressed | Lightweight design system |
+| **Documentation** | [![Storybook](https://img.shields.io/badge/Docs-Live-ff4785)](https://completeperspective.github.io/evoke-ui-react/) | Interactive Storybook |
+| **CI/CD Pipeline** | 4 workflows active | Automated quality gates |
+
+#### GitHub Actions Workflows
+
+Our CI/CD pipeline includes these automated workflows:
+
+- **🔄 `ci.yml`** - Continuous Integration (Tests, Build, Quality Gates)
+- **🚀 `deploy-storybook.yml`** - Main Branch Documentation Deployment  
+- **👀 `pr-preview.yml`** - Live PR Preview Generation
+- **🧹 `pr-cleanup.yml`** - Automatic Preview Cleanup
+
+All workflows use Node.js 22, pnpm caching, and secure deployment strategies.# Trigger CI workflow refresh

@@ -31,8 +31,8 @@ const config: StorybookConfig = {
   
   addons: [
     '@storybook/addon-a11y',
-    // Performance monitoring addon for development builds only
-    ...(isProduction ? [] : ['@storybook/addon-measure']),
+    // Note: @storybook/addon-measure was removed in Storybook 9.0+
+    // Performance monitoring is now handled via custom implementation
   ],
   
   // Enhanced metadata and SEO for GitHub Pages
@@ -146,6 +146,13 @@ const config: StorybookConfig = {
         'process.browser': 'true',
         'process.version': JSON.stringify('v18.0.0'),
         'process.versions': JSON.stringify({ node: '18.0.0' }),
+        // Fix for process not being defined in browser
+        'process': JSON.stringify({
+          env: { NODE_ENV: isProd ? 'production' : 'development' },
+          browser: true,
+          version: 'v18.0.0',
+          versions: { node: '18.0.0' }
+        }),
         // Expose PR branding to stories
         __STORYBOOK_PR_BRANDING__: JSON.stringify(prBranding),
         __STORYBOOK_DEPLOYMENT_ENV__: JSON.stringify({

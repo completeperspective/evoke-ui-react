@@ -2,7 +2,7 @@
 
 A production-ready, themable React component library built on shadcn/ui with CVA-first architecture, atomic design principles, and comprehensive CI/CD infrastructure.
 
-[![Build Status](https://github.com/completeperspective/evoke-ui-react/workflows/CI/badge.svg)](https://github.com/completeperspective/evoke-ui-react/actions)
+[![Build Status](https://github.com/completeperspective/evoke-ui-react/workflows/Continuous%20Integration/badge.svg)](https://github.com/completeperspective/evoke-ui-react/actions/workflows/ci.yml)
 [![Node.js Version](https://img.shields.io/badge/node-%3E%3D22.0.0-brightgreen)](https://nodejs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.3+-blue)](https://www.typescriptlang.org/)
 [![License](https://img.shields.io/badge/license-MIT-green)](./LICENSE)
