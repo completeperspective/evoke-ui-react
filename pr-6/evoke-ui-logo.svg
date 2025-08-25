@@ -1,0 +1,36 @@
+<svg width="280" height="80" viewBox="0 0 280 80" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .logo-text {
+        font-family: 'Lobster', cursive;
+        font-size: 32px;
+        font-weight: 400;
+        letter-spacing: -0.02em;
+        fill: oklch(0.6533 0.2684 354.75);
+        dominant-baseline: middle;
+      }
+      .logo-accent {
+        fill: oklch(0.75 0.18 310);
+      }
+      
+      /* Fallback for browsers without OKLCH support */
+      @supports not (color: oklch(1 0 0)) {
+        .logo-text {
+          fill: #e91e63; /* Approximate magenta fallback */
+        }
+        .logo-accent {
+          fill: #9c27b0; /* Approximate purple fallback */
+        }
+      }
+    </style>
+  </defs>
+
+  <!-- Logo background (transparent) -->
+  <rect x="0" y="0" width="280" height="80" fill="none" />
+
+  <!-- Main wordmark: "evoke ui" -->
+  <text x="20" y="40" class="logo-text">evoke ui</text>
+
+  <!-- Optional accent dot after "ui" -->
+  <circle cx="250" cy="40" r="4" class="logo-accent" />
+</svg>
