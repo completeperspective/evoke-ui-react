@@ -175,7 +175,7 @@ pnpm build-storybook  # Build static Storybook
 pnpm storybook        # Start Storybook dev server
 ```
 
-## 🔄 CI/CD Pipeline
+## 🔄 CI/CD Pipeline & Branch Protection
 
 ### GitHub Actions Workflows
 
@@ -183,9 +183,10 @@ pnpm storybook        # Start Storybook dev server
 - **Triggers**: Every push and PR
 - **Actions**: Test suite (662 tests), build verification, type checking, linting
 - **Quality Gates**: All checks must pass before merge
+- **Branch Protection**: Required status checks for main branch protection
 
 #### 2. Production Deployment (`deploy-storybook.yml`)
-- **Triggers**: Push to main branch
+- **Triggers**: Push to main branch (after protection rules)
 - **Target**: `https://completeperspective.github.io/evoke-ui-react/`
 - **Features**: Full Storybook build with component documentation
 
@@ -198,11 +199,19 @@ pnpm storybook        # Start Storybook dev server
 - **Triggers**: PR close/merge
 - **Actions**: Automatic artifact cleanup and status reporting
 
+### Branch Protection System
+- **✅ Main Branch Security**: PR approval required from code owners
+- **✅ Status Check Integration**: CI pipeline success mandatory before merge
+- **✅ Admin Override**: Emergency access preserved for critical situations
+- **✅ Code Ownership**: Comprehensive CODEOWNERS file with 79 path-based rules
+- **✅ Quality Gates**: "🧪 Test Suite", "📖 Storybook Build", "✅ Quality Gates" required
+
 ### Performance Metrics
 - **✅ Build Time**: 21.82s (82% faster than target)
 - **✅ Test Success Rate**: 662/662 tests passing (100%)
 - **✅ Bundle Optimization**: Manual chunking strategy
 - **✅ Deployment Reliability**: Secure artifact-based system
+- **✅ Branch Protection**: Fully operational with CI integration
 
 ## 📦 Distribution
 
