@@ -79,3 +79,57 @@ export const cardClasses = {
 export const searchBarClasses = {
   searchBar: 'evoke-search-bar',
 } as const;
+
+// Modal organism component class names
+export const modalClasses = {
+  modal: 'evoke-modal',
+  overlay: 'evoke-modal-overlay',
+  content: 'evoke-modal-content',
+  header: 'evoke-modal-header',
+  footer: 'evoke-modal-footer',
+  title: 'evoke-modal-title',
+  description: 'evoke-modal-description',
+  close: 'evoke-modal-close',
+} as const;
+
+// Dialog organism component class names
+export const dialogClasses = {
+  dialog: 'evoke-dialog',
+  content: 'evoke-dialog-content',
+  actions: 'evoke-dialog-actions',
+} as const;
+
+// AlertDialog organism component class names
+export const alertDialogClasses = {
+  alertDialog: 'evoke-alert-dialog',
+  overlay: 'evoke-alert-dialog-overlay',
+  content: 'evoke-alert-dialog-content',
+  header: 'evoke-alert-dialog-header',
+  footer: 'evoke-alert-dialog-footer',
+  title: 'evoke-alert-dialog-title',
+  description: 'evoke-alert-dialog-description',
+  action: 'evoke-alert-dialog-action',
+  cancel: 'evoke-alert-dialog-cancel',
+  actions: 'evoke-alert-dialog-actions',
+} as const;
+
+// Drawer organism component class names
+export const drawerClasses = {
+  drawer: 'evoke-drawer',
+  content: 'evoke-drawer-content',
+  header: 'evoke-drawer-header',
+  footer: 'evoke-drawer-footer',
+  title: 'evoke-drawer-title',
+  description: 'evoke-drawer-description',
+} as const;
+
+// Sheet organism component class names
+export const sheetClasses = {
+  sheet: 'evoke-sheet',
+  content: 'evoke-sheet-content',
+  inner: 'evoke-sheet-inner',
+  header: 'evoke-sheet-header',
+  footer: 'evoke-sheet-footer',
+  title: 'evoke-sheet-title',
+  description: 'evoke-sheet-description',
+} as const;

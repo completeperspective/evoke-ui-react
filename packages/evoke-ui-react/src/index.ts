@@ -38,7 +38,7 @@ export * from './types';
 // Component exports - Atomic Design Architecture
 export * from './atoms';
 export * from './molecules';
-// export * from './organisms';
+export * from './organisms';
 // export * from './templates';
 
 export default {
