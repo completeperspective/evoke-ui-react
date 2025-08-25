@@ -1,20 +1,79 @@
-# GitHub CODEOWNERS for Evoke UI React
+# GitHub CODEOWNERS for Evoke UI React Component Library
 # This file defines who needs to review code changes in specific paths
+# https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
 
-# Global owners for all code changes
-* @adam
+# =============================================================================
+# GLOBAL OWNERSHIP
+# =============================================================================
+# Default owners for all files not explicitly covered below
+* @completeperspective
 
-# Critical configuration files
-/.github/workflows/ @adam
-/packages/evoke-ui-react/.storybook/ @adam
-/packages/evoke-ui-react/src/styles/ @adam
-/packages/evoke-ui-react/package.json @adam
+# =============================================================================
+# CRITICAL INFRASTRUCTURE
+# =============================================================================
+# GitHub workflows and repository configuration
+/.github/workflows/ @completeperspective
+/.github/dependabot.yml @completeperspective
+/.github/CODEOWNERS @completeperspective
+
+# Root configuration files
+/package.json @completeperspective
+/pnpm-workspace.yaml @completeperspective
+/pnpm-lock.yaml @completeperspective
+/tsconfig.json @completeperspective
+/.gitignore @completeperspective
+
+# =============================================================================
+# BUILD AND DEPLOYMENT
+# =============================================================================
+# Component library build configuration
+/packages/evoke-ui-react/package.json @completeperspective
+/packages/evoke-ui-react/tsup.config.ts @completeperspective
+/packages/evoke-ui-react/vite.config.ts @completeperspective
+
+# Storybook configuration (affects documentation deployment)
+/packages/evoke-ui-react/.storybook/ @completeperspective
+
+# =============================================================================
+# CORE COMPONENT LIBRARY
+# =============================================================================
+# Design system foundation
+/packages/evoke-ui-react/src/styles/ @completeperspective
+/packages/evoke-ui-react/src/tokens/ @completeperspective
 
 # Component source code
-/packages/evoke-ui-react/src/atoms/ @adam
-/packages/evoke-ui-react/src/molecules/ @adam
+/packages/evoke-ui-react/src/atoms/ @completeperspective
+/packages/evoke-ui-react/src/molecules/ @completeperspective
+/packages/evoke-ui-react/src/organisms/ @completeperspective
 
-# Documentation and examples
-/docs/ @adam
-/examples/ @adam
-/*.md @adam
+# Utility functions and hooks
+/packages/evoke-ui-react/src/utils/ @completeperspective
+/packages/evoke-ui-react/src/hooks/ @completeperspective
+
+# Main library exports
+/packages/evoke-ui-react/src/index.ts @completeperspective
+
+# =============================================================================
+# TESTING AND QUALITY
+# =============================================================================
+# Test configuration and utilities
+/packages/evoke-ui-react/vitest.config.ts @completeperspective
+/packages/evoke-ui-react/src/test-utils/ @completeperspective
+
+# =============================================================================
+# DOCUMENTATION AND EXAMPLES
+# =============================================================================
+# Project documentation
+/docs/ @completeperspective
+/*.md @completeperspective
+/CHANGELOG.md @completeperspective
+
+# Example applications
+/examples/ @completeperspective
+
+# =============================================================================
+# SECURITY SENSITIVE
+# =============================================================================
+# Security-related files require additional scrutiny
+.nvmrc @completeperspective
+/packages/evoke-ui-react/.env.* @completeperspective
