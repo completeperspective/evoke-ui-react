@@ -3,8 +3,8 @@
   "pr_title": "wip gh pages",
   "pr_branch": "feat/phase-three-publis-docs",
   "pr_author": "colpitts-dev",
-  "commit_sha": "d4af74545cc19679a226f5a31b7d5186dcc54518",
-  "built_at": "2025-08-25T00:08:47+00:00",
+  "commit_sha": "dae2f42a5ba776f5c5869fe100977e9ada93bc03",
+  "built_at": "2025-08-25T00:20:09+00:00",
   "preview_url": "https://completeperspective.github.io/evoke-ui-react/pr-1/",
   "deployment_type": "live-preview"
 }
