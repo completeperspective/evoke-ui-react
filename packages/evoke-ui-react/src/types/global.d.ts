@@ -55,3 +55,18 @@ declare module '*.woff2';
 declare module '*.eot';
 declare module '*.ttf';
 declare module '*.otf';
+
+// Global test environment variables
+declare global {
+  var IS_REACT_ACT_ENVIRONMENT: boolean;
+}
+
+// Extend Node.js global for test environment
+declare namespace NodeJS {
+  interface Global {
+    IS_REACT_ACT_ENVIRONMENT: boolean;
+  }
+}
+
+// Also declare for globalThis
+declare var IS_REACT_ACT_ENVIRONMENT: boolean;

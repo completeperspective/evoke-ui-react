@@ -1,5 +1,4 @@
-import { renderHook, act } from '@testing-library/react';
-import { fireEvent } from '@testing-library/dom';
+import { renderHook, act, fireEvent } from '@testing-library/react';
 import { useClickOutside } from '../useClickOutside';
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 

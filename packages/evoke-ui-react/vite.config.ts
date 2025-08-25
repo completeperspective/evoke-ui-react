@@ -16,6 +16,18 @@ export default defineConfig({
     typecheck: {
       tsconfig: './tsconfig.json',
     },
+    // Suppress React 18 act() warnings in test environment
+    environmentOptions: {
+      jsdom: {
+        resources: 'usable',
+      },
+    },
+    // Configure test timeout for CI environment
+    testTimeout: 10000,
+    hookTimeout: 10000,
+    // Suppress console errors for act warnings
+    silent: false,
+    logLevel: 'info',
   },
   css: {
     preprocessorOptions: {

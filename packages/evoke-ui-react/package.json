@@ -47,7 +47,20 @@
     "test:package:verbose": "node scripts/test-package.mjs --verbose",
     "test:package:keep": "node scripts/test-package.mjs --skip-cleanup",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build --output-dir ../../storybook-static",
+    "build-storybook:optimized": "npm run build-storybook:clean && STORYBOOK_PERFORMANCE_LOG=true storybook build --output-dir ../../storybook-static --webpack-stats-json",
+    "build-storybook:clean": "rm -rf ../../storybook-static",
+    "build-storybook:analyze": "npm run build-storybook:optimized && npx webpack-bundle-analyzer ../../storybook-static/storybook-stats.json",
+    "deploy-docs": "gh-pages -d storybook-static -m 'Deploy Storybook documentation [skip ci]'",
+    "deploy-docs:clean": "gh-pages -d storybook-static -m 'Deploy Storybook documentation [skip ci]' --remove '*.html' --remove '*.js' --remove '*.css' --remove 'static'",
+    "preview-docs": "npx serve storybook-static -p 6006 -s",
+    "preview-docs:gzip": "npx serve storybook-static -p 6006 -s --compression",
+    "docs:build": "npm run build && npm run build-storybook:optimized",
+    "docs:build:fast": "npm run build && npm run build-storybook",
+    "docs:deploy": "npm run docs:build && npm run deploy-docs",
+    "docs:deploy:fast": "npm run docs:build:fast && npm run deploy-docs",
+    "docs:preview-local": "npm run docs:build && npm run preview-docs:gzip",
+    "docs:performance": "npm run build-storybook:analyze"
   },
   "peerDependencies": {
     "react": "^18.0.0 || ^19.0.0",
@@ -62,7 +75,7 @@
   },
   "devDependencies": {
     "@storybook/addon-a11y": "^9.0.8",
-    "@storybook/addon-docs": "^9.0.8",
+    "@storybook/addon-measure": "^9.0.8",
     "@storybook/manager-api": "9.0.0-alpha.1",
     "@storybook/react-vite": "^9.0.8",
     "@storybook/theming": "9.0.0-alpha.1",
@@ -76,15 +89,21 @@
     "@types/react-dom": "^18.2.18",
     "@vitejs/plugin-react": "^4.2.1",
     "@vitest/ui": "^1.2.2",
+    "autoprefixer": "^10.4.21",
     "concurrently": "^8.2.2",
+    "cssnano": "^7.1.1",
     "eslint-plugin-storybook": "^9.0.8",
+    "gh-pages": "^6.3.0",
     "jsdom": "^26.1.0",
     "sass": "^1.70.0",
+    "serve": "^14.2.4",
     "storybook": "^9.0.8",
     "tailwindcss": "^4.0.0-alpha.14",
+    "terser": "^5.43.1",
     "tsup": "^8.0.1",
     "vite": "^5.0.12",
-    "vitest": "^1.2.2"
+    "vitest": "^1.2.2",
+    "webpack-bundle-analyzer": "^4.10.2"
   },
   "keywords": [
     "react",
