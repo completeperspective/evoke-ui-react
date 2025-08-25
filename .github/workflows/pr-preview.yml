@@ -84,7 +84,7 @@ jobs:
           REPO_NAME=$(echo "${{ github.repository }}" | cut -d'/' -f2)
           export STORYBOOK_BASE_PATH="/${REPO_NAME}/pr-${{ github.event.number }}/"
 
-          # Build Storybook with PR-specific base path and output directory
+          # Build Storybook with PR-specific base path and output directory  
           pnpm build-storybook --output-dir ../../pr-preview-${{ github.event.number }}
         env:
           NODE_ENV: production

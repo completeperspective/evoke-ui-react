@@ -28,6 +28,7 @@ const config: StorybookConfig = {
     '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)',
   ],
   staticDirs: ['./assets'],
+  
   addons: [
     '@storybook/addon-docs',
     '@storybook/addon-a11y',
@@ -43,6 +44,9 @@ const config: StorybookConfig = {
     managerHead: (head) => `
       ${head}
       <base href="${basePath}">
+      <script>
+        window.__STORYBOOK_BASE_PATH__ = '${basePath}';
+      </script>
       <meta name="storybook-deployment" content="github-pages">
       <meta name="storybook-version" content="${require('../package.json').version}">
       <meta name="storybook-build-time" content="${new Date().toISOString()}">
