@@ -69,6 +69,9 @@ jobs:
       - name: Build Storybook
         working-directory: packages/evoke-ui-react
         run: |
+          # Main branch deployment - set base path for GitHub Pages
+          REPO_NAME=$(echo "${{ github.repository }}" | cut -d'/' -f2)
+          export STORYBOOK_BASE_PATH="/${REPO_NAME}/"
           pnpm build-storybook --output-dir ../../storybook-static
         env:
           NODE_ENV: production
