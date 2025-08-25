@@ -79,7 +79,10 @@ jobs:
           export STORYBOOK_PR_TITLE="${{ github.event.pull_request.title }}"
           export STORYBOOK_PR_BRANCH="${{ github.event.pull_request.head.ref }}"
           export STORYBOOK_PR_AUTHOR="${{ github.event.pull_request.user.login }}"
-          export STORYBOOK_BASE_PATH="/evoke-ui/pr-${{ github.event.number }}/"
+          
+          # Calculate repository name dynamically for base path
+          REPO_NAME=$(echo "${{ github.repository }}" | cut -d'/' -f2)
+          export STORYBOOK_BASE_PATH="/${REPO_NAME}/pr-${{ github.event.number }}/"
 
           # Build Storybook with PR-specific base path and output directory
           pnpm build-storybook --output-dir ../../pr-preview-${{ github.event.number }}
