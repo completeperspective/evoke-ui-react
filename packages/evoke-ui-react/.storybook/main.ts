@@ -33,9 +33,9 @@ const config: StorybookConfig = {
     '@storybook/addon-docs',
     '@storybook/addon-a11y',
     '@storybook/addon-controls',
-    '@storybook/addon-viewport',
+    '@storybook/addon-viewport', 
     '@storybook/addon-backgrounds',
-    // Performance monitoring addon for production builds
+    // Performance monitoring addon for development builds only
     ...(isProduction ? [] : ['@storybook/addon-measure']),
   ],
   
@@ -136,6 +136,9 @@ const config: StorybookConfig = {
       
       define: {
         global: 'globalThis',
+        // Node.js polyfills for browser environment
+        'process.env.NODE_ENV': JSON.stringify(isProd ? 'production' : 'development'),
+        process: JSON.stringify({ env: { NODE_ENV: isProd ? 'production' : 'development' } }),
         // Expose PR branding to stories
         __STORYBOOK_PR_BRANDING__: JSON.stringify(prBranding),
         __STORYBOOK_DEPLOYMENT_ENV__: JSON.stringify({
@@ -248,6 +251,12 @@ const config: StorybookConfig = {
             
             // External dependencies that should not be bundled
             external: (id) => {
+              // Ensure CVA and other essential dependencies are bundled
+              if (id.includes('class-variance-authority') || 
+                  id.includes('clsx') || 
+                  id.includes('tailwind-merge')) {
+                return false; // Bundle these dependencies
+              }
               // Keep peer dependencies external for better tree shaking
               return false; // Storybook needs everything bundled
             },
@@ -276,6 +285,10 @@ const config: StorybookConfig = {
             'class-variance-authority',
           ],
           exclude: ['@storybook/addon-measure'],
+        },
+        // Ensure proper ESM handling
+        ssr: {
+          noExternal: ['class-variance-authority'],
         },
       }),
     });
