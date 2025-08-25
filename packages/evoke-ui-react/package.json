@@ -119,10 +119,10 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/yourusername/evoke-ui.git"
+    "url": "https://github.com/completeperspective/evoke-ui-react.git"
   },
   "bugs": {
-    "url": "https://github.com/yourusername/evoke-ui/issues"
+    "url": "https://github.com/completeperspective/evoke-ui-react/issues"
   },
-  "homepage": "https://github.com/yourusername/evoke-ui#readme"
+  "homepage": "https://completeperspective.github.io/evoke-ui-react/"
 }
