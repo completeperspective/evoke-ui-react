@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Width Test</title>
+    <link rel="stylesheet" href="./dist/tailwind.css">
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            margin: 2rem;
+            background-color: #f8f9fa;
+        }
+        .test-container {
+            background: white;
+            border: 2px solid #ddd;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+        .test-element {
+            background: linear-gradient(to right, #3b82f6, #1d4ed8);
+            color: white;
+            padding: 1rem;
+            border-radius: 0.25rem;
+            text-align: center;
+            font-weight: 600;
+        }
+        .width-display {
+            margin-top: 0.5rem;
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+    </style>
+</head>
+<body>
+    <h1>Responsive Max-Width Test</h1>
+    <p>This page tests that the responsive breakpoint variants for max-width utilities now properly map to sizing tokens instead of spacing tokens.</p>
+
+    <div class="test-container">
+        <h2>Base max-width classes (should work correctly)</h2>
+        <div class="test-element max-w-xs">max-w-xs (should be 20rem / 320px)</div>
+        <div class="width-display">Expected: 320px, Actual: <span id="base-xs-width"></span></div>
+    </div>
+
+    <div class="test-container">
+        <div class="test-element max-w-sm">max-w-sm (should be 24rem / 384px)</div>
+        <div class="width-display">Expected: 384px, Actual: <span id="base-sm-width"></span></div>
+    </div>
+
+    <div class="test-container">
+        <h2>Responsive max-width classes (the fix)</h2>
+        <div class="test-element sm:max-w-xs">sm:max-w-xs (should be 20rem / 320px on desktop)</div>
+        <div class="width-display">Expected: 320px on ≥640px screens, Actual: <span id="responsive-xs-width"></span></div>
+    </div>
+
+    <div class="test-container">
+        <div class="test-element sm:max-w-sm">sm:max-w-sm (should be 24rem / 384px on desktop)</div>
+        <div class="width-display">Expected: 384px on ≥640px screens, Actual: <span id="responsive-sm-width"></span></div>
+    </div>
+
+    <div class="test-container">
+        <div class="test-element sm:max-w-md">sm:max-w-md (should be 28rem / 448px on desktop)</div>
+        <div class="width-display">Expected: 448px on ≥640px screens, Actual: <span id="responsive-md-width"></span></div>
+    </div>
+
+    <div class="test-container">
+        <div class="test-element sm:max-w-lg">sm:max-w-lg (should be 32rem / 512px on desktop)</div>
+        <div class="width-display">Expected: 512px on ≥640px screens, Actual: <span id="responsive-lg-width"></span></div>
+    </div>
+
+    <script>
+        function updateWidths() {
+            const elements = [
+                { selector: '.max-w-xs', id: 'base-xs-width' },
+                { selector: '.max-w-sm', id: 'base-sm-width' },
+                { selector: '.sm\\:max-w-xs', id: 'responsive-xs-width' },
+                { selector: '.sm\\:max-w-sm', id: 'responsive-sm-width' },
+                { selector: '.sm\\:max-w-md', id: 'responsive-md-width' },
+                { selector: '.sm\\:max-w-lg', id: 'responsive-lg-width' }
+            ];
+
+            elements.forEach(({ selector, id }) => {
+                try {
+                    const element = document.querySelector(selector);
+                    if (element) {
+                        const computedStyle = window.getComputedStyle(element);
+                        const maxWidth = computedStyle.maxWidth;
+                        const actualWidth = element.getBoundingClientRect().width;
+                        document.getElementById(id).textContent = `${Math.round(actualWidth)}px (max-width: ${maxWidth})`;
+                    }
+                } catch (e) {
+                    document.getElementById(id).textContent = 'Error measuring';
+                }
+            });
+        }
+
+        // Update on load and resize
+        window.addEventListener('load', updateWidths);
+        window.addEventListener('resize', updateWidths);
+
+        // Initial update
+        setTimeout(updateWidths, 100);
+    </script>
+</body>
+</html>
