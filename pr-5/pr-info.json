@@ -3,8 +3,8 @@
   "pr_title": "fix: correct GitHub Actions badge URLs and enhance README documentation",
   "pr_branch": "fix/readme-build-bagdge",
   "pr_author": "colpitts-dev",
-  "commit_sha": "ca98f8dfade0b48b1da4deb097ac22edae6c00ac",
-  "built_at": "2025-08-25T12:58:00+00:00",
+  "commit_sha": "959c476fb35f3cd0c2ea4441e02095edfbdac42c",
+  "built_at": "2025-08-25T13:21:59+00:00",
   "preview_url": "https://completeperspective.github.io/evoke-ui-react/pr-5/",
   "deployment_type": "live-preview"
 }
