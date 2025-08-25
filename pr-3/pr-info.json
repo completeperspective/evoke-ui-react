@@ -1,0 +1,10 @@
+{
+  "pr_number": 3,
+  "pr_title": "Fix/root deploy",
+  "pr_branch": "fix/root-deploy",
+  "pr_author": "colpitts-dev",
+  "commit_sha": "3f5095a9228e190ad4eef8012f2786b011e3b213",
+  "built_at": "2025-08-25T01:34:05+00:00",
+  "preview_url": "https://completeperspective.github.io/evoke-ui-react/pr-3/",
+  "deployment_type": "live-preview"
+}
