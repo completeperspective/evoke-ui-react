@@ -1,0 +1,20 @@
+# GitHub CODEOWNERS for Evoke UI React
+# This file defines who needs to review code changes in specific paths
+
+# Global owners for all code changes
+* @adam
+
+# Critical configuration files
+/.github/workflows/ @adam
+/packages/evoke-ui-react/.storybook/ @adam
+/packages/evoke-ui-react/src/styles/ @adam
+/packages/evoke-ui-react/package.json @adam
+
+# Component source code
+/packages/evoke-ui-react/src/atoms/ @adam
+/packages/evoke-ui-react/src/molecules/ @adam
+
+# Documentation and examples
+/docs/ @adam
+/examples/ @adam
+/*.md @adam
