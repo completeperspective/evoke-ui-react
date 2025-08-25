@@ -1,0 +1,10 @@
+{
+  "pr_number": 7,
+  "pr_title": "chore: move docs into generated folder",
+  "pr_branch": "feat/complete-branch-protection",
+  "pr_author": "colpitts-dev",
+  "commit_sha": "a3954667849aa0f8c603962de2a199dabafc148c",
+  "built_at": "2025-08-25T14:43:46+00:00",
+  "preview_url": "https://completeperspective.github.io/evoke-ui-react/pr-7/",
+  "deployment_type": "live-preview"
+}
