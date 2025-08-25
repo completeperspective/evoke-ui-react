@@ -1,19 +1,35 @@
 import type { Preview } from '@storybook/react-vite';
 
+// Extend Window type for performance monitoring
+declare global {
+  interface Window {
+    __STORYBOOK_PERFORMANCE__?: {
+      startTime: number;
+      errorCount: number;
+      logRender: (componentName: string, renderTime: number) => void;
+      trackMetric: (metricName: string, value: number) => void;
+    };
+  }
+}
+
 // Import styles with optimized loading order
 import '../src/styles/tailwind.css';
 import '../src/styles/index.scss';
 
 // Development utilities (only load in development)
-const isDevelopment = process.env.NODE_ENV !== 'production';
+const isDevelopment = typeof process !== 'undefined' ? process.env.NODE_ENV !== 'production' : true;
 
 // Performance monitoring
 if (isDevelopment && typeof window !== 'undefined') {
   // Add development performance monitoring
   window.__STORYBOOK_PERFORMANCE__ = {
     startTime: Date.now(),
+    errorCount: 0,
     logRender: (componentName: string, renderTime: number) => {
       console.log(`📊 ${componentName} rendered in ${renderTime}ms`);
+    },
+    trackMetric: (metricName: string, value: number) => {
+      console.log(`📈 ${metricName}: ${value}ms`);
     },
   };
 }
@@ -32,7 +48,7 @@ const preview: Preview = {
       sort: 'requiredFirst',
     },
     docs: {
-      canvas: { 
+      canvas: {
         sourceState: 'shown',
         // Performance optimization for docs
         withToolbar: true,
@@ -115,7 +131,16 @@ const preview: Preview = {
         order: [
           'Welcome',
           'Design System',
-          ['Color Tokens', 'Typography Tokens', 'Spacing Tokens', 'Animation Tokens', 'Shadow Tokens'],
+          [
+            'Tokens',
+            [
+              'Color Tokens',
+              'Typography Tokens',
+              'Spacing Tokens',
+              'Animation Tokens',
+              'Shadow Tokens',
+            ],
+          ],
           'Atoms',
           ['Button', 'Input', 'Text', 'Heading', 'Badge', 'Label', 'Skeleton', 'Separator'],
           'Molecules',
@@ -171,19 +196,23 @@ const preview: Preview = {
   decorators: [
     (Story, context) => {
       const startTime = performance.now();
-      
-      // Wrap the story for performance monitoring (development only)
-      if (isDevelopment && typeof window !== 'undefined') {
+
+      // Render the story
+      const result = Story();
+
+      // Performance monitoring (development only)
+      if (isDevelopment && typeof window !== 'undefined' && window.__STORYBOOK_PERFORMANCE__) {
         const endTime = performance.now();
         const renderTime = endTime - startTime;
-        
+
         // Log performance for debugging
-        if (renderTime > 16) { // Only log if render time is > 1 frame (16ms)
+        if (renderTime > 16) {
+          // Only log if render time is > 1 frame (16ms)
           console.log(`⚡ Story "${context.name}" rendered in ${renderTime.toFixed(2)}ms`);
         }
       }
-      
-      return Story();
+
+      return result;
     },
   ],
 };

@@ -30,7 +30,7 @@
     "*.scss"
   ],
   "scripts": {
-    "dev": "vite",
+    "dev": "storybook dev -p 6006",
     "build": "npm run build:lib && npm run build:styles",
     "build:lib": "tsup",
     "build:styles": "npm run build:sass && npm run build:tailwind",
