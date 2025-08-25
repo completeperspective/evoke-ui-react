@@ -325,6 +325,7 @@ const ModalContent = React.forwardRef<
         modalClasses.content,
         className
       )}
+      aria-describedby={props['aria-describedby'] || undefined}
       {...props}
     >
       {children}
