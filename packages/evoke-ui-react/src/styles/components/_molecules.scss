@@ -347,6 +347,10 @@
   
   // Suggestions dropdown enhancements
   .suggestions-dropdown {
+    // Firefox scrollbar styling (moved before nested rules)
+    scrollbar-width: thin;
+    scrollbar-color: oklch(var(--ui-color-border)) transparent;
+    
     // Ensure proper backdrop blur support where available
     @supports (backdrop-filter: blur(8px)) {
       backdrop-filter: blur(8px) saturate(180%);
@@ -356,10 +360,6 @@
         background-color: rgba(15, 23, 42, 0.8);
       }
     }
-    
-    // Firefox scrollbar styling
-    scrollbar-width: thin;
-    scrollbar-color: oklch(var(--ui-color-border)) transparent;
 
     // Custom scrollbar styling
     &::-webkit-scrollbar {
