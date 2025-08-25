@@ -30,7 +30,7 @@
     "*.scss"
   ],
   "scripts": {
-    "dev": "vite",
+    "dev": "storybook dev -p 6006",
     "build": "npm run build:lib && npm run build:styles",
     "build:lib": "tsup",
     "build:styles": "npm run build:sass && npm run build:tailwind",
@@ -46,7 +46,6 @@
     "test:package": "node scripts/test-package.mjs",
     "test:package:verbose": "node scripts/test-package.mjs --verbose",
     "test:package:keep": "node scripts/test-package.mjs --skip-cleanup",
-    "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },
   "peerDependencies": {
@@ -100,10 +99,10 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/yourusername/evoke-ui.git"
+    "url": "https://github.com/completeperspective/evoke-ui.git"
   },
   "bugs": {
-    "url": "https://github.com/yourusername/evoke-ui/issues"
+    "url": "https://github.com/completeperspective/evoke-ui/issues"
   },
-  "homepage": "https://github.com/yourusername/evoke-ui#readme"
+  "homepage": "https://github.com/completeperspective/evoke-ui#readme"
 }
