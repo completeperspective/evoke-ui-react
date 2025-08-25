@@ -47,7 +47,7 @@ If you notice this pattern in the prompt, please use these flags to only define 
 - **Update `README.md`** when new features are added, dependencies change, or setup steps are modified.
 - **Comment non-obvious code** and ensure everything is understandable to a mid-level developer.
 - When writing complex logic, **add an inline `# Reason:` comment** explaining the why, not just the what.
-- ALWAYS **save artifacts** in the related project's /docs folder.
+- ALWAYS **save artifacts** in the related project's /docs/generated folder. create this folder if it doesn't exist.
 
 ### 🧠 AI Behavior Rules
 
