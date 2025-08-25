@@ -645,4 +645,4 @@ Our CI/CD pipeline includes these automated workflows:
 - **👀 `pr-preview.yml`** - Live PR Preview Generation
 - **🧹 `pr-cleanup.yml`** - Automatic Preview Cleanup
 
-All workflows use Node.js 22, pnpm caching, and secure deployment strategies.
+All workflows use Node.js 22, pnpm caching, and secure deployment strategies.# Trigger CI workflow refresh
