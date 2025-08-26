@@ -807,3 +807,124 @@
     animation: none !important;
   }
 }
+
+/* ================================
+ * GRID COMPONENT
+ * ================================ */
+
+.evoke-grid {
+  // Advanced CSS Grid features not available in Tailwind
+  container-type: inline-size; // Container queries support
+
+  // Reduced motion support
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      transition: none !important;
+    }
+  }
+
+  // Print styles optimization
+  @media print {
+    grid-template-columns: 1fr !important;
+    gap: 0.5rem !important;
+  }
+
+  // High contrast mode enhancements
+  @media (prefers-contrast: high) {
+    outline: 1px solid currentColor;
+    outline-offset: -1px;
+  }
+}
+
+.evoke-grid-item {
+  // Ensure content doesn't overflow grid area
+  min-width: 0; // Allows content to shrink below intrinsic width
+  overflow-wrap: break-word;
+
+  // Enhanced accessibility
+  &:focus-visible {
+    outline: 2px solid var(--ui-color-ring, hsl(var(--ring)));
+    outline-offset: 2px;
+    border-radius: 0.25rem;
+  }
+
+  // Container query responsive behavior
+  @container (max-width: 300px) {
+    font-size: 0.875rem;
+  }
+
+  // High contrast mode enhancements
+  @media (prefers-contrast: high) {
+    &:focus-visible {
+      outline: 3px solid currentColor !important;
+      outline-offset: 3px !important;
+    }
+  }
+}
+
+/* ================================
+ * BOX COMPONENT
+ * ================================ */
+
+.evoke-box {
+  // Advanced CSS features not available in Tailwind
+  container-type: inline-size; // Container queries support
+
+  // Enhanced accessibility for interactive boxes
+  &:focus-visible {
+    outline: 2px solid var(--ui-color-ring, hsl(var(--ring)));
+    outline-offset: 2px;
+    border-radius: 0.25rem;
+  }
+
+  // Ensure content doesn't overflow container
+  min-width: 0; // Allows content to shrink below intrinsic width
+  overflow-wrap: break-word;
+
+  // Reduced motion support
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      transition: none !important;
+      animation: none !important;
+    }
+  }
+
+  // Print styles optimization
+  @media print {
+    box-shadow: none !important;
+    transform: none !important;
+    background: transparent !important;
+  }
+
+  // High contrast mode enhancements
+  @media (prefers-contrast: high) {
+    &:focus-visible {
+      outline: 3px solid currentColor !important;
+      outline-offset: 3px !important;
+    }
+  }
+
+  // Container query responsive behavior
+  @container (max-width: 300px) {
+    padding: 0.5rem !important;
+
+    // Reduce font size in cramped containers
+    font-size: 0.875rem;
+  }
+
+  @container (max-width: 200px) {
+    padding: 0.25rem !important;
+    font-size: 0.75rem;
+  }
+
+  // Touch device optimizations
+  @media (hover: none) and (pointer: coarse) {
+    // Ensure minimum touch target size when interactive
+    &[tabindex],
+    &[role='button'],
+    &[onclick] {
+      min-height: 44px;
+      min-width: 44px;
+    }
+  }
+}

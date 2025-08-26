@@ -24,3 +24,10 @@ export * from './Skeleton';
 
 // Separator - Content dividers
 export * from './Separator';
+
+// Grid - Layout system components
+export * from './Grid';
+export * from './GridItem';
+
+// Box - Layout primitive with spacing and sizing controls
+export * from './Box';
