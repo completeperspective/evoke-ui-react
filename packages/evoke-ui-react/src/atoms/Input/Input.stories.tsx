@@ -383,18 +383,18 @@ export const FormValidation: Story = {
 // All variants showcase
 const AllVariantsTemplate = () => (
   <div className="grid grid-cols-1 gap-6 w-full max-w-2xl">
-    <div className="space-y-4">
+    <div className="flex flex-col">
       <h4 className="text-sm font-semibold">Sizes</h4>
-      <div className="space-y-3">
+      <div className="flex gap-2">
         <Input size="sm" placeholder="Small input" />
         <Input size="md" placeholder="Medium input" />
         <Input size="lg" placeholder="Large input" />
       </div>
     </div>
 
-    <div className="space-y-4">
+    <div className="flex flex-col">
       <h4 className="text-sm font-semibold">States</h4>
-      <div className="space-y-3">
+      <div className="flex gap-2">
         <Input placeholder="Default state" />
         <Input state="error" value="Error state" error="Something went wrong" />
         <Input state="success" value="Success state" helperText="Looks great!" />
@@ -403,9 +403,9 @@ const AllVariantsTemplate = () => (
       </div>
     </div>
 
-    <div className="space-y-4">
+    <div className="flex flex-col">
       <h4 className="text-sm font-semibold">With Icons</h4>
-      <div className="space-y-3">
+      <div className="flex gap-2">
         <Input startIcon={<SearchIcon />} placeholder="Search with start icon" />
         <Input endIcon={<CheckIcon />} placeholder="Input with end icon" />
         <Input startIcon={<UserIcon />} endIcon={<CheckIcon />} placeholder="Both icons" />
