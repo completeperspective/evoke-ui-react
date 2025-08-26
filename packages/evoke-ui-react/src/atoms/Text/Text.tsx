@@ -105,12 +105,14 @@ const textVariants = cva(
       {
         interactive: true,
         variant: 'body',
-        className: 'hover:text-primary focus:text-primary focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 rounded-sm',
+        className:
+          'hover:text-primary focus:text-primary focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 rounded-sm',
       },
       {
         interactive: true,
         variant: 'lead',
-        className: 'hover:text-primary focus:text-primary focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 rounded-sm',
+        className:
+          'hover:text-primary focus:text-primary focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 rounded-sm',
       },
       // Code variant enhancements
       {
@@ -132,7 +134,7 @@ const textVariants = cva(
       },
       {
         status: 'warning',
-        weight: 'medium', 
+        weight: 'medium',
         className: 'font-semibold',
       },
       {
@@ -202,19 +204,19 @@ export interface TextProps
 
 /**
  * Text component for displaying text content with semantic variants
- * 
+ *
  * @example
  * ```tsx
  * <Text variant="body">Regular body text</Text>
- * 
+ *
  * <Text variant="lead" as="p">
  *   Lead text for introductions
  * </Text>
- * 
+ *
  * <Text variant="small" weight="medium" align="center">
  *   Small centered text
  * </Text>
- * 
+ *
  * <Text variant="code">const code = 'example';</Text>
  * ```
  */
@@ -242,17 +244,17 @@ const Text = React.forwardRef<HTMLElement, TextProps>(
       children,
       ...props
     },
-    ref
+    ref,
   ) => {
     return React.createElement(
       Component,
       {
         className: cn(
-          textVariants({ 
-            variant, 
-            align, 
-            weight, 
-            transform, 
+          textVariants({
+            variant,
+            align,
+            weight,
+            transform,
             truncate,
             display,
             spacing,
@@ -269,14 +271,14 @@ const Text = React.forwardRef<HTMLElement, TextProps>(
             [textClasses.smallCaps]: smallCaps,
             [textClasses.tabularNums]: tabularNums,
           },
-          className
+          className,
         ),
         ref,
         ...props,
       },
-      children
+      children,
     );
-  }
+  },
 );
 
 Text.displayName = 'Text';

@@ -2,7 +2,7 @@
 
 ## Project Purpose
 
-Evoke UI is a production-ready, themable React component library built on top of shadcn/ui that follows atomic design principles. The library prioritizes runtime theming through CSS variables using OKLCH color space, enabling consuming applications to dynamically customize brand colors, typography, spacing, and other design tokens without rebuilding.
+Evoke UI is A weapon grade, themable React component library built on top of shadcn/ui that follows atomic design principles. The library prioritizes runtime theming through CSS variables using OKLCH color space, enabling consuming applications to dynamically customize brand colors, typography, spacing, and other design tokens without rebuilding.
 
 ## Architecture & Core Principles
 

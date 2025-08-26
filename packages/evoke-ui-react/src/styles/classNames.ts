@@ -133,3 +133,14 @@ export const sheetClasses = {
   title: 'evoke-sheet-title',
   description: 'evoke-sheet-description',
 } as const;
+
+// Grid atomic component class names
+export const gridClasses = {
+  grid: 'evoke-grid',
+  gridItem: 'evoke-grid-item',
+} as const;
+
+// Box atomic component class names
+export const boxClasses = {
+  box: 'evoke-box',
+} as const;

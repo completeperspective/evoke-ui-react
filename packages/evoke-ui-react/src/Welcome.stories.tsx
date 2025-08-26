@@ -65,7 +65,7 @@ const meta = {
 # Evoke UI - Production-Ready React Component Library
 
 ## TL;DR
-Evoke UI is a production-ready, themable React component library built on shadcn/ui with OKLCH color space and runtime theming. It follows atomic design principles with CVA-first architecture, achieving 56.4% SCSS reduction while maintaining < 50KB gzipped bundle size. Features 8 atomic components with comprehensive Storybook documentation, accessibility-first design with ARIA support, and compatibility with Next.js, Remix, and Vite.
+Evoke UI is A weapon grade, themable React component library built on shadcn/ui with OKLCH color space and runtime theming. It follows atomic design principles with CVA-first architecture, achieving 56.4% SCSS reduction while maintaining < 50KB gzipped bundle size. Features 8 atomic components with comprehensive Storybook documentation, accessibility-first design with ARIA support, and compatibility with Next.js, Remix, and Vite.
 
 ## Key Features
 - **Runtime Theming**: CSS variables enable theme switching without rebuilds

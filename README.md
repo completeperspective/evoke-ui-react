@@ -1,6 +1,6 @@
 # Evoke UI React Component Library 🎨
 
-A production-ready, themable React component library built on shadcn/ui with CVA-first architecture, atomic design principles, and comprehensive CI/CD infrastructure.
+A weapon grade, themable React component library built on shadcn/ui with CVA-first architecture, atomic design principles, and comprehensive CI/CD infrastructure.
 
 [![Build Status](https://github.com/completeperspective/evoke-ui-react/workflows/Continuous%20Integration/badge.svg)](https://github.com/completeperspective/evoke-ui-react/actions/workflows/ci.yml)
 [![Node.js Version](https://img.shields.io/badge/node-%3E%3D22.0.0-brightgreen)](https://nodejs.org/)
@@ -28,10 +28,7 @@ import '@evoke-ui/react/styles.css';
 function App() {
   return (
     <Card>
-      <SearchBar 
-        placeholder="Search components..." 
-        onSearch={(query) => console.log(query)} 
-      />
+      <SearchBar placeholder="Search components..." onSearch={(query) => console.log(query)} />
       <Button variant="primary" size="lg">
         Get Started
       </Button>
@@ -43,12 +40,15 @@ function App() {
 ## 📚 Documentation
 
 ### 🌐 Live Documentation
+
 - **Production Documentation**: [https://completeperspective.github.io/evoke-ui-react/](https://completeperspective.github.io/evoke-ui-react/)
 - **Component Playground**: Interactive Storybook with live examples
 - **Design System Guide**: Complete token reference and theming documentation
 
 ### 🔍 PR Preview System
+
 Pull requests automatically generate preview deployments for visual review:
+
 - Preview artifacts available as downloadable builds
 - Comprehensive review checklists included
 - Automatic cleanup when PRs are closed/merged
@@ -59,7 +59,7 @@ Pull requests automatically generate preview deployments for visual review:
 
 ```
 ┌─────────────────────────────────────┐
-│             Templates               │  
+│             Templates               │
 │        (Layout Patterns)            │
 └──────────────┬──────────────────────┘
                │
@@ -74,7 +74,7 @@ Pull requests automatically generate preview deployments for visual review:
 └──────────────┬──────────────────────┘
                │
 ┌──────────────▼──────────────────────┐
-│             Atoms                   │  ✅ 8/8 Complete  
+│             Atoms                   │  ✅ 8/8 Complete
 │      (Foundation Elements)          │
 └─────────────────────────────────────┘
 ```
@@ -82,6 +82,7 @@ Pull requests automatically generate preview deployments for visual review:
 ### ✅ Completed Components
 
 #### Atomic Components (8/8)
+
 - **Button** - 69% SCSS reduction, CVA-first variants
 - **Input** - 57% SCSS reduction, enhanced accessibility
 - **Label** - 42% SCSS reduction, semantic integration
@@ -92,11 +93,13 @@ Pull requests automatically generate preview deployments for visual review:
 - **Separator** - 61% SCSS reduction, layout utility
 
 #### Molecular Components (3/3)
+
 - **FormField** - Complete form composition with validation
 - **Card** - Flexible container with interactive variants
 - **SearchBar** - Advanced search with history and suggestions
 
 ### CVA-First Architecture
+
 - **56.4% average SCSS reduction** (1,074+ lines eliminated)
 - **Type-safe variants** with VariantProps integration
 - **Consistent API** across all components
@@ -105,23 +108,26 @@ Pull requests automatically generate preview deployments for visual review:
 ## 🎨 Theming System
 
 ### OKLCH Color Space
+
 Utilizing perceptually uniform OKLCH color space for:
+
 - **Wide gamut support** for P3 displays
 - **Better accessibility** contrast calculations
 - **Predictable color mixing** and interpolation
 
 ### Runtime Theming
+
 ```scss
 :root {
   /* Semantic Tokens (OKLCH format) */
   --ui-color-primary: 0.65 0.2 255;
   --ui-color-secondary: 0.75 0.18 310;
   --ui-color-success: 0.75 0.18 145;
-  
+
   /* Component Tokens */
   --ui-button-height: 2.5rem;
   --ui-button-padding-x: 1rem;
-  
+
   /* Typography Scale */
   --ui-font-size-base: 1rem;
   --ui-font-family-sans: system-ui, -apple-system, sans-serif;
@@ -129,6 +135,7 @@ Utilizing perceptually uniform OKLCH color space for:
 ```
 
 ### Tailwind CSS v4 Integration
+
 ```scss
 @import 'tailwindcss';
 
@@ -141,10 +148,12 @@ Utilizing perceptually uniform OKLCH color space for:
 ## 🛠️ Development
 
 ### Prerequisites
+
 - **Node.js 22+** (required for Storybook 8)
 - **pnpm 8+** (recommended package manager)
 
 ### Setup
+
 ```bash
 # Clone the repository
 git clone https://github.com/completeperspective/evoke-ui-react.git
@@ -158,6 +167,7 @@ pnpm dev
 ```
 
 ### Available Scripts
+
 ```bash
 # Development
 pnpm dev              # Start Storybook dev server
@@ -180,26 +190,31 @@ pnpm storybook        # Start Storybook dev server
 ### GitHub Actions Workflows
 
 #### 1. Continuous Integration (`ci.yml`)
+
 - **Triggers**: Every push and PR
 - **Actions**: Test suite (662 tests), build verification, type checking, linting
 - **Quality Gates**: All checks must pass before merge
 - **Branch Protection**: Required status checks for main branch protection
 
 #### 2. Production Deployment (`deploy-storybook.yml`)
+
 - **Triggers**: Push to main branch (after protection rules)
 - **Target**: `https://completeperspective.github.io/evoke-ui-react/`
 - **Features**: Full Storybook build with component documentation
 
 #### 3. PR Preview System (`pr-preview.yml`)
+
 - **Triggers**: PR creation, updates, reopening
 - **Output**: Downloadable artifact with complete Storybook build
 - **Features**: Auto-generated PR comments with download links and review checklist
 
 #### 4. Cleanup Automation (`pr-cleanup.yml`)
+
 - **Triggers**: PR close/merge
 - **Actions**: Automatic artifact cleanup and status reporting
 
 ### Branch Protection System
+
 - **✅ Main Branch Security**: PR approval required from code owners
 - **✅ Status Check Integration**: CI pipeline success mandatory before merge
 - **✅ Admin Override**: Emergency access preserved for critical situations
@@ -207,6 +222,7 @@ pnpm storybook        # Start Storybook dev server
 - **✅ Quality Gates**: "🧪 Test Suite", "📖 Storybook Build", "✅ Quality Gates" required
 
 ### Performance Metrics
+
 - **✅ Build Time**: 21.82s (82% faster than target)
 - **✅ Test Success Rate**: 662/662 tests passing (100%)
 - **✅ Bundle Optimization**: Manual chunking strategy
@@ -216,11 +232,12 @@ pnpm storybook        # Start Storybook dev server
 ## 📦 Distribution
 
 ### Package Structure
+
 ```
 @evoke-ui/react/
 ├── dist/
 │   ├── index.js          # CommonJS bundle
-│   ├── index.mjs         # ES module bundle  
+│   ├── index.mjs         # ES module bundle
 │   ├── index.d.ts        # TypeScript declarations
 │   ├── styles.css        # Complete compiled styles
 │   └── tailwind.css      # Tailwind utilities only
@@ -229,13 +246,14 @@ pnpm storybook        # Start Storybook dev server
 ```
 
 ### Import Options
+
 ```typescript
 // Tree-shakeable imports (recommended)
 import { Button } from '@evoke-ui/react';
 
 // Style imports
-import '@evoke-ui/react/styles.css';       // Complete styles
-import '@evoke-ui/react/tailwind.css';     // Tailwind utilities only
+import '@evoke-ui/react/styles.css'; // Complete styles
+import '@evoke-ui/react/tailwind.css'; // Tailwind utilities only
 
 // Advanced: Sass source imports
 import '@evoke-ui/react/src/styles/index.scss';
@@ -244,6 +262,7 @@ import '@evoke-ui/react/src/styles/index.scss';
 ## 🧪 Testing
 
 ### Test Suite Coverage
+
 - **662 total tests** across all components and hooks
 - **100% pass rate** with comprehensive coverage
 - **Component Tests**: React Testing Library with user interaction testing
@@ -251,6 +270,7 @@ import '@evoke-ui/react/src/styles/index.scss';
 - **Integration Tests**: Component composition and prop forwarding
 
 ### Testing Strategy
+
 - **Unit Tests**: Individual component logic
 - **Integration Tests**: Component interactions
 - **Accessibility Tests**: ARIA compliance and keyboard navigation
@@ -259,6 +279,7 @@ import '@evoke-ui/react/src/styles/index.scss';
 ## 🤝 Contributing
 
 ### Development Workflow
+
 1. **Fork** the repository
 2. **Create** a feature branch (`git checkout -b feature/amazing-component`)
 3. **Develop** following our component architecture patterns
@@ -267,6 +288,7 @@ import '@evoke-ui/react/src/styles/index.scss';
 6. **Submit** a pull request
 
 ### Component Development Guidelines
+
 - Follow **CVA-first architecture** patterns
 - Write **comprehensive tests** (unit + integration)
 - Include **Storybook stories** with all variants
@@ -276,11 +298,13 @@ import '@evoke-ui/react/src/styles/index.scss';
 ## 📋 Project Status
 
 ### ✅ Completed Phases
+
 - **Phase 1**: Atomic components (8/8) + Build system + Molecular components (3/3)
 - **Phase 2**: Advanced testing + Package distribution + CVA migration
 - **Phase 3**: Complete CI/CD pipeline + GitHub Pages deployment + Performance optimization
 
 ### 🚧 Current Focus (Phase 4)
+
 - **Organism Components**: DataTable, NavigationMenu, Modal systems
 - **Next.js Example Application**
 - **Advanced Theme Marketplace**
@@ -289,18 +313,21 @@ import '@evoke-ui/react/src/styles/index.scss';
 ## 🏆 Key Achievements
 
 ### Performance & Quality
+
 - **56.4% SCSS reduction** through CVA-first architecture
 - **21.82s build time** (82% improvement over targets)
 - **100% test success rate** (662/662 tests)
 - **Zero TypeScript errors** across entire codebase
 
-### Infrastructure & Deployment  
+### Infrastructure & Deployment
+
 - **4 automated workflows** for CI/CD pipeline
 - **Secure artifact-based** PR preview system
 - **Node.js 22 compatibility** for modern tooling
 - **Comprehensive error resolution** (8+ GitHub Actions fixes)
 
 ### Developer Experience
+
 - **Complete type safety** with VariantProps
 - **Interactive documentation** with Storybook
 - **One-click PR previews** with review checklists
