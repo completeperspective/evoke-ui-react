@@ -1,0 +1,10 @@
+{
+  "pr_number": 9,
+  "pr_title": "feat: enhance Box, Grid, and GridItem stories with premium dark mode design",
+  "pr_branch": "feat/add-grid-system",
+  "pr_author": "colpitts-dev",
+  "commit_sha": "2703fa1d59629f11fb7065e1c073e4312e6b4392",
+  "built_at": "2025-08-26T02:13:07+00:00",
+  "preview_url": "https://completeperspective.github.io/evoke-ui-react/pr-9/",
+  "deployment_type": "live-preview"
+}
